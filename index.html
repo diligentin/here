@@ -46,10 +46,13 @@ h1, h2 {
 
 /* 6 w rzędzie */
 .grid-6 {
-  grid-template-columns:repeat(auto-fit, minmax(140px, 1fr));
-  width:100%;
-  max-width:1100px;
-  margin:0 auto;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
 }
 
 }
