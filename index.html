@@ -12,476 +12,113 @@ body {
   font-family:Avenir Next W1G, sans-serif;
 }
 
-/* ===== HEADER ===== */
-header img {
-  width:100%;
-  display:block;
+/* ===== HERO ===== */
+.hero {
+  display:flex;
+  justify-content:center;
+  padding:20px 0;
+}
+.hero img {
+  width:300px;
+  filter:drop-shadow(0 0 20px rgba(0,0,0,0.6));
 }
 
 /* ===== NAGŁÓWKI ===== */
-h1 {
-
-  margin:16px;
+h1, h2 {
+  margin:20px 16px 10px;
   font-size:30px;
-  font-family: PiekosToons BB;
+  font-family:PiekosToons BB;
 }
 
-h2 {
-  margin:16px;
-  font-size:30px;
-    font-family: PiekosToons BB;
+/* ===== GRID ===== */
+.grid {
+  display:grid;
+  gap:20px;
+  justify-content:center;
+  padding:0 16px;
 }
 
-  h3 {
-  margin:16px;
-  font-size:30px;
-      font-family: PiekosToons BB;
-}
-  h4 {
-  margin:16px;
-  font-size:30px;
-      font-family: PiekosToons BB;
-}
-/* ===== SCROLL ===== */
-.scroll-wrapper {
-  position: relative;
+/* 6 w rzędzie */
+.grid-6 {
+  grid-template-columns:repeat(auto-fill, minmax(170px, 1fr));
+  max-width:1100px;
+  margin:0 auto;
 }
 
-.scroll-container {
-  overflow-x: auto;
-  padding: 0 16px;
-  scroll-behavior: smooth;
+/* KARTA */
+.card {
+  text-decoration:none;
+  color:white;
+  text-align:center;
 }
 
-.scroll-row {
-  display: flex;
-  gap: 16px;
+/* MINIATURY 170×170 */
+.card.square img {
+  width:170px;
+  height:170px;
+  object-fit:cover;
+  border-radius:8px;
 }
 
-/* ===== KARTA KOMIKSU ===== */
-.comic-card {
-  flex: 0 0 auto;
-  text-align: center;
-  text-decoration: none;
-  color: white;
-  position: relative; /* WAŻNE dla efektów */
+/* OKŁADKI 170×300 */
+.card.tall img {
+  width:170px;
+  height:300px;
+  object-fit:cover;
+  border-radius:8px;
 }
-
-/* OKŁADKA */
-.comic-card img {
-  width: 300px;
-  border-radius: 4px;
-  transition: transform 0.25s ease, filter 0.25s ease;
-}
-
-/* HOVER – ZOOM + CIEMNIEJE */
-.comic-card:hover img {
- 
-  filter: brightness(0.7);
-}
-
-
-/* ===== STRZAŁKI ===== */
-.arrow {
-  position: absolute;
-  top: 40%;
-  transform: translateY(-50%);
-  background: rgba(0,0,0,0.6);
-  color: white;
-  border: none;
-  font-size: 60px;
-  padding: 10px 20px;
-  cursor: pointer;
-  z-index: 10;
-}
-
-.arrow.left { left: 0; }
-.arrow.right { right: 0; }
-
-/* ===== MOBILE ===== */
-@media (max-width: 768px) {
-  .comic-card img { width: 28vw; }
-  .comic-card p { font-size: 22px; }
-  .arrow { display: none; }
-}
-
-  /* ===== POWOLNY RUCH TŁA ===== */
-body {
-  /* gradient, możesz zmienić kolory jak chcesz */
-  background: #191818ff;
-
-}
-/* ===== HERO / LOGO ===== */
-.hero {
-  position: relative;
-  height: 15vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-}
-
-/* LOGO */
-.hero .logo {
-  max-width: 350px;
-  width: 70%;
-  opacity: 0.9;
-  filter: drop-shadow(0 0 20px rgba(0,0,0,0.6));
-}
-
-
-
-  .updates-list {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  margin: 20px 0;
-}
-
-.update-card {
-  display: flex;
-  gap: 12px;
-  text-decoration: none;
-  background: rgba(0,0,0,0.45);
-  border-radius: 12px;
-  padding: 10px;
-  transition: transform 0.2s ease, background 0.2s ease;
-}
-
-.update-card:hover {
-
-  background: rgba(0,0,0,0.65);
-}
-
-.update-card img {
-  width: 150px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 8px;
-}
-
-.update-info {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.update-title {
-  color: white;
-  font-size: 25px;
-  font-weight: 600;
-  margin: 0;
-}
-
-.update-chapter {
-  color: #ccc;
-  font-size: 18px;
-  margin: 4px 0;
-}
-
-.update-time {
-  font-size: 14px;
-  color: #888;
-}
-
 </style>
 </head>
 
 <body>
 
 <header class="hero">
-  <img class="logo" src="https://tajnachalupka.github.io/main/13.jpg"  alt="FurinxManhwa">
+  <img src="https://moja.github.io/main/13.jpg" alt="FurinxManhwa">
 </header>
 
-<!-- ===== OSTATNIO CZYTANE (NOWE, ALE NIE RUSZA UI) ===== -->
-<h2 id="recent-title" style="display:none;">Ostatnio czytane</h2>
-<div id="recent-wrapper"></div>
+<!-- ===== NOWY ROZDZIAŁ — 6 OKŁADEK 170×170 ===== -->
+<h2>Nowy rozdział</h2>
+<div class="grid grid-6">
 
-  <h4 class="section-title">Nowy rozdział</h4>
-  <div class="updates-list">
-
-  <a class="update-card" href="reader.html?comic=thehoundsofsisyphus&chapter=8">
-    <img src="https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/nowyrozzdzial/Zrzut%20ekranu%202026-04-18%20221035.png" alt="">
-    <div class="update-info">
-      <p class="update-title">The hounds of Sisyphus</p>
-      <p class="update-chapter">Rozdział 8</p>
-      <span class="update-time"></span>
-    </div>
+  <a class="card square" href="reader.html?comic=thehoundsofsisyphus&chapter=8">
+    <img src="https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/nowyrozzdzial/Zrzut%20ekranu%202026-04-18%20221035.png">
   </a>
 
-    
+  <!-- dodaj kolejne 5 jeśli chcesz -->
+
+</div>
+
+<!-- ===== WSZYSTKIE TYTUŁY — 12 OKŁADEK 170×300 ===== -->
 <h1>Wszystkie tytuły</h1>
+<div class="grid grid-6">
 
-<div class="scroll-wrapper">
-  <button class="arrow left">‹</button>
+  <a class="card tall" href="comic-swallow-you-whole.html">
+    <img src="https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/Syw.png">
+  </a>
 
-  <div class="scroll-container">
-    <div class="scroll-row">
+  <a class="card tall" href="comic-the-hounds-of-sisyphus.html">
+    <img src="https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/thos.png">
+  </a>
 
-      <a class="comic-card" href="comic-swallow-you-whole.html" data-comic="swallowyouwhole">
-           <img src="https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/Syw.png">
-      </a>
+  <a class="card tall" href="afos.html">
+    <img src="https://moja.github.io/main/afos.jpg">
+  </a>
 
-      <a class="comic-card" href="comic-the-hounds-of-sisyphus.html" data-comic="thehoundsofsisyphus">
-        <img src="https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/thos.png">
-      </a>
+  <a class="card tall" href="comic-devils-knight.html">
+    <img src="https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/Dk.png">
+  </a>
 
-      <a class="comic-card" href="afos.html" data-comic="afos">
-        <img src="https://tajnachalupka.github.io/main/cov/!afos.jpg">
-      </a>
+  <a class="card tall" href="comic-shutline.html">
+    <img src="https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/sh.png">
+  </a>
 
-      <a class="comic-card" href="comic-devils-knight.html" data-comic="devilsknight">
-        <img src="https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/Dk.png">
-      </a>
+  <a class="card tall" href="comic-love-remedy.html">
+    <img src="https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/LR.png">
+  </a>
 
-      <a class="comic-card" href="comic-shutline.html" data-comic="shutline">
-        <img src="https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/sh.png">
-      </a>
+  <!-- dodaj kolejne 6, razem 12 -->
 
-     </div>
-  </div>
-
-  <button class="arrow right">›</button>
 </div>
-
-  <h3>Thriller</h3>
-
-<div class="scroll-wrapper">
-  <button class="arrow left">‹</button>
-
-  <div class="scroll-container">
-    <div class="scroll-row">
-
-    <a class="comic-card" href="comic-the-hounds-of-sisyphus.html"  data-comic="thehoundsofsisyphus">
-        <img src="https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/thos.png">
-    </a>
-
-          </div>
-  </div>
-
-  <button class="arrow right">›</button>
-</div>
-
-<h1>Omegaverse</h1>
-
-<div class="scroll-wrapper">
-  <button class="arrow left">‹</button>
-
-  <div class="scroll-container">
-    <div class="scroll-row">
-
-      <a class="comic-card" href="comic-swallow-you-whole.html" data-comic="swallowyouwhole">
-        <img src="https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/Syw.png">
-      </a>
-
-      <a class="comic-card" href="comic-love-remedy.html" data-comic="loveremedy">
-        <img src="https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/LR.png">
-      </a>
-      
-</div>
-  </div>
-
-  <button class="arrow right">›</button>
-</div>
-    
-    <h3>GL</h3>
-
-<div class="scroll-wrapper">
-  <button class="arrow left">‹</button>
-
-  <div class="scroll-container">
-    <div class="scroll-row">
-
-    <a class="comic-card" href="comic-dl.html"  data-comic="dl">
-        <img src="https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/Distorted%20Love.webp">
-    </a>
-
-          </div>
-  </div>
-
-  <button class="arrow right">›</button>
-</div>
-    
-      <h3>One shoty</h3>
-
-<div class="scroll-wrapper">
-  <button class="arrow left">‹</button>
-
-  <div class="scroll-container">
-    <div class="scroll-row">
-
-       <a class="comic-card" href="comic-obeyworship.html"  data-comic="obeyworship">
-        <img src="https://pub-0d8188d0f04447a19e5ad7ca209fc462.r2.dev/obeyworship/1%20s.png">
-    </a>
-
-      <a class="comic-card" href="comic-pirat.html"  data-comic="pirat">
-        <img src="https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/1%20s_inny.webp">
-    </a
-          </div>
-  </div>
-
-  <button class="arrow right">›</button>
-</div>
-
-    <h3>-18</h3>
-
-<div class="scroll-wrapper">
-  <button class="arrow left">‹</button>
-
-  <div class="scroll-container">
-    <div class="scroll-row">
-
-      <a class="comic-card" href="comic-sekai.html"  data-comic="sekai">
-        <img src="https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/d4ef0f68-373d-496a-828a-b74d502a830b.jpg.512%20(1).jpg">
-        </a>
-      
-          </div>
-  </div>
-
-  <button class="arrow right">›</button>
-</div>
-    
-<script>
-/* STRZAŁKI – TWOJE, NIETKNIĘTE */
-document.querySelectorAll(".scroll-wrapper").forEach(wrapper => {
-  const container = wrapper.querySelector(".scroll-container");
-  const left = wrapper.querySelector(".left");
-  const right = wrapper.querySelector(".right");
-
-  if (!left || !right) return;
-
-  left.onclick = () => container.scrollBy({ left: -300, behavior: "smooth" });
-  right.onclick = () => container.scrollBy({ left: 300, behavior: "smooth" });
-});
-</script>
-
-<script>
-/* ===== OSTATNIO CZYTANE – LOGIKA ===== */
-document.addEventListener("DOMContentLoaded", () => {
-
-  const recent = JSON.parse(localStorage.getItem("recentComics")) || [];
-
-  const comicsData = {
-    swallowyouwhole: {
-      name: "Swallow You Whole",
-      cover: "https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/Syw.png",
-      link: "comic-swallow-you-whole.html"
-    },
-    thehoundsofsisyphus: {
-      name: "The Hounds Of Sisyphus",
-      cover: "https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/thos.png",
-      link: "comic-the-hounds-of-sisyphus.html"
-    },
-    pizza: {
-      name: "The Pizza Delivery Man and the Gold Palace",
-      cover: "https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/pizza.png",
-      link: "comic-pizza.html"
-    },
-    devilsknight: {
-      name: "Devil's Knight",
-      cover: "https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/Dk.png",
-      link: "comic-devils-knight.html"
-    },
-    underthemoonlight: {
-      name: "Under The Moonlight",
-      cover: "https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/utm.png",
-      link: "comic-under-the-moonlight.html"
-    },
-    husband: {
-      name: "Young and Pretty Husband",
-      cover: "https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/uaph.png",
-      link: "comic-husband.html"
-    },
-    mirror: {
-      name: "Mirror, mirror",
-      cover: "https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/mirror%2C%20mirror.png",
-      link: "comic-mirror.html"
-    },
-    mirror: {
-      name: "Santa",
-      cover: "https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/Santa.webp",
-      link: "comic-santa.html"
-    },
-    obeyworship: {
-      name: "Obey Worship",
-      cover: "https://pub-0d8188d0f04447a19e5ad7ca209fc462.r2.dev/obeyworship/1%20s.png",
-      link: "comic-obeyworship.html"
-    },
-    mansea: {
-      name: "The Man of the Sea",
-      cover: "https://pub-0d8188d0f04447a19e5ad7ca209fc462.r2.dev/themanofthesea/1%20s.png",
-      link: "comic-mansea.html"
-    },
-    swipe: {
-      name: "Swipe and Play",
-      cover: "https://pub-0d8188d0f04447a19e5ad7ca209fc462.r2.dev/swipeandplay/1%20s.png",
-      link: "comic-swipe.html"
-    },
-    loveremedy: {
-      name: "Love Remedy",
-      cover: "https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/LR.png",
-      link: "comic-love-remedy.html"
-    },
-    dl: {
-      name: "Distorted Love",
-      cover: "https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/Distorted%20Love.webp",
-      link: "comic-dl.html"
-    },
-    shutline: {
-      name: "Shutline",
-      cover: "https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/sh.png",
-      link: "comic-shutline.html"
-    },
-    sekai: {
-      name:"Sekai wa Temee de Mawatteru",
-      cover: "https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/d4ef0f68-373d-496a-828a-b74d502a830b.jpg.512%20(1).jpg",
-      link: "comic-sekai.html"
-    },
-    wolfinwhite: {
-      name: "Wolf in White",
-      cover: "https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/Untitled14909_20260226204854.png",
-      link: "comic-wolf-in-white.html"
-    },
-    tamingthetiger: {
-      name: "Taming the Tiger",
-      cover: "https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/Untitled15170_20260305174004.png",
-      link: "comic-taming-the-tiger.html"
-    },
-    prince: {
-      name: "I am the prince of this land",
-      cover: "https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/ok%C5%82adki/Untitled14916_20260307170620.png",
-      link: "comic-prince.html"
-    },
-    nonzerosum: {
-      name: "Non Zero Sum",
-      cober: "https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/ok%C5%82adki/Untitled15309_20260312195045.png",
-      link: "comic-non-zero-sum.html
-    }
-  };
-
-  // filtrujemy tylko te klucze, które istnieją w comicsData
-  const validRecent = recent.filter(c => comicsData[c]);
-
-  if (validRecent.length > 0) {
-    document.getElementById("recent-title").style.display = "block";
-
-    document.getElementById("recent-wrapper").innerHTML = `
-      <div class="scroll-wrapper">
-        <div class="scroll-container">
-          <div class="scroll-row">
-            ${validRecent.map(c => `
-              <a class="comic-card" href="${comicsData[c].link}">
-                <img src="${comicsData[c].cover}">
-                <p>${comicsData[c].name}</p>
-              </a>
-            `).join("")}
-          </div>
-        </div>
-      </div>
-    `;
-  }
-});
-</script>
 
 </body>
 </html>
