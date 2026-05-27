@@ -2,644 +2,129 @@
 <html lang="pl">
 <head>
 <meta charset="UTF-8">
-<title>tłumaczenia</title>
-
+<title>Strona główna</title>
 <style>
-body {
-  margin:0;
-  background:#111;
-  color:white;
-  font-family:Avenir Next W1G, sans-serif;
-}
+  body {
+    margin: 0;
+    background: #000;
+    color: #fff;
+    font-family: sans-serif;
+  }
 
-/* ===== HEADER ===== */
-header img {
-  width:100%;
-  display:block;
-}
+  .wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
 
-/* ===== NAGŁÓWKI ===== */
-h1 {
-  text-align:center;
-  margin:16px 0;
-  font-size:50px;
-}
+  h1, h2 {
+    text-align: center;
+  }
 
-h2 {
-  margin:16px;
-  font-size:50px;
-}
+  .new-chapter {
+    text-align: center;
+    margin-bottom: 40px;
+  }
 
-  h3 {
-  margin:16px;
-  font-size:50px;
-}
-  h4 {
-  margin:16px;
-  font-size:30px;
-}
-/* ===== SCROLL ===== */
-.scroll-wrapper {
-  position: relative;
-}
+  .new-chapter img {
+    max-width: 720px;
+    width: 100%;
+    height: auto;
+    cursor: pointer;
+    border: 2px solid #444;
+  }
 
-.scroll-container {
-  overflow-x: auto;
-  padding: 0 16px;
-  scroll-behavior: smooth;
-}
+  .titles-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    justify-items: center;
+  }
 
-.scroll-row {
-  display: flex;
-  gap: 16px;
-}
+  .title-card {
+    width: 180px;
+    height: 300px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 1px solid #444;
+    background: #111;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-/* ===== KARTA KOMIKSU ===== */
-.comic-card {
-  flex: 0 0 auto;
-  text-align: center;
-  text-decoration: none;
-  color: white;
-  position: relative; /* WAŻNE dla efektów */
-}
+  .title-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 
-/* OKŁADKA */
-.comic-card img {
-  width: 300px;
-  border-radius: 9px;
-  transition: transform 0.25s ease, filter 0.25s ease;
-}
+  @media (max-width: 1100px) {
+    .titles-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
 
-/* HOVER – ZOOM + CIEMNIEJE */
-.comic-card:hover img {
-  transform: scale(1.08);
-  filter: brightness(0.7);
-}
-
-  /* ===== CARD LIFT (SUBTELNE PODNIESIENIE) ===== */
-.comic-card {
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.comic-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 22px rgba(0,0,0,0.35);
-}
-
-/* HOVER – GRADIENT OD DOŁU */
-.comic-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.7), transparent 60%);
-  opacity: 0;
-  transition: opacity 0.2s ease;
-  pointer-events: none;
-}
-
-/* Gradient aktywny przy hoverze */
-.comic-card:hover::before {
-  opacity: 1;
-}
-
-/* TEKST POD OKŁADKĄ */
-.comic-card p {
-  font-size: 30px;
-  margin-top: 10px;
-  font-weight: 600;
-}
-
-  .comic-card p {
-  font-size: 30px;
-  margin-top: 10px;
-  font-weight: 600;
-  text-align: center;
-
-  max-width: 300px;
-  white-space: normal;
-  word-wrap: break-word;
-  line-height: 1.25;
-}
-
-  /* ===== ANIMOWANY NAGŁÓWEK (h1 + h2) ===== */
-@keyframes glowPulse {
-  0% { text-shadow: 0 0 5px rgba(255,255,255,0.4); }
-  50% { text-shadow: 0 0 20px rgba(255,255,255,0.8); }
-  100% { text-shadow: 0 0 5px rgba(255,255,255,0.4); }
-}
-
-h1, h2, h3, h4 {
-  animation: glowPulse 2.5s infinite ease-in-out;
-}
-
-  /* ===== STATUS ===== */
-.status {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  background: #333; /* ciemny szary */
-  padding: 6px 10px;
-  font-size: 20px;
-  font-weight: bold;
-  border-radius: 6px;
-  text-transform: uppercase;
-}
-
-.comic-card {
-  position: relative;
-}
-
-/* ===== STRZAŁKI ===== */
-.arrow {
-  position: absolute;
-  top: 40%;
-  transform: translateY(-50%);
-  background: rgba(0,0,0,0.6);
-  color: white;
-  border: none;
-  font-size: 60px;
-  padding: 10px 20px;
-  cursor: pointer;
-  z-index: 10;
-}
-
-.arrow.left { left: 0; }
-.arrow.right { right: 0; }
-
-/* ===== MOBILE ===== */
-@media (max-width: 768px) {
-  .comic-card img { width: 28vw; }
-  .comic-card p { font-size: 22px; }
-  .arrow { display: none; }
-}
-
-  /* ===== POWOLNY RUCH TŁA ===== */
-body {
-  /* gradient, możesz zmienić kolory jak chcesz */
-  background: linear-gradient(120deg, #111 0%, #222 50%, #111 100%);
-  background-size: 400% 400%; /* wielkość gradientu dla ruchu */
-  animation: moveBackground 30s linear infinite;
-}
-
-@keyframes moveBackground {
-  0% { background-position: 0% 0%; }
-  50% { background-position: 100% 100%; }
-  100% { background-position: 0% 0%; }
-}
-/* ===== HERO / LOGO ===== */
-.hero {
-  position: relative;
-  height: 15vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-}
-
-/* LOGO */
-.hero .logo {
-  max-width: 350px;
-  width: 70%;
-  opacity: 0.9;
-  filter: drop-shadow(0 0 20px rgba(0,0,0,0.6));
-}
-
-/* FADE DO TREŚCI */
-.hero::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 120px;
-  background: linear-gradient(to bottom, rgba(0,0,0,0), rgba(17,17,17,1));
-}
-
-
-  /* ===== ROZMAZANE TŁO Z PARALLAX ===== */
-body {
-  position: relative;
-  background: #111;
-  overflow-x: hidden;
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background-image: url("...");
-  background-size: cover;
-  background-position: center;
-  filter: blur(20px) brightness(0.4);
-  transform: scale(1.1);
-  z-index: -1;
-}
-
-  .updates-list {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  margin: 20px 0;
-}
-
-.update-card {
-  display: flex;
-  gap: 12px;
-  text-decoration: none;
-  background: rgba(0,0,0,0.45);
-  border-radius: 12px;
-  padding: 10px;
-  transition: transform 0.2s ease, background 0.2s ease;
-}
-
-.update-card:hover {
-  transform: scale(1.02);
-  background: rgba(0,0,0,0.65);
-}
-
-.update-card img {
-  width: 150px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 8px;
-}
-
-.update-info {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.update-title {
-  color: white;
-  font-size: 25px;
-  font-weight: 600;
-  margin: 0;
-}
-
-.update-chapter {
-  color: #ccc;
-  font-size: 18px;
-  margin: 4px 0;
-}
-
-.update-time {
-  font-size: 14px;
-  color: #888;
-}
-
+  @media (max-width: 700px) {
+    .titles-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
 </style>
 </head>
-
 <body>
+<div class="wrapper">
 
-<header class="hero">
-  <img class="logo" src="..."  alt="...">
-</header>
-
-<!-- ===== OSTATNIO CZYTANE (NOWE, ALE NIE RUSZA UI) ===== -->
-<h2 id="recent-title" style="display:none;">Ostatnio czytane</h2>
-<div id="recent-wrapper"></div>
-
-  <h4 class="section-title">Nowy rozdział</h4>
-  <div class="updates-list">
-
-  <a class="update-card" href="reader.html?comic=thehoundsofsisyphus&chapter=8">
-    <img src="https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/nowyrozzdzial/Zrzut%20ekranu%202026-04-18%20221035.png" alt="">
-    <div class="update-info">
-      <p class="update-title">The hounds of Sisyphus</p>
-      <p class="update-chapter">Rozdział 8</p>
-      <span class="update-time"></span>
-    </div>
-  </a>
-
-    
-<h1>Wszystkie tytuły</h1>
-
-<div class="scroll-wrapper">
-  <button class="arrow left">‹</button>
-
-  <div class="scroll-container">
-    <div class="scroll-row">
-
-      <a class="comic-card" href="comic-swallow-you-whole.html" data-comic="swallowyouwhole">
-        <span class="status">W trakcie</span>
-        <img src="https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/Syw.png">
-        <p>Swallow You Whole</p>
-      </a>
-
-      <a class="comic-card" href="comic-the-hounds-of-sisyphus.html" data-comic="thehoundsofsisyphus">
-        <span class="status">W trakcie</span>
-        <img src="https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/thos.png">
-        <p>The Hounds Of Sisyphus</p>
-      </a>
-
-      <a class="comic-card" href="comic-pizza.html" data-comic="pizza">
-        <span class="status">W trakcie</span>
-        <img src="https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/pizza.png">
-        <p>The Pizza Delivery Man and the Gold Palace</p>
-      </a>
-
-          <a class="comic-card" href="comic-shutline.html" data-comic="shutline">
-         <span class="status">W trakcie</span>
-        <img src="https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/sh.png">
-        <p>Shutline</p>
-      </a>
-
-      <a class="comic-card" href="comic-wolf-in-white.html" data-comic="wolfinwhite">
-        <span class="status">W trakcie</span>
-        <img src="https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/Untitled14909_20260226204854.png">
-        <p>Wolf in White</p>
-      </a>
-
-      <a class="comic-card" href="comic-taming-the-tiger.html" data-comic="tamingthetiger">
-        <span class="status">W trakcie</span>
-        <img src="https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/Untitled15170_20260305174004.png">
-        <p>Taming the Tiger</p>
-      </a>
-
-      <a class="comic-card" href="comic-prince.html" data-comic="prince">
-        <span class="status">W trakcie</span>
-        <img src="https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/ok%C5%82adki/Untitled14916_20260307170620.png">
-        <p>I am the Prince of this land</p>
-      </a>
-
-      <a class="comic-card" href="comic-non-zero-sum.html" data-comic="nonzerosum">
-        <span class="status">W trakcie</span>
-        <img src="https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/ok%C5%82adki/Untitled15309_20260312195045.png">
-        <p>Non Zero Sum</p>
-      </a>
-
-    </div>
+  <h1>Nowy rozdział</h1>
+  <div class="new-chapter">
+    <!-- PODMIEŃ LINKI: href do readera, src do okładki -->
+    <a href="reader.html?comic=komiks1&chapter=5">
+      <img src="LINK_DO_OKŁADKI_NOWEGO_ROZDZIAŁU.jpg" alt="Nowy rozdział">
+    </a>
   </div>
 
-  <button class="arrow right">›</button>
-</div>
-
-  <h3>Thriller</h3>
-
-<div class="scroll-wrapper">
-  <button class="arrow left">‹</button>
-
-  <div class="scroll-container">
-    <div class="scroll-row">
-
-    <a class="comic-card" href="comic-the-hounds-of-sisyphus.html"  data-comic="thehoundsofsisyphus">
-      <span class="status">W trakcie</span>
-        <img src="https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/thos.png">
-        <p>The Hounds Of Sisyphus</p>
+  <h2>Wszystkie tytuły</h2>
+  <div class="titles-grid">
+    <!-- 12 przykładowych tytułów – podmień href i src -->
+    <a class="title-card" href="title.html?comic=komiks1">
+      <img src="LINK_OKLADKA_KOMIKS1.jpg" alt="Komiks 1">
+    </a>
+    <a class="title-card" href="title.html?comic=komiks2">
+      <img src="LINK_OKLADKA_KOMIKS2.jpg" alt="Komiks 2">
+    </a>
+    <a class="title-card" href="title.html?comic=komiks3">
+      <img src="LINK_OKLADKA_KOMIKS3.jpg" alt="Komiks 3">
+    </a>
+    <a class="title-card" href="title.html?comic=komiks4">
+      <img src="LINK_OKLADKA_KOMIKS4.jpg" alt="Komiks 4">
+    </a>
+    <a class="title-card" href="title.html?comic=komiks5">
+      <img src="LINK_OKLADKA_KOMIKS5.jpg" alt="Komiks 5">
+    </a>
+    <a class="title-card" href="title.html?comic=komiks6">
+      <img src="LINK_OKLADKA_KOMIKS6.jpg" alt="Komiks 6">
     </a>
 
-          </div>
+    <a class="title-card" href="title.html?comic=komiks7">
+      <img src="LINK_OKLADKA_KOMIKS7.jpg" alt="Komiks 7">
+    </a>
+    <a class="title-card" href="title.html?comic=komiks8">
+      <img src="LINK_OKLADKA_KOMIKS8.jpg" alt="Komiks 8">
+    </a>
+    <a class="title-card" href="title.html?comic=komiks9">
+      <img src="LINK_OKLADKA_KOMIKS9.jpg" alt="Komiks 9">
+    </a>
+    <a class="title-card" href="title.html?comic=komiks10">
+      <img src="LINK_OKLADKA_KOMIKS10.jpg" alt="Komiks 10">
+    </a>
+    <a class="title-card" href="title.html?comic=komiks11">
+      <img src="LINK_OKLADKA_KOMIKS11.jpg" alt="Komiks 11">
+    </a>
+    <a class="title-card" href="title.html?comic=komiks12">
+      <img src="LINK_OKLADKA_KOMIKS12.jpg" alt="Komiks 12">
+    </a>
   </div>
 
-  <button class="arrow right">›</button>
 </div>
-
-<h1>Omegaverse</h1>
-
-<div class="scroll-wrapper">
-  <button class="arrow left">‹</button>
-
-  <div class="scroll-container">
-    <div class="scroll-row">
-
-      <a class="comic-card" href="comic-swallow-you-whole.html" data-comic="swallowyouwhole">
-        <span class="status">W trakcie</span>
-        <img src="https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/Syw.png">
-        <p>Swallow You Whole</p>
-      </a>
-
-      <a class="comic-card" href="comic-love-remedy.html" data-comic="loveremedy">
-         <span class="status">W trakcie</span>
-        <img src="https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/LR.png">
-        <p>Love Remedy</p>
-      </a>
-      
-</div>
-  </div>
-
-  <button class="arrow right">›</button>
-</div>
-    
-    <h3>GL</h3>
-
-<div class="scroll-wrapper">
-  <button class="arrow left">‹</button>
-
-  <div class="scroll-container">
-    <div class="scroll-row">
-
-    <a class="comic-card" href="comic-dl.html"  data-comic="dl">
-      <span class="status">W trakcie</span>
-        <img src="https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/Distorted%20Love.webp">
-        <p>Distorted Love</p>
-    </a>
-
-          </div>
-  </div>
-
-  <button class="arrow right">›</button>
-</div>
-    
-      <h3>One shoty</h3>
-
-<div class="scroll-wrapper">
-  <button class="arrow left">‹</button>
-
-  <div class="scroll-container">
-    <div class="scroll-row">
-
-       <a class="comic-card" href="comic-obeyworship.html"  data-comic="obeyworship">
-        <img src="https://pub-0d8188d0f04447a19e5ad7ca209fc462.r2.dev/obeyworship/1%20s.png">
-        <p>Obey Worship</p>
-    </a>
-      
-      <a class="comic-card" href="comic-mansea.html"  data-comic="mansea">
-        <img src="https://pub-0d8188d0f04447a19e5ad7ca209fc462.r2.dev/themanofthesea/1%20s.png">
-        <p>The Man of the Sea</p>
-    </a>
-
-      <a class="comic-card" href="comic-swipe.html"  data-comic="swipe">
-        <img src="https://pub-0d8188d0f04447a19e5ad7ca209fc462.r2.dev/swipeandplay/1%20s.png">
-        <p>Swipe and Play</p>
-    </a>
-
-      <a class="comic-card" href="comic-sit.html"  data-comic="sit">
-        <img src="https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/Supy--Baty.Sit-p00.jpeg">
-        <p>Sit</p>
-    </a>
-
-      <a class="comic-card" href="comic-pirat.html"  data-comic="pirat">
-        <img src="https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/1%20s_inny.webp">
-        <p>Skarby z prywatnej kolekcji kapitana</p>
-    </a
-          </div>
-  </div>
-
-  <button class="arrow right">›</button>
-</div>
-
-    <h3>-18</h3>
-
-<div class="scroll-wrapper">
-  <button class="arrow left">‹</button>
-
-  <div class="scroll-container">
-    <div class="scroll-row">
-
-      <a class="comic-card" href="comic-sekai.html"  data-comic="sekai">
-        <img src="https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/d4ef0f68-373d-496a-828a-b74d502a830b.jpg.512%20(1).jpg">
-        <p>Sekai wa Temee de Mawatteru</p>
-        </a>
-      
-          </div>
-  </div>
-
-  <button class="arrow right">›</button>
-</div>
-    
-<script>
-/* STRZAŁKI – TWOJE, NIETKNIĘTE */
-document.querySelectorAll(".scroll-wrapper").forEach(wrapper => {
-  const container = wrapper.querySelector(".scroll-container");
-  const left = wrapper.querySelector(".left");
-  const right = wrapper.querySelector(".right");
-
-  if (!left || !right) return;
-
-  left.onclick = () => container.scrollBy({ left: -300, behavior: "smooth" });
-  right.onclick = () => container.scrollBy({ left: 300, behavior: "smooth" });
-});
-</script>
-
-<script>
-/* ===== OSTATNIO CZYTANE – LOGIKA ===== */
-document.addEventListener("DOMContentLoaded", () => {
-
-  const recent = JSON.parse(localStorage.getItem("recentComics")) || [];
-
-  const comicsData = {
-    swallowyouwhole: {
-      name: "Swallow You Whole",
-      cover: "https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/Syw.png",
-      link: "comic-swallow-you-whole.html"
-    },
-    thehoundsofsisyphus: {
-      name: "The Hounds Of Sisyphus",
-      cover: "https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/thos.png",
-      link: "comic-the-hounds-of-sisyphus.html"
-    },
-    pizza: {
-      name: "The Pizza Delivery Man and the Gold Palace",
-      cover: "https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/pizza.png",
-      link: "comic-pizza.html"
-    },
-    devilsknight: {
-      name: "Devil's Knight",
-      cover: "https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/Dk.png",
-      link: "comic-devils-knight.html"
-    },
-    underthemoonlight: {
-      name: "Under The Moonlight",
-      cover: "https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/utm.png",
-      link: "comic-under-the-moonlight.html"
-    },
-    husband: {
-      name: "Young and Pretty Husband",
-      cover: "https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/uaph.png",
-      link: "comic-husband.html"
-    },
-    mirror: {
-      name: "Mirror, mirror",
-      cover: "https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/mirror%2C%20mirror.png",
-      link: "comic-mirror.html"
-    },
-    mirror: {
-      name: "Santa",
-      cover: "https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/Santa.webp",
-      link: "comic-santa.html"
-    },
-    obeyworship: {
-      name: "Obey Worship",
-      cover: "https://pub-0d8188d0f04447a19e5ad7ca209fc462.r2.dev/obeyworship/1%20s.png",
-      link: "comic-obeyworship.html"
-    },
-    mansea: {
-      name: "The Man of the Sea",
-      cover: "https://pub-0d8188d0f04447a19e5ad7ca209fc462.r2.dev/themanofthesea/1%20s.png",
-      link: "comic-mansea.html"
-    },
-    swipe: {
-      name: "Swipe and Play",
-      cover: "https://pub-0d8188d0f04447a19e5ad7ca209fc462.r2.dev/swipeandplay/1%20s.png",
-      link: "comic-swipe.html"
-    },
-    loveremedy: {
-      name: "Love Remedy",
-      cover: "https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/LR.png",
-      link: "comic-love-remedy.html"
-    },
-    dl: {
-      name: "Distorted Love",
-      cover: "https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/Distorted%20Love.webp",
-      link: "comic-dl.html"
-    },
-    shutline: {
-      name: "Shutline",
-      cover: "https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/sh.png",
-      link: "comic-shutline.html"
-    },
-    sekai: {
-      name:"Sekai wa Temee de Mawatteru",
-      cover: "https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/d4ef0f68-373d-496a-828a-b74d502a830b.jpg.512%20(1).jpg",
-      link: "comic-sekai.html"
-    },
-    wolfinwhite: {
-      name: "Wolf in White",
-      cover: "https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/Untitled14909_20260226204854.png",
-      link: "comic-wolf-in-white.html"
-    },
-    tamingthetiger: {
-      name: "Taming the Tiger",
-      cover: "https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/Untitled15170_20260305174004.png",
-      link: "comic-taming-the-tiger.html"
-    },
-    prince: {
-      name: "I am the prince of this land",
-      cover: "https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/ok%C5%82adki/Untitled14916_20260307170620.png",
-      link: "comic-prince.html"
-    },
-    nonzerosum: {
-      name: "Non Zero Sum",
-      cober: "https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/ok%C5%82adki/Untitled15309_20260312195045.png",
-      link: "comic-non-zero-sum.html
-    }
-  };
-
-  // filtrujemy tylko te klucze, które istnieją w comicsData
-  const validRecent = recent.filter(c => comicsData[c]);
-
-  if (validRecent.length > 0) {
-    document.getElementById("recent-title").style.display = "block";
-
-    document.getElementById("recent-wrapper").innerHTML = `
-      <div class="scroll-wrapper">
-        <div class="scroll-container">
-          <div class="scroll-row">
-            ${validRecent.map(c => `
-              <a class="comic-card" href="${comicsData[c].link}">
-                <img src="${comicsData[c].cover}">
-                <p>${comicsData[c].name}</p>
-              </a>
-            `).join("")}
-          </div>
-        </div>
-      </div>
-    `;
-  }
-});
-</script>
-
 </body>
 </html>
