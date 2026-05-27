@@ -1,7 +1,7 @@
 {
-  "key": "aaa",
+  "key": "afos",
   "title": "Komiks AAA",
-  "cover": "img/aaa-cover.jpg",
+  "cover": "https://tajnachalupka.github.io/main/cover/at.png",
   "description": "To jest główny opis komiksu AAA. Możesz go dowolnie zmieniać w tym pliku JSON.",
   "descriptionNote": "To jest dodatkowy tekst mniejszą czcionką – np. o autorze, dacie, wydaniu.",
   "chapters": [
@@ -9,16 +9,16 @@
       "number": 1,
       "label": "Rozdział 1",
       "pages": [
-        "img/aaa-ch1-1.jpg",
-        "img/aaa-ch1-2.jpg"
+          "https://tajnachalupka.github.io/afos/01/1.jpg",
+      "https://tajnachalupka.github.io/afos/01/2.jpg"
       ]
     },
     {
       "number": 2,
       "label": "Rozdział 2",
       "pages": [
-        "img/aaa-ch2-1.jpg",
-        "img/aaa-ch2-2.jpg"
+           "https://tajnachalupka.github.io/afos/02/1.jpg",
+      "https://tajnachalupka.github.io/afos/02/2.jpg"
       ]
     }
   ]
