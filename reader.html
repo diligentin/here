@@ -14,6 +14,145 @@
 
   img.page {
     display: block;
+    max-width: 720px;   /* LIMIT 720 PX */
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    margin: 0 auto;
+  }
+
+  #comic-container {
+    max-width: 100vw;
+    overflow-x: hidden;
+    text-align: center;
+  }
+
+  /* ===== REAKCJE ===== */
+  #reactions {
+    margin: 40px auto;
+    padding: 20px;
+    text-align: center;
+    background: #111;
+    border-top: 1px solid #333;
+    max-width: 720px;
+  }
+
+  .reaction-btn {
+    font-size: 32px;
+    margin: 0 10px;
+    cursor: pointer;
+    transition: transform .15s;
+  }
+
+  .reaction-btn:hover {
+    transform: scale(1.25);
+  }
+
+  .reaction-count {
+    font-size: 14px;
+    color: #aaa;
+    display: block;
+  }
+
+  /* ===== DISQUS ===== */
+  #comments {
+    margin: 40px auto;
+    padding: 20px;
+    background: #111;
+    border-top: 1px solid #333;
+    max-width: 720px;
+  }
+</style>
+</head>
+<body>
+
+<div id="comic-container"></div>
+
+<!-- ===== REAKCJE ===== -->
+<div id="reactions">
+  <h3>Twoja reakcja</h3>
+  <div id="reaction-buttons"></div>
+</div>
+
+<!-- ===== KOMENTARZE DISQUS ===== -->
+<div id="comments">
+  <h3>Komentarze</h3>
+  <div id="disqus_thread"></div>
+</div>
+
+<script>
+(async function () {
+  const params = new URLSearchParams(window.location.search);
+  const comicKey = params.get("comic");
+  const chapter = params.get("chapter");
+
+  const container = document.getElementById("comic-container");
+
+  if (!comicKey || !chapter) {
+    container.innerHTML =
+      "<p style='text-align:center;padding:50px;'>Brak parametru comic lub chapter.</p>";
+    return;
+  }
+
+  // ====== POBIERANIE JSON ======
+  let data;
+  try {
+    const res = await fetch(`comics/${comicKey}.json`);
+    if (!res.ok) throw new Error("Nie znaleziono JSON");
+    data = await res.json();
+  } catch (err) {
+    container.innerHTML =
+      "<p style='text-align:center;padding:50px;'>Błąd wczytywania JSON.</p>";
+    return;
+  }
+
+  const pages = data.chapters[String(chapter)];
+  if (!pages || pages.length === 0) {
+    container.innerHTML =
+      "<p style='text-align:center;padding:50px;'>Brak obrazków dla tego rozdziału.</p>";
+    return;
+  }
+
+  // ====== TWORZENIE OBRAZÓW (bez src na start) ======
+  const imgElements = pages.map((src) => {
+    const img = document.createElement("img");
+    img.className = "page";
+    img.dataset.src = src;
+    img.decoding = "async";
+    img.loading = "lazy";
+    return img;
+  });
+
+  imgElements.forEach(img => container.appendChild(img));
+
+  // ====== OBSERWATOR ŁADOWANIA (preload 1000px) ======
+  const preloadObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const img = entry.target;
+        if (!img.src) img.src = img.dataset.src;
+      }
+    });
+  }, {
+    rootMargin: "1000px 0px 1000px 0px"
+  });
+
+  imgElements.forEach(img => preloadObserver<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Reader</title>
+
+<style>
+  body {
+    margin: 0;
+    background: black;
+    color: white;
+    font-family: sans-serif;
+  }
+
+  img.page {
+    display: block;
     max-width: 720px;
     width: 100%;
     height: auto;
