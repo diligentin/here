@@ -19,46 +19,54 @@
   }
 
   /* --- OBRAZEK: NOWY ROZDZIAŁ --- */
-  .new-chapter {
+  .section-header {
     display: flex;
     justify-content: flex-start;
     padding-left: 15px;
+    margin: 20px 0 10px 0;
+  }
+
+  .section-header img {
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+    background: #111;
+    border: none;
+  }
+
+  /* --- GRID POD OBRAZKIEM NOWE ROZDZIAŁY --- */
+  .new-chapters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    justify-items: center;
     margin-bottom: 40px;
   }
 
-  .new-chapter img {
+  .new-chapter-card {
     width: 200px;
     height: 200px;
-    object-fit: contain;
     background: #111;
-    border: none;
-    cursor: pointer;
-  }
-
-  /* --- OBRAZEK: WSZYSTKIE TYTUŁY --- */
-  .all-titles {
     display: flex;
-    justify-content: flex-start;
-    padding-left: 15px;
-    margin-bottom: 20px;
-  }
-
-  .all-titles img {
-    width: 200px;
-    height: 200px;
-    object-fit: contain;
-    background: #111;
-    border: none;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
+    border: none;
   }
 
-  /* --- GRID TYTUŁÓW --- */
+  .new-chapter-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* --- GRID WSZYSTKIE TYTUŁY --- */
   .titles-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 20px;
-    justify-items: start;
-    padding-left: 15px;
+    justify-items: center;
+    margin-bottom: 40px;
   }
 
   .title-card {
@@ -91,35 +99,55 @@
 <div class="wrapper">
 
   <!-- OBRAZEK: NOWY ROZDZIAŁ -->
-  <div class="new-chapter">
+  <div class="section-header">
     <img src="https://tajnachalupka.github.io/main/nowy.jpg" alt="">
   </div>
 
+  <!-- GRID NOWYCH ROZDZIAŁÓW -->
+  <div class="new-chapters-grid">
+
+    <a class="new-chapter-card" href="reader.html?comic=afos&chapter=1">
+      <img src="https://tajnachalupka.github.io/main/cov/!afos.jpg" alt="afos">
+    </a>
+
+    <a class="new-chapter-card" href="reader.html?comic=bbb&chapter=1">
+      <img src="LINK_DO_NOWEGO_ROZDZIALU_2.jpg" alt="">
+    </a>
+
+    <!-- dodawaj kolejne -->
+
+  </div>
+
   <!-- OBRAZEK: WSZYSTKIE TYTUŁY -->
-  <div class="all-titles">
+  <div class="section-header">
     <img src="https://tajnachalupka.github.io/main/wszystkie.jpg" alt="">
   </div>
 
   <!-- GRID TYTUŁÓW -->
   <div class="titles-grid">
 
-     <!-- KOMIKS AAA -->
-    <a class="title-card" href="tyt-afos.html">
+    <a class="title-card" href="tyt-afos.html?comic=afos">
       <img src="https://tajnachalupka.github.io/main/cov/!afos.jpg" alt="afos">
     </a>
 
-    <!-- 11 kolejnych tytułów jako szablon -->
-    <a class="title-card" href="tyt-at.html"><img src="https://tajnachalupka.github.io/main/cov/!at.jpg"></a>
-    <a class="title-card" href="tyt-ccc.html"><img src="https://tajnachalupka.github.io/main/cov/!bn.jpg"></a>
-    <a class="title-card" href="tyt-ddd.html"><img src="https://tajnachalupka.github.io/main/cov/!mp.jpg"></a>
-    <a class="title-card" href="tyt-eee.html"><img src="https://tajnachalupka.github.io/main/cov/!mo.jpg"></a>
-    <a class="title-card" href="tyt-fff.html"><img src="https://tajnachalupka.github.io/main/cov/!mnbig.jpg"></a>
-    <a class="title-card" href="tyt-ggg.html"><img src="https://tajnachalupka.github.io/main/cov/!orta.jpg"></a>
-    <a class="title-card" href="tyt-hhh.html"><img src="https://tajnachalupka.github.io/main/cov/!osd.jpg"></a>
-    <a class="title-card" href="tyt-iii.html"><img src="https://tajnachalupka.github.io/main/cov/!rc.jpg"></a>
-    <a class="title-card" href="tyt-jjj.html"><img src="https://tajnachalupka.github.io/main/cov/!sah.jpg"></a>
-    <a class="title-card" href="tyt-kkk.html"><img src="https://tajnachalupka.github.io/main/cov/!ub.jpg"></a>
-    <a class="title-card" href="tyt-lll.html"><img src="https://tajnachalupka.github.io/main/cov/!yiam.jpg"></a>
+    <a class="title-card" href="tyt-at.html?comic=at">
+      <a class="title-card" href="tyt-at.html"><img src="https://tajnachalupka.github.io/main/cov/!at.jpg"></a>
+    </a>
+
+     <a class="title-card" href="tyt-bn.html?comic=bn">
+      <img src="https://tajnachalupka.github.io/main/cov/!bn.jpg"></a>
+
+      <a class="title-card" href="tyt-mp.html?comic=mp">
+      <img src="https://tajnachalupka.github.io/main/cov/!mp.jpg"></a>
+
+      <a class="title-card" href="tyt-bn.html?comic=bn">
+      <img src="https://tajnachalupka.github.io/main/cov/!bn.jpg"></a>
+
+      <a class="title-card" href="tyt-bn.html?comic=bn">
+      <img src="https://tajnachalupka.github.io/main/cov/!bn.jpg"></a>
+
+    
+    <!-- dodawaj kolejne -->
 
   </div>
 
