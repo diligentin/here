@@ -14,17 +14,17 @@ body {
 }
 a { color: white; text-decoration: none; }
 
-/* HOME BUTTON NA PRAWO */
+/* HOME BUTTON NA DOLE */
 .back {
+  display: block;
   position: fixed;
-  top: 20px;
+  bottom: 20px;
   right: 20px;
-  padding: 0;
   z-index: 20;
 }
 .back img {
-  width: 60px;
-  height: 60px;
+  width: 80px;
+  height: auto;
 }
 
 /* ===== NOWY UKŁAD COVER + INFO ===== */
@@ -48,7 +48,7 @@ a { color: white; text-decoration: none; }
   max-width: 600px;
   display: flex;
   flex-direction: column;
-  gap: 16px; /* mniejsza przerwa */
+  gap: 16px;
   text-align: center;
 }
 
@@ -57,23 +57,22 @@ a { color: white; text-decoration: none; }
   font-family: PiekosToons BB;
   font-size: 48px;
   text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 6px;
 }
 
 /* TAGI */
 .comic-tags {
   display: flex;
-  gap: 6px; /* mniejsza luka */
+  gap: 4px;
   flex-wrap: wrap;
-  justify-content: center; /* wyśrodkowanie */
+  justify-content: center;
 }
 
 .comic-tags span {
   font-family: PiekosToons BB;
   font-size: 28px;
-  padding: 4px 12px;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.08);
+  padding: 0;
+  background: none;
   color: #bbb;
   letter-spacing: 0.4px;
 }
@@ -85,7 +84,7 @@ a { color: white; text-decoration: none; }
   color: #e0e0e0;
   line-height: 1.4;
   letter-spacing: 0.3px;
-  text-align: justify; /* WYJUSTOWANIE */
+  text-align: justify;
 }
 
 /* ===== SEKCJA ===== */
@@ -129,7 +128,7 @@ a { color: white; text-decoration: none; }
 
 <!-- HOME BUTTON -->
 <a class="back" href="index.html">
-  <img src="https://tajnachalupka.github.io/main/home.png" alt="">
+  <img src="https://moja.github.io/main/home.png" alt="">
 </a>
 
 <!-- NOWY UKŁAD -->
@@ -188,7 +187,8 @@ a { color: white; text-decoration: none; }
     btn.className = "chapter-btn";
     btn.innerText = num;
 
-    if (localStorage.getItem(`visited_${comicKey}_${num}`)) {
+    // POPRAWIONE: historia odwiedzin
+    if (localStorage.getItem(`visited_${comicKey}_${num}`) === "true") {
       btn.classList.add("visited");
     }
 
