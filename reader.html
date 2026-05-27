@@ -53,9 +53,6 @@ img {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 26px;
-  color: white;
-  font-family: sans-serif;
   cursor: pointer;
   user-select: none;
   transition: 0.2s;
@@ -63,6 +60,14 @@ img {
 
 .nav-btn:hover {
   background: #2a2a2a;
+}
+
+/* ikony w przyciskach */
+.btn-icon {
+  width: 32px;
+  height: 32px;
+  pointer-events: none;
+  filter: invert(1); /* usuń jeśli masz białe ikony */
 }
 </style>
 </head>
@@ -72,28 +77,35 @@ img {
 
 <!-- ===== FLOATING BUTTONS ===== -->
 <div class="nav-buttons" id="nav">
-  <div class="nav-btn" id="homeBtn">🏠︎</div>
-  <div class="nav-btn" id="nextBtn">➜</div>
+  <div class="nav-btn" id="homeBtn">
+    <img src="https://tajnachalupka.github.io/main/domek.png" class="btn-icon">
+  </div>
+
+  <div class="nav-btn" id="nextBtn">
+    <img src="https://tajnachalupka.github.io/main/next.png" class="btn-icon">
+  </div>
 </div>
 
 <script>
 (async function () {
   const params = new URLSearchParams(window.location.search);
   const comicKey = params.get("comic");
-  const chapter = Number(params.get("chapter")); // ← musi być liczba
+  const chapter = Number(params.get("chapter"));
 
   const container = document.getElementById("comic-container");
 
-  // ===== HOME BUTTON (działa zawsze) =====
+  // ===== HOME BUTTON =====
   document.getElementById("homeBtn").onclick = () => {
-    window.location.href = "index.html"; // ← główna strona
+    window.location.href = "index.html";
   };
 
   // ===== WALIDACJA =====
   if (!comicKey || !chapter) {
     container.innerHTML =
       "<p style='color:white;text-align:center;padding:50px;'>Brak parametru comic lub chapter.</p>";
-    document.getElementById("nextBtn").style.display = "none";
+    document.getElementById("nextBtn").onclick = () => {
+      window.location.href = "index.html";
+    };
     return;
   }
 
@@ -102,14 +114,13 @@ img {
     if (!res.ok) throw new Error("Nie znaleziono JSON");
 
     const data = await res.json();
-    const pages = data.chapters[String(chapter)]; // ← klucz musi być stringiem
+    const pages = data.chapters[String(chapter)];
 
     // ===== jeśli chapter nie istnieje =====
     if (!pages) {
       container.innerHTML =
         "<p style='color:white;text-align:center;padding:50px;'>Ten rozdział nie istnieje.</p>";
 
-      // NEXT → wraca na główną
       document.getElementById("nextBtn").onclick = () => {
         window.location.href = "index.html";
       };
@@ -149,7 +160,6 @@ img {
         window.location.href = `reader.html?comic=${comicKey}&chapter=${chapter + 1}`;
       };
     } else {
-      // ostatni rozdział → wracamy na główną
       nextBtn.onclick = () => {
         window.location.href = "index.html";
       };
@@ -160,7 +170,6 @@ img {
     container.innerHTML =
       "<p style='color:white;text-align:center;padding:50px;'>Błąd wczytywania pliku JSON.</p>";
 
-    // NEXT → wraca na główną
     document.getElementById("nextBtn").onclick = () => {
       window.location.href = "index.html";
     };
