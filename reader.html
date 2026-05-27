@@ -2,18 +2,20 @@
 (async function () {
   const params = new URLSearchParams(window.location.search);
   const comicKey = params.get("comic");
-  const chapter = Number(params.get("chapter"));
+  const chapter = params.get("chapter"); // nie Number() tutaj
 
   const container = document.getElementById("comic-container");
 
   // ===== HOME BUTTON (działa zawsze) =====
   document.getElementById("homeBtn").onclick = () => {
-    window.location.href = "index.html"; // ← prowadzi na główną
+    window.location.href = "index.html";
   };
 
+  // ===== WALIDACJA PARAMETRÓW =====
   if (!comicKey || !chapter) {
     container.innerHTML =
       "<p style='color:white;text-align:center;padding:50px;'>Brak parametru comic lub chapter.</p>";
+    document.getElementById("nextBtn").style.display = "none";
     return;
   }
 
@@ -22,14 +24,12 @@
     if (!res.ok) throw new Error("Nie znaleziono JSON");
 
     const data = await res.json();
-    const pages = data.chapters[String(chapter)];
+    const pages = data.chapters[chapter];
 
     // ===== jeśli chapter nie istnieje =====
-    if (!pages || pages.length === 0) {
+    if (!pages) {
       container.innerHTML =
-        "<p style='color:white;text-align:center;padding:50px;'>Brak obrazków dla tego rozdziału.</p>";
-
-      // NEXT ukryty
+        "<p style='color:white;text-align:center;padding:50px;'>Ten rozdział nie istnieje.</p>";
       document.getElementById("nextBtn").style.display = "none";
       return;
     }
@@ -62,45 +62,20 @@
     const nextBtn = document.getElementById("nextBtn");
     const total = Object.keys(data.chapters).length;
 
-    if (chapter < total) {
+    if (Number(chapter) < total) {
       nextBtn.onclick = () => {
-        window.location.href = `reader.html?comic=${comicKey}&chapter=${chapter + 1}`;
+        window.location.href = `reader.html?comic=${comicKey}&chapter=${Number(chapter) + 1}`;
       };
     } else {
-      nextBtn.style.display = "none"; // ostatni rozdział
+      nextBtn.style.display = "none";
     }
 
   } catch (err) {
     console.error(err);
     container.innerHTML =
       "<p style='color:white;text-align:center;padding:50px;'>Błąd wczytywania pliku JSON.</p>";
-
-    // NEXT ukryty
     document.getElementById("nextBtn").style.display = "none";
   }
 
-  // ===== ZAPIS OSTATNIO CZYTANE =====
-  const recent = JSON.parse(localStorage.getItem("recentComics")) || [];
-  const idx = recent.indexOf(comicKey);
-  if (idx !== -1) recent.splice(idx, 1);
-  recent.unshift(comicKey);
-  localStorage.setItem("recentComics", JSON.stringify(recent.slice(0, 5)));
-
 })();
-  
-// ===== AUTO-HIDE BUTTONS ON SCROLL =====
-let lastScroll = 0;
-const nav = document.getElementById("nav");
-
-window.addEventListener("scroll", () => {
-  const current = window.scrollY;
-
-  if (current > lastScroll) {
-    nav.classList.add("hidden");
-  } else {
-    nav.classList.remove("hidden");
-  }
-
-  lastScroll = current;
-});
 </script>
