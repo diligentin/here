@@ -1,163 +1,42 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-<meta charset="UTF-8">
-<title>Strona główna</title>
-
-<style>
- body {
-  margin: 0;
-  background: #191818ff;
-  color: #fff;
-  font-family: Avenir Next W1G, sans-serif;
-}
-
-.wrapper {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-/* --- OBRAZEK: NOWY ROZDZIAŁ --- */
-.section-header {
-  display: flex;
-  justify-content: flex-start;
-  padding-left: 15px;
-  margin-bottom: 22px; /* 22px odstępu do gridu */
-}
-
-.section-header img {
-  width: 200px;
-  height: 200px;
-  object-fit: contain;
-  background: #191818ff;
-  border: none;
-}
-
-/* --- GRID NOWYCH ROZDZIAŁÓW --- */
-.new-chapters-grid {
-  display: grid;
-  grid-template-columns: repeat(6, 200px);
-  justify-content: center;
-  gap: 12px; /* odstępy między obrazkami */
-  margin-bottom: 32px; /* 32px odstępu do kolejnego nagłówka */
-}
-
-.new-chapter-card {
-  width: 200px;
-  height: 200px;
-  background: #191818ff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  border: none;
-}
-
-.new-chapter-card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* --- OBRAZEK: WSZYSTKIE TYTUŁY --- */
-.section-header-titles {
-  display: flex;
-  justify-content: flex-start;
-  padding-left: 15px;
-  margin-bottom: 22px; /* 22px odstępu do gridu */
-}
-
-.section-header-titles img {
-  width: 200px;
-  height: 200px;
-  object-fit: contain;
-  background: #191818ff;
-  border: none;
-}
-
-/* --- GRID TYTUŁÓW --- */
-.titles-grid {
-  display: grid;
-  grid-template-columns: repeat(6, 170px);
-  justify-content: center;
-  gap: 12px; /* odstępy między obrazkami */
-}
-
-.title-card {
-  width: 170px;
-  height: 300px;
-  background: #191818ff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  border: none;
-}
-
-.title-card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-</style>
+  <meta charset="UTF-8">
+  <title>Strona główna</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 <div class="wrapper">
 
-  <!-- OBRAZEK: NOWY ROZDZIAŁ -->
+  <!-- Obrazek: NOWE ROZDZIAŁY -->
   <div class="section-header">
-    <img src="https://tajnachalupka.github.io/main/nowy.jpg" alt="">
+    <img src="img/nowe-rozdzialy.png" alt="Nowe rozdziały">
   </div>
 
-  <!-- GRID NOWYCH ROZDZIAŁÓW -->
   <div class="new-chapters-grid">
-
-    <a class="new-chapter-card" href="reader.html?comic=afos&chapter=1">
-      <img src="https://tajnachalupka.github.io/main/cov/!afos.jpg" alt="afos">
+    <!-- Przykłady – podmienisz na swoje -->
+    <a class="new-chapter-card" href="reader.html?comic=aaa&chapter=1">
+      <img src="img/aaa-ch1-thumb.jpg" alt="">
     </a>
-
-    <a class="new-chapter-card" href="reader.html?comic=bbb&chapter=1">
-      <img src="LINK_DO_NOWEGO_ROZDZIALU_2.jpg" alt="">
+    <a class="new-chapter-card" href="reader.html?comic=aaa&chapter=2">
+      <img src="img/aaa-ch2-thumb.jpg" alt="">
     </a>
-
-    <!-- dodawaj kolejne -->
-
   </div>
 
-  <!-- OBRAZEK: WSZYSTKIE TYTUŁY -->
+  <!-- Obrazek: WSZYSTKIE TYTUŁY -->
   <div class="section-header">
-    <img src="https://tajnachalupka.github.io/main/wszystkie.jpg" alt="">
+    <img src="img/wszystkie-tytuly.png" alt="Wszystkie tytuły">
   </div>
 
-  <!-- GRID TYTUŁÓW -->
   <div class="titles-grid">
-
-    <a class="title-card" href="tyt-afos.html?comic=afos">
-      <img src="https://tajnachalupka.github.io/main/cov/!afos.jpg" alt="afos">
+    <!-- 12 tytułów – przykładowo -->
+    <a class="title-card" href="tyt.html?comic=aaa">
+      <img src="img/aaa-cover.jpg" alt="AAA">
     </a>
-
-    <a class="title-card" href="tyt-at.html?comic=at">
-      <img src="https://tajnachalupka.github.io/main/cov/!at.jpg"></a>
+    <a class="title-card" href="tyt.html?comic=aab">
+      <img src="img/aab-cover.jpg" alt="AAB">
     </a>
-
-     <a class="title-card" href="tyt-bn.html?comic=bn">
-      <img src="https://tajnachalupka.github.io/main/cov/!bn.jpg"></a>
-
-      <a class="title-card" href="tyt-mp.html?comic=mp">
-      <img src="https://tajnachalupka.github.io/main/cov/!mp.jpg"></a>
-
-      <a class="title-card" href="tyt-bn.html?comic=bn">
-      <img src="https://tajnachalupka.github.io/main/cov/!bn.jpg"></a>
-
-      <a class="title-card" href="tyt-bn.html?comic=bn">
-      <img src="https://tajnachalupka.github.io/main/cov/!bn.jpg"></a>
-
-    
-    <!-- dodawaj kolejne -->
-
+    <!-- ...do 12 -->
   </div>
 
 </div>
