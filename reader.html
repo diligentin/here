@@ -24,11 +24,57 @@
     max-width: 100vw;
     overflow-x: hidden;
   }
+
+  /* ===== REAKCJE ===== */
+  #reactions {
+    margin: 40px auto;
+    padding: 20px;
+    text-align: center;
+    background: #111;
+    border-top: 1px solid #333;
+  }
+
+  .reaction-btn {
+    font-size: 32px;
+    margin: 0 10px;
+    cursor: pointer;
+    transition: transform .15s;
+  }
+
+  .reaction-btn:hover {
+    transform: scale(1.25);
+  }
+
+  .reaction-count {
+    font-size: 14px;
+    color: #aaa;
+    display: block;
+  }
+
+  /* ===== DISQUS ===== */
+  #comments {
+    margin: 40px auto;
+    padding: 20px;
+    background: #111;
+    border-top: 1px solid #333;
+  }
 </style>
 </head>
 <body>
 
 <div id="comic-container"></div>
+
+<!-- ===== REAKCJE ===== -->
+<div id="reactions">
+  <h3>Twoja reakcja</h3>
+  <div id="reaction-buttons"></div>
+</div>
+
+<!-- ===== KOMENTARZE DISQUS ===== -->
+<div id="comments">
+  <h3>Komentarze</h3>
+  <div id="disqus_thread"></div>
+</div>
 
 <script>
 (async function () {
@@ -67,41 +113,38 @@
   const imgElements = pages.map((src) => {
     const img = document.createElement("img");
     img.className = "page";
-    img.dataset.src = src; // prawdziwy URL
-    img.decoding = "async"; // bezpieczne dekodowanie
-    img.loading = "lazy";   // lazy loading
+    img.dataset.src = src;
+    img.decoding = "async";
+    img.loading = "lazy";
     return img;
   });
 
   imgElements.forEach(img => container.appendChild(img));
 
-  // ====== OBSERWATOR ŁADOWANIA (preload 1000px przed wejściem) ======
+  // ====== OBSERWATOR ŁADOWANIA (preload 1000px) ======
   const preloadObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         const img = entry.target;
-        if (!img.src) {
-          img.src = img.dataset.src; // ustawiamy prawdziwy URL
-        }
+        if (!img.src) img.src = img.dataset.src;
       }
     });
   }, {
-    rootMargin: "1000px 0px 1000px 0px" // PRELOAD 1000px PRZED
+    rootMargin: "1000px 0px 1000px 0px"
   });
 
   imgElements.forEach(img => preloadObserver.observe(img));
 
-  // ====== OBSERWATOR ODCIĄŻANIA PAMIĘCI ======
+  // ====== OBSERWATOR ODCIĄŻANIA RAM ======
   const unloadObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) {
         const img = entry.target;
-        // usuwamy obraz z pamięci, ale zostawiamy dataset.src
         if (img.src) img.src = "";
       }
     });
   }, {
-    rootMargin: "-2000px 0px -2000px 0px" // usuń, gdy daleko poza ekranem
+    rootMargin: "-2000px 0px -2000px 0px"
   });
 
   imgElements.forEach(img => unloadObserver.observe(img));
@@ -113,6 +156,65 @@
   recent.unshift(comicKey);
   localStorage.setItem("recentComics", JSON.stringify(recent.slice(0, 5)));
 
+  // ============================================================
+  // ===================== REAKCJE ==============================
+  // ============================================================
+
+  const reactionTypes = ["👍", "❤️", "😂", "😮", "👎"];
+  const reactionContainer = document.getElementById("reaction-buttons");
+
+  const storageKey = `reactions_${comicKey}_${chapter}`;
+  const savedReactions = JSON.parse(localStorage.getItem(storageKey)) || {
+    "👍": 0, "❤️": 0, "😂": 0, "😮": 0, "👎": 0
+  };
+
+  function renderReactions() {
+    reactionContainer.innerHTML = "";
+    reactionTypes.forEach(type => {
+      const btn = document.createElement("span");
+      btn.className = "reaction-btn";
+      btn.textContent = type;
+
+      const count = document.createElement("span");
+      count.className = "reaction-count";
+      count.textContent = savedReactions[type];
+
+      btn.onclick = () => {
+        savedReactions[type]++;
+        localStorage.setItem(storageKey, JSON.stringify(savedReactions));
+        renderReactions();
+      };
+
+      const wrapper = document.createElement("span");
+      wrapper.style.display = "inline-block";
+      wrapper.style.margin = "0 10px";
+      wrapper.appendChild(btn);
+      wrapper.appendChild(count);
+
+      reactionContainer.appendChild(wrapper);
+    });
+  }
+
+  renderReactions();
+
+})();
+</script>
+
+<!-- ============================================================
+     ===================== DISQUS ================================
+     ============================================================ -->
+
+<script>
+var disqus_config = function () {
+  this.page.url = window.location.href;
+  this.page.identifier = window.location.pathname + window.location.search;
+};
+
+(function() {
+  var d = document, s = d.createElement('script');
+  s.src = 'https://TWOJ-DISQUS-NICK.disqus.com/embed.js'; 
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
 })();
 </script>
 
