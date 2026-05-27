@@ -1,1 +1,18 @@
 
+{
+  "title": "afos",
+  "chapters": {
+    "1": [
+      "https://tajnachalupka.github.io/afos/01/1.jpg",
+      "https://tajnachalupka.github.io/afos/01/2.jpg"
+    ],
+    "2": [
+      "https://tajnachalupka.github.io/afos/02/1.jpg",
+      "https://tajnachalupka.github.io/afos/02/2.jpg"
+    ],
+    "3": [
+      "LINK_DO_OBRAZKA_3_1.jpg",
+      "LINK_DO_OBRAZKA_3_2.jpg"
+    ]
+  }
+}
