@@ -1,229 +1,56 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-<meta charset="UTF-8">
-<title>Reader</title>
-
-<style>
-  body {
-    margin: 0;
-    background: black;
-    color: white;
-    font-family: sans-serif;
-  }
-
-  img.page {
-    display: block;
-    max-width: 720px;
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-    margin: 0 auto;
-  }
-
-  #comic-container {
-    max-width: 100vw;
-    overflow-x: hidden;
-    text-align: center;
-  }
-
-  #reactions {
-    margin: 40px auto;
-    padding: 20px;
-    text-align: center;
-    background: #111;
-    border-top: 1px solid #333;
-    max-width: 720px;
-  }
-
-  .reaction-btn {
-    font-size: 32px;
-    margin: 0 10px;
-    cursor: pointer;
-    transition: transform .15s;
-  }
-
-  .reaction-btn:hover {
-    transform: scale(1.25);
-  }
-
-  .reaction-count {
-    font-size: 14px;
-    color: #aaa;
-    display: block;
-  }
-
-  #comments {
-    margin: 40px auto;
-    padding: 20px;
-    background: #111;
-    border-top: 1px solid #333;
-    max-width: 720px;
-  }
-
-  a.back {
-    color: #ccc;
-    text-decoration: none;
-    display: inline-block;
-    margin: 10px 0 20px;
-  }
-</style>
+  <meta charset="UTF-8">
+  <title>Czytnik</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-page="reader">
+<div class="wrapper">
 
-<div style="max-width: 720px; margin: 0 auto; padding: 10px;">
-  <a href="javascript:history.back()" class="back">← Wróć</a>
+  <h1 class="reader-title" id="reader-title">Tytuł — Rozdział X</h1>
+
+  <div id="reader-pages">
+    <!-- Strony rozdziału (obrazki) wczyta app.js -->
+  </div>
+
+  <!-- REAKCJE: wstawisz swoje obrazki -->
+  <div class="reactions">
+    <div class="reactions-row">
+      <img src="img/reactions/r1.png" data-react="r1" alt="">
+      <img src="img/reactions/r2.png" data-react="r2" alt="">
+      <img src="img/reactions/r3.png" data-react="r3" alt="">
+      <img src="img/reactions/r4.png" data-react="r4" alt="">
+      <img src="img/reactions/r5.png" data-react="r5" alt="">
+    </div>
+
+    <div class="reaction-counts">
+      <div><span id="count-r1">0</span></div>
+      <div><span id="count-r2">0</span></div>
+      <div><span id="count-r3">0</span></div>
+      <div><span id="count-r4">0</span></div>
+      <div><span id="count-r5">0</span></div>
+    </div>
+  </div>
+
+  <!-- PRZYCISKI: HOME + NEXT (obok siebie w jednym rzędzie) -->
+  <div class="nav-row">
+    <!-- ŚRODEK: powrót na główną – wkleisz swój obrazek -->
+    <a id="btn-home" href="index.html">
+      <img src="img/home.png" alt="Powrót na główną">
+    </a>
+
+    <!-- PRAWA: następny rozdział – wkleisz swój obrazek -->
+    <a id="btn-next" href="#">
+      <img src="img/next.png" alt="Następny rozdział">
+    </a>
+  </div>
+
+  <!-- DISQUS – tu wkleisz swój kod dla danego rozdziału -->
+  <div id="disqus_thread" style="margin-top:40px;"></div>
+
 </div>
 
-<div id="comic-container"></div>
-
-<div id="reactions">
-  <h3>Twoja reakcja</h3>
-  <div id="reaction-buttons"></div>
-</div>
-
-<div id="comments">
-  <h3>Komentarze</h3>
-  <div id="disqus_thread"></div>
-</div>
-
-<script>
-(async function () {
-  const params = new URLSearchParams(window.location.search);
-  const comicKey = params.get("comic");
-  const chapter = params.get("chapter");
-
-  const container = document.getElementById("comic-container");
-
-  if (!comicKey || !chapter) {
-    container.innerHTML =
-      "<p style='text-align:center;padding:50px;'>Brak parametru comic lub chapter.</p>";
-    return;
-  }
-
-  // ====== ZAPIS ODWIEDZONEGO ROZDZIAŁU (dla przycisków w title.html) ======
-  const visitedKey = `visited_${comicKey}`;
-  const visited = JSON.parse(localStorage.getItem(visitedKey)) || [];
-  const chNum = Number(chapter);
-  if (!visited.includes(chNum)) {
-    visited.push(chNum);
-    localStorage.setItem(visitedKey, JSON.stringify(visited));
-  }
-
-  // ====== POBIERANIE JSON ======
-  let data;
-  try {
-    const res = await fetch(`comics/${comicKey}.json`);
-    if (!res.ok) throw new Error("Nie znaleziono JSON");
-    data = await res.json();
-  } catch (err) {
-    container.innerHTML =
-      "<p style='text-align:center;padding:50px;'>Błąd wczytywania JSON.</p>";
-    return;
-  }
-
-  const pages = data.chapters[String(chapter)];
-  if (!pages || pages.length === 0) {
-    container.innerHTML =
-      "<p style='text-align:center;padding:50px;'>Brak obrazków dla tego rozdziału.</p>";
-    return;
-  }
-
-  const imgElements = pages.map((src) => {
-    const img = document.createElement("img");
-    img.className = "page";
-    img.dataset.src = src;
-    img.decoding = "async";
-    img.loading = "lazy";
-    return img;
-  });
-
-  imgElements.forEach(img => container.appendChild(img));
-
-  const preloadObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const img = entry.target;
-        if (!img.src) img.src = img.dataset.src;
-      }
-    });
-  }, {
-    rootMargin: "1000px 0px 1000px 0px"
-  });
-
-  imgElements.forEach(img => preloadObserver.observe(img));
-
-  const unloadObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) {
-        const img = entry.target;
-        if (img.src) img.src = "";
-      }
-    });
-  }, {
-    rootMargin: "-2000px 0px -2000px 0px"
-  });
-
-  imgElements.forEach(img => unloadObserver.observe(img));
-
-  // ====== REAKCJE ======
-  const reactionTypes = ["👍", "❤️", "😂", "😮", "👎"];
-  const reactionContainer = document.getElementById("reaction-buttons");
-
-  const storageKey = `reactions_${comicKey}_${chapter}`;
-  const savedReactions = JSON.parse(localStorage.getItem(storageKey)) || {
-    "👍": 0, "❤️": 0, "😂": 0, "😮": 0, "👎": 0
-  };
-
-  function renderReactions() {
-    reactionContainer.innerHTML = "";
-    reactionTypes.forEach(type => {
-      const btn = document.createElement("span");
-      btn.className = "reaction-btn";
-      btn.textContent = type;
-
-      const count = document.createElement("span");
-      count.className = "reaction-count";
-      count.textContent = savedReactions[type];
-
-      btn.onclick = () => {
-        savedReactions[type]++;
-        localStorage.setItem(storageKey, JSON.stringify(savedReactions));
-        renderReactions();
-      };
-
-      const wrapper = document.createElement("span");
-      wrapper.style.display = "inline-block";
-      wrapper.style.margin = "0 10px";
-      wrapper.appendChild(btn);
-      wrapper.appendChild(count);
-
-      reactionContainer.appendChild(wrapper);
-    });
-  }
-
-  renderReactions();
-
-})();
-</script>
-
-<script>
-var disqus_config = function () {
-  const params = new URLSearchParams(window.location.search);
-  const comicKey = params.get("comic");
-  const chapter = params.get("chapter");
-
-  this.page.url = window.location.href;
-  this.page.identifier = comicKey + "_" + chapter;
-};
-
-(function() {
-  var d = document, s = d.createElement('script');
-  s.src = 'https://TWOJ-DISQUS-NICK.disqus.com/embed.js';
-  s.setAttribute('data-timestamp', +new Date());
-  (d.head || d.body).appendChild(s);
-})();
-</script>
-
+<script src="app.js"></script>
 </body>
 </html>
