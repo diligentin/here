@@ -2,16 +2,16 @@
 (async function () {
   const params = new URLSearchParams(window.location.search);
   const comicKey = params.get("comic");
-  const chapter = params.get("chapter"); // nie Number() tutaj
+  const chapter = Number(params.get("chapter")); // ← WRACAMY DO NUMBER
 
   const container = document.getElementById("comic-container");
 
   // ===== HOME BUTTON (działa zawsze) =====
   document.getElementById("homeBtn").onclick = () => {
-    window.location.href = "index.html";
+    window.location.href = "index.html"; // ← główna strona
   };
 
-  // ===== WALIDACJA PARAMETRÓW =====
+  // ===== WALIDACJA =====
   if (!comicKey || !chapter) {
     container.innerHTML =
       "<p style='color:white;text-align:center;padding:50px;'>Brak parametru comic lub chapter.</p>";
@@ -24,7 +24,7 @@
     if (!res.ok) throw new Error("Nie znaleziono JSON");
 
     const data = await res.json();
-    const pages = data.chapters[chapter];
+    const pages = data.chapters[String(chapter)]; // ← KLUCZ MUSI BYĆ STRINGIEM
 
     // ===== jeśli chapter nie istnieje =====
     if (!pages) {
@@ -62,9 +62,9 @@
     const nextBtn = document.getElementById("nextBtn");
     const total = Object.keys(data.chapters).length;
 
-    if (Number(chapter) < total) {
+    if (chapter < total) {
       nextBtn.onclick = () => {
-        window.location.href = `reader.html?comic=${comicKey}&chapter=${Number(chapter) + 1}`;
+        window.location.href = `reader.html?comic=${comicKey}&chapter=${chapter + 1}`;
       };
     } else {
       nextBtn.style.display = "none";
