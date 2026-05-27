@@ -2,8 +2,7 @@
 <html lang="pl">
 <head>
 <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>tłumaczenia</title>
 
@@ -27,8 +26,8 @@ body {
 }
 .section-title-img {
   display:block;
-  width:300px;          /* rozmiar podobny do nagłówków */
-   margin: 20px 0 20px 16px; /* góra | prawo | dół | lewo */
+  width:300px;
+  margin: 20px 0 20px 16px;
 }
 
 /* ===== NAGŁÓWKI ===== */
@@ -39,19 +38,17 @@ h1, h2 {
 }
 
 /* ===== GRID ===== */
-
 .auto-grid {
   display: grid;
-  gap: 10px; /* stały odstęp między obrazkami */
+  gap: 10px;
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   width: 100%;
   max-width: 1100px;
   margin: 0 auto;
 }
 
-
 /* KARTA */
-  .card img {
+.card img {
   transition: filter 0.25s ease;
 }
 
@@ -81,10 +78,18 @@ h1, h2 {
   border-radius:8px;
 }
 
-  @media (max-width: 600px) {
+/* ===== PRZECZYTANE ROZDZIAŁY ===== */
+.card.read img {
+  filter: brightness(0.4) saturate(0.8);
+  border: 3px solid #00ff88;
+  border-radius: 8px;
+}
+
+@media (max-width: 600px) {
   body {
     zoom: 0.7;
-    
+  }
+}
 </style>
 </head>
 
@@ -95,35 +100,33 @@ h1, h2 {
 </header>
 
 <!-- ===== NOWY ROZDZIAŁ — 6 OKŁADEK 170×170 ===== -->
-  
 <img class="section-title-img" src="https://tajnachalupka.github.io/main/nowy.png" alt="">
 
-  <div class="auto-grid">
+<div class="auto-grid">
 
   <a class="card square" href="reader.html?comic=thehoundsofsisyphus&chapter=8">
     <img src="https://tajnachalupka.github.io/main/nr/afos60.jpg">
   </a>
 
-      <a class="card square" href="reader.html?comic=thehoundsofsisyphus&chapter=8">
+  <a class="card square" href="reader.html?comic=thehoundsofsisyphus&chapter=8">
     <img src="https://tajnachalupka.github.io/main/nr/rc95.jpg">
   </a>
 
-      <a class="card square" href="reader.html?comic=thehoundsofsisyphus&chapter=8">
+  <a class="card square" href="reader.html?comic=thehoundsofsisyphus&chapter=8">
     <img src="https://tajnachalupka.github.io/main/nr/sah6.jpg">
   </a>
 
-      <a class="card square" href="reader.html?comic=thehoundsofsisyphus&chapter=8">
+  <a class="card square" href="reader.html?comic=thehoundsofsisyphus&chapter=8">
     <img src="https://tajnachalupka.github.io/main/nr/ub26c.jpg">
   </a>
 
-      <a class="card square" href="reader.html?comic=thehoundsofsisyphus&chapter=8">
+  <a class="card square" href="reader.html?comic=thehoundsofsisyphus&chapter=8">
     <img src="https://tajnachalupka.github.io/main/nr/yiam11.jpg">
   </a>
 
-      <a class="card square" href="reader.html?comic=afos&chapter=2">
+  <a class="card square" href="reader.html?comic=afos&chapter=2">
     <img src="https://tajnachalupka.github.io/main/nr/yiam12.jpg">
   </a>
-  <!-- dodaj kolejne 5 jeśli chcesz -->
 
 </div>
 
@@ -156,10 +159,30 @@ h1, h2 {
     <img src="https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/LR.png">
   </a>
 
-  <!-- dodaj kolejne 6, razem 12 -->
-
 </div>
-<div class="padlet-embed" style="border:1px solid rgba(0,0,0,0.1);border-radius:2px;box-sizing:border-box;overflow:hidden;position:relative;width:100%;background:#F4F4F4"><p style="padding:0;margin:0"><iframe src="https://padlet.com/embed/ml339n7v5mkqpdpg" frameborder="0" allow="camera;microphone;geolocation;display-capture;clipboard-write" style="width:100%;height:608px;display:block;padding:0;margin:0"></iframe></p></div>
+
+<!-- PADLET -->
+<div class="padlet-embed" style="border:1px solid rgba(0,0,0,0.1);border-radius:2px;box-sizing:border-box;overflow:hidden;position:relative;width:100%;background:#F4F4F4">
+  <p style="padding:0;margin:0">
+    <iframe src="https://padlet.com/embed/ml339n7v5mkqpdpg" frameborder="0" allow="camera;microphone;geolocation;display-capture;clipboard-write" style="width:100%;height:608px;display:block;padding:0;margin:0"></iframe>
+  </p>
+</div>
+
+<!-- ===== JS: OZNACZANIE PRZECZYTANYCH ROZDZIAŁÓW ===== -->
+<script>
+document.querySelectorAll("a.card").forEach(card => {
+  const url = new URL(card.href, window.location.href);
+  const comic = url.searchParams.get("comic");
+  const chapter = url.searchParams.get("chapter");
+
+  if (comic && chapter) {
+    const key = `read_${comic}_${chapter}`;
+    if (localStorage.getItem(key)) {
+      card.classList.add("read");
+    }
+  }
+});
+</script>
 
 </body>
 </html>
