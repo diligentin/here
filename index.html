@@ -4,27 +4,72 @@
 <meta charset="UTF-8">
 <title>Strona główna</title>
 <style>
-  body { margin:0; background:#191818ff; color:#fff; font-family:Avenir Next W1G, sans-serif;; }
-  .wrapper { max-width:1200px; margin:0 auto; padding:20px; }
-  h1,h2 { text-align:center; }
+ body {
+  margin: 0;
+  background: #191818ff;
+  color: #fff;
+  font-family: Avenir Next W1G, sans-serif;
+}
 
-  .new-chapter { text-align:center; margin-bottom:40px; }
-  .new-chapter img {
-    width:200px; height:200px; cursor:pointer; border:0px solid #444; display:flex; align-items:center; justify-content:center
-  }
+.wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
 
-  .titles-grid {
-    display:grid; grid-template-columns:repeat(6,1fr);
-    gap:15px; justify-items:center;
-  }
+h1, h2 {
+  text-align: center;
+}
+
+/* NOWOŚĆ — pełne wyśrodkowanie */
+.new-chapter {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.new-chapter img {
+  width: 200px;
+  height: 200px;
+  cursor: pointer;
+  border: none;
+  object-fit: cover;
+}
+
+/* GRID — wyśrodkowany, responsywny */
+.titles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+  justify-items: center;
+}
+
+/* Karta tytułu — bez ramek, wyśrodkowana */
+.title-card {
+  width: 200px;
+  height: 350px;
+  background: #111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+}
+
+.title-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Responsywność */
+@media(max-width: 700px) {
   .title-card {
-    width:200px; height:350px; overflow:hidden; cursor:pointer;
-    border:1px solid #444; background:#111; display:flex; align-items:center; justify-content:center;
+    width: 150px;
+    height: 260px;
   }
-  .title-card img { width:100%; height:100%; object-fit:cover; }
+}
 
-  @media(max-width:1100px){ .titles-grid{ grid-template-columns:repeat(3,1fr);} }
-  @media(max-width:700px){ .titles-grid{ grid-template-columns:repeat(2,1fr);} }
 </style>
 </head>
 <body>
