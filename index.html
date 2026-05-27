@@ -44,10 +44,10 @@ h1, h2 {
   padding:0 16px;
 }
 
-/* Desktop: 4 w rzędzie */
-.grid-4 {
+/* Desktop: 6 w rzędzie */
+.grid-6 {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: 10px;
   max-width: 1100px;
   margin: 0 auto;
@@ -56,14 +56,14 @@ h1, h2 {
 /* Tablet: 2 w rzędzie */
 @media (max-width: 900px) {
   .grid-4 {
-    grid-template-columns: repeat(2, 1fr) !important;
+    grid-template-columns: repeat(3, 1fr) !important;
   }
 }
 
 /* Telefon: 1 w rzędzie */
 @media (max-width: 600px) {
   .grid-4 {
-    grid-template-columns: repeat(1, 1fr) !important;
+    grid-template-columns: repeat(2, 1fr) !important;
   }
 }
 
