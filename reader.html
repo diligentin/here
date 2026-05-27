@@ -57,13 +57,12 @@ img {
   transition: 0.2s;
 }
 
-
 /* ikony w przyciskach */
 .btn-icon {
   width: 42px;
   height: 42px;
   pointer-events: none;
-  filter: invert(1); /* usuń jeśli masz białe ikony */
+  filter: invert(1);
 }
 </style>
 </head>
@@ -146,6 +145,9 @@ img {
       loadImage();
       container.appendChild(img);
     });
+
+    // ===== ZAPIS PRZECZYTANEGO ROZDZIAŁU =====
+    localStorage.setItem(`read_${comicKey}_${chapter}`, "1");
 
     // ===== NEXT BUTTON =====
     const nextBtn = document.getElementById("nextBtn");
