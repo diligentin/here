@@ -2,74 +2,29 @@
 <html lang="pl">
 <head>
 <meta charset="UTF-8">
-<title>tłumaczenia</title>
+<title>Strona główna</title>
 <style>
-  body {
-    margin: 0;
-    background: #111;
-    color: #fff;
-    font-family: PiekosToons BB;
-  }
+  body { margin:0; background:#000; color:#fff; font-family:sans-serif; }
+  .wrapper { max-width:1200px; margin:0 auto; padding:20px; }
+  h1,h2 { text-align:center; }
 
-  .wrapper {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-
-  h1, h2 {
-    text-align: center;
-  }
-
-  .new-chapter {
-    text-align: center;
-    margin-bottom: 40px;
-  }
-
+  .new-chapter { text-align:center; margin-bottom:40px; }
   .new-chapter img {
-    max-width: 720px;
-    width: 100%;
-    height: auto;
-    cursor: pointer;
-    border: 0px solid #444;
+    max-width:720px; width:100%; height:auto; cursor:pointer; border:2px solid #444;
   }
 
   .titles-grid {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 10px;
-    justify-items: center;
+    display:grid; grid-template-columns:repeat(6,1fr);
+    gap:10px; justify-items:center;
   }
-
   .title-card {
-    width: 190px;
-    height: 300px;
-    overflow: hidden;
-    cursor: pointer;
-    border: 0px solid #444;
-    background: #111;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width:180px; height:300px; overflow:hidden; cursor:pointer;
+    border:1px solid #444; background:#111; display:flex; align-items:center; justify-content:center;
   }
+  .title-card img { width:100%; height:100%; object-fit:cover; }
 
-  .title-card img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  @media (max-width: 1100px) {
-    .titles-grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-
-  @media (max-width: 700px) {
-    .titles-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
+  @media(max-width:1100px){ .titles-grid{ grid-template-columns:repeat(3,1fr);} }
+  @media(max-width:700px){ .titles-grid{ grid-template-columns:repeat(2,1fr);} }
 </style>
 </head>
 <body>
@@ -77,61 +32,32 @@
 
   <h1>Nowy rozdział</h1>
   <div class="new-chapter">
-    <!-- PODMIEŃ LINKI: href do readera, src do okładki -->
-    <a href="reader.html?comic=komiks1&chapter=5">
-      <img src="LINK_DO_OKŁADKI_NOWEGO_ROZDZIAŁU.jpg" alt="Nowy rozdział">
+    <a href="reader.html?comic=afos&chapter=1">
+      <img src="LINK_OKLADKA_NOWEGO_ROZDZIALU_AAA.jpg" alt="Nowy rozdział aaa">
     </a>
-
-     <a href="reader.html?comic=komiks1&chapter=5">
-      <img src="LINK_DO_OKŁADKI_NOWEGO_ROZDZIAŁU.jpg" alt="Nowy rozdział">
-    </a>
-
-     <a href="reader.html?comic=komiks1&chapter=5">
-      <img src="LINK_DO_OKŁADKI_NOWEGO_ROZDZIAŁU.jpg" alt="Nowy rozdział">
-    </a>
-    
   </div>
 
   <h2>Wszystkie tytuły</h2>
   <div class="titles-grid">
-    <!-- 12 przykładowych tytułów – podmień href i src -->
-    <a class="title-card" href="title.html?comic=komiks1">
-      <img src="https://tajnachalupka.github.io/main/cov/afos.jpg" alt="afos">
-    </a>
-    <a class="title-card" href="title.html?comic=komiks2">
-      <img src="LINK_OKLADKA_KOMIKS2.jpg" alt="Komiks 2">
-    </a>
-    <a class="title-card" href="title.html?comic=komiks3">
-      <img src="LINK_OKLADKA_KOMIKS3.jpg" alt="Komiks 3">
-    </a>
-    <a class="title-card" href="title.html?comic=komiks4">
-      <img src="LINK_OKLADKA_KOMIKS4.jpg" alt="Komiks 4">
-    </a>
-    <a class="title-card" href="title.html?comic=komiks5">
-      <img src="LINK_OKLADKA_KOMIKS5.jpg" alt="Komiks 5">
-    </a>
-    <a class="title-card" href="title.html?comic=komiks6">
-      <img src="LINK_OKLADKA_KOMIKS6.jpg" alt="Komiks 6">
+
+    <!-- KOMIKS AAA -->
+    <a class="title-card" href="tyt-afos.html">
+      <img src="<img src="https://tajnachalupka.github.io/main/cov/afos.jpg" alt="afos">
     </a>
 
-    <a class="title-card" href="title.html?comic=komiks7">
-      <img src="LINK_OKLADKA_KOMIKS7.jpg" alt="Komiks 7">
-    </a>
-    <a class="title-card" href="title.html?comic=komiks8">
-      <img src="LINK_OKLADKA_KOMIKS8.jpg" alt="Komiks 8">
-    </a>
-    <a class="title-card" href="title.html?comic=komiks9">
-      <img src="LINK_OKLADKA_KOMIKS9.jpg" alt="Komiks 9">
-    </a>
-    <a class="title-card" href="title.html?comic=komiks10">
-      <img src="LINK_OKLADKA_KOMIKS10.jpg" alt="Komiks 10">
-    </a>
-    <a class="title-card" href="title.html?comic=komiks11">
-      <img src="LINK_OKLADKA_KOMIKS11.jpg" alt="Komiks 11">
-    </a>
-    <a class="title-card" href="title.html?comic=komiks12">
-      <img src="LINK_OKLADKA_KOMIKS12.jpg" alt="Komiks 12">
-    </a>
+    <!-- 11 kolejnych tytułów jako szablon -->
+    <a class="title-card" href="tyt-bbb.html"><img src="LINK_OKLADKA_BBB.jpg"></a>
+    <a class="title-card" href="tyt-ccc.html"><img src="LINK_OKLADKA_CCC.jpg"></a>
+    <a class="title-card" href="tyt-ddd.html"><img src="LINK_OKLADKA_DDD.jpg"></a>
+    <a class="title-card" href="tyt-eee.html"><img src="LINK_OKLADKA_EEE.jpg"></a>
+    <a class="title-card" href="tyt-fff.html"><img src="LINK_OKLADKA_FFF.jpg"></a>
+    <a class="title-card" href="tyt-ggg.html"><img src="LINK_OKLADKA_GGG.jpg"></a>
+    <a class="title-card" href="tyt-hhh.html"><img src="LINK_OKLADKA_HHH.jpg"></a>
+    <a class="title-card" href="tyt-iii.html"><img src="LINK_OKLADKA_III.jpg"></a>
+    <a class="title-card" href="tyt-jjj.html"><img src="LINK_OKLADKA_JJJ.jpg"></a>
+    <a class="title-card" href="tyt-kkk.html"><img src="LINK_OKLADKA_KKK.jpg"></a>
+    <a class="title-card" href="tyt-lll.html"><img src="LINK_OKLADKA_LLL.jpg"></a>
+
   </div>
 
 </div>
