@@ -39,34 +39,13 @@ h1, h2 {
 }
 
 /* ===== GRID ===== */
-.grid {
-  display:grid;
-  gap:10px;
-  justify-content:center;
-  padding:0 16px;
-}
-
-/* Desktop: 4 w rzędzie */
-.grid-4 {
+.auto-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  width: 100%;
   max-width: 1100px;
   margin: 0 auto;
-}
-
-/* Tablet: 3 w rzędzie */
-@media (max-width: 900px) {
-  .grid-4 {
-    grid-template-columns: repeat(3, 1fr) !important;
-  }
-}
-
-/* Telefon: 2 w rzędzie */
-@media (max-width: 600px) {
-  .grid-4 {
-    grid-template-columns: repeat(2, 1fr) !important;
-  }
 }
 
 
@@ -113,7 +92,7 @@ h1, h2 {
   
 <img class="section-title-img" src="https://tajnachalupka.github.io/main/nowy.png" alt="">
 
-<div class="grid-4">
+  <div class="auto-grid">
 
   <a class="card square" href="reader.html?comic=thehoundsofsisyphus&chapter=8">
     <img src="https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/nowyrozzdzial/Zrzut%20ekranu%202026-04-18%20221035.png">
@@ -126,7 +105,7 @@ h1, h2 {
 <!-- ===== WSZYSTKIE TYTUŁY — 12 OKŁADEK 170×300 ===== -->
 <img class="section-title-img" src="https://tajnachalupka.github.io/main/wszystkie.png" alt="">
 
-<div class="grid-4">
+<div class="auto-grid">
 
   <a class="card tall" href="comic-swallow-you-whole.html">
     <img src="https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/Syw.png">
