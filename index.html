@@ -44,29 +44,29 @@ h1, h2 {
   padding:0 16px;
 }
 
-/* 6 w rzędzie */
-.grid-6 {
+/* Desktop: 4 w rzędzie */
+.grid-4 {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 10px;
   max-width: 1100px;
   margin: 0 auto;
 }
+
+/* Tablet: 2 w rzędzie */
 @media (max-width: 900px) {
   .grid-4 {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr) !important;
   }
 }
 
+/* Telefon: 1 w rzędzie */
 @media (max-width: 600px) {
   .grid-4 {
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: repeat(1, 1fr) !important;
   }
 }
 
-}
-
-}
 
 /* KARTA */
   .card img {
