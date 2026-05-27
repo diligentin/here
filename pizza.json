@@ -1,7 +1,5 @@
 {
-  "cover": "https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/AAsrhbdjdt.webp",
-  "desc": "Woo-won jest dostawcą pizzy, któremu w życiu kompletnie się nie układa. Seo-an to bogaty mężczyzna zmagający się z atakami paniki i fobią społeczną. Z pozoru nic ich nie łączy, ale jedna drobna życzliwość prowadzi do ich kolejnych spotkań, które zbliżają ich do siebie bardziej, niż się spodziewali. Być może razem znajdą sposób, by poradzić sobie z problemami - a może wcale nie potrzebują rozwiązań, tylko siebie nawzajem?",
-  "tags": ["BL", "+18", "Romans", "Dramat", "Psychologiczny"],
+  "title": "Mój Komiks",
   "chapters": {
     "1": [
        "https://pub-9b851339398240699a792a411e7ece21.r2.dev/rozdzilypizza/1/1%20P%201-3.jpg",
@@ -35,53 +33,6 @@
         "https://pub-9b851339398240699a792a411e7ece21.r2.dev/rozdzilypizza/2/P%2041-45.jpg",
         "https://pub-9b851339398240699a792a411e7ece21.r2.dev/rozdzilypizza/2/P%2046-48.jpg",
         "https://pub-9b851339398240699a792a411e7ece21.r2.dev/rozdzilypizza/2/P%2049-50.jpg"
-      ],
-    "3": [
-      "https://pub-9b851339398240699a792a411e7ece21.r2.dev/rozdzilypizza/3/P%201-2.jpg",
-      "https://pub-9b851339398240699a792a411e7ece21.r2.dev/rozdzilypizza/3/P%203-6.jpg",
-      "https://pub-9b851339398240699a792a411e7ece21.r2.dev/rozdzilypizza/3/P%207-10.jpg",
-      "https://pub-9b851339398240699a792a411e7ece21.r2.dev/rozdzilypizza/3/P%2011-14.jpg",
-      "https://pub-9b851339398240699a792a411e7ece21.r2.dev/rozdzilypizza/3/P%2015-18.jpg",
-      "https://pub-9b851339398240699a792a411e7ece21.r2.dev/rozdzilypizza/3/P%2019-22.jpg",
-      "https://pub-9b851339398240699a792a411e7ece21.r2.dev/rozdzilypizza/3/P%2023-25.jpg",
-      "https://pub-9b851339398240699a792a411e7ece21.r2.dev/rozdzilypizza/3/P%2026-30.jpg",
-      "https://pub-9b851339398240699a792a411e7ece21.r2.dev/rozdzilypizza/3/P%2031-33.jpg",
-      "https://pub-9b851339398240699a792a411e7ece21.r2.dev/rozdzilypizza/3/P%2034-39.jpg",
-      "https://pub-9b851339398240699a792a411e7ece21.r2.dev/rozdzilypizza/3/P%2040-44.jpg"
-    ],
-    "4": [
-      "https://pub-9b851339398240699a792a411e7ece21.r2.dev/rozdzilypizza/4/P%201-3.jpg",
-      "https://pub-9b851339398240699a792a411e7ece21.r2.dev/rozdzilypizza/4/P%204-8.jpg",
-      "https://pub-9b851339398240699a792a411e7ece21.r2.dev/rozdzilypizza/4/P%209-13.jpg",
-      "https://pub-9b851339398240699a792a411e7ece21.r2.dev/rozdzilypizza/4/P%2014-16.jpg",
-      "https://pub-9b851339398240699a792a411e7ece21.r2.dev/rozdzilypizza/4/P%2017-20.jpg",
-      "https://pub-9b851339398240699a792a411e7ece21.r2.dev/rozdzilypizza/4/P%2021-24.jpg",
-      "https://pub-9b851339398240699a792a411e7ece21.r2.dev/rozdzilypizza/4/P%2025-29.jpg",
-      "https://pub-9b851339398240699a792a411e7ece21.r2.dev/rozdzilypizza/4/P%2030-34.jpg",
-      "https://pub-9b851339398240699a792a411e7ece21.r2.dev/rozdzilypizza/4/P%2035-39.jpg",
-      "https://pub-9b851339398240699a792a411e7ece21.r2.dev/rozdzilypizza/4/P%2040-43.jpg",
-      "https://pub-9b851339398240699a792a411e7ece21.r2.dev/rozdzilypizza/4/P%2044-47.jpg",
-      "https://pub-9b851339398240699a792a411e7ece21.r2.dev/rozdzilypizza/4/P%2049-52.jpg",
-      "https://pub-9b851339398240699a792a411e7ece21.r2.dev/rozdzilypizza/4/P%2053-57.jpg"
-    ],
-    "5": [
-      "https://pub-9b851339398240699a792a411e7ece21.r2.dev/rozdzilypizza/5/P%201-6.webp",
-      "https://pub-9b851339398240699a792a411e7ece21.r2.dev/rozdzilypizza/5/P%207-12.webp",
-      "https://pub-9b851339398240699a792a411e7ece21.r2.dev/rozdzilypizza/5/P%2013-18.webp",
-      "https://pub-9b851339398240699a792a411e7ece21.r2.dev/rozdzilypizza/5/P%2019-25.webp",
-      "https://pub-9b851339398240699a792a411e7ece21.r2.dev/rozdzilypizza/5/P%2026-34.webp",
-      "https://pub-9b851339398240699a792a411e7ece21.r2.dev/rozdzilypizza/5/P%2035-37.webp",
-      "https://pub-9b851339398240699a792a411e7ece21.r2.dev/rozdzilypizza/5/P%2038-43.webp"
-    ],
-    "6": [
-      "https://pub-9b851339398240699a792a411e7ece21.r2.dev/rozdzilypizza/6/P%201-9.webp",
-      "https://pub-9b851339398240699a792a411e7ece21.r2.dev/rozdzilypizza/6/P%2010-18.webp",
-      "https://pub-9b851339398240699a792a411e7ece21.r2.dev/rozdzilypizza/6/P%2019-24.webp",
-      "https://pub-9b851339398240699a792a411e7ece21.r2.dev/rozdzilypizza/6/P%2025-33.webp",
-      "https://pub-9b851339398240699a792a411e7ece21.r2.dev/rozdzilypizza/6/P%2034-43.webp",
-      "https://pub-9b851339398240699a792a411e7ece21.r2.dev/rozdzilypizza/6/P%2044-48.webp",
-      "https://pub-9b851339398240699a792a411e7ece21.r2.dev/rozdzilypizza/6/P%2049-54.webp",
-      "https://pub-9b851339398240699a792a411e7ece21.r2.dev/rozdzilypizza/6/P%2055-59.webp"
-    ]
+      ]
   }
 }
