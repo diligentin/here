@@ -2,14 +2,14 @@
 <html lang="pl">
 <head>
 <meta charset="UTF-8">
-<title>FurinxManhwa</title>
+<title>tłumaczenia</title>
 
 <style>
 body {
   margin:0;
-  background:#111;
+  background:#191818ff;
   color:white;
-  font-family:Arial, sans-serif;
+  font-family:Avenir Next W1G, sans-serif;
 }
 
 /* ===== HEADER ===== */
@@ -22,17 +22,17 @@ header img {
 h1 {
   text-align:center;
   margin:16px 0;
-  font-size:50px;
+  font-size:30px;
 }
 
 h2 {
   margin:16px;
-  font-size:50px;
+  font-size:30px;
 }
 
   h3 {
   margin:16px;
-  font-size:50px;
+  font-size:30px;
 }
   h4 {
   margin:16px;
@@ -76,61 +76,6 @@ h2 {
   filter: brightness(0.7);
 }
 
-  /* ===== CARD LIFT (SUBTELNE PODNIESIENIE) ===== */
-.comic-card {
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.comic-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 22px rgba(0,0,0,0.35);
-}
-
-/* HOVER – GRADIENT OD DOŁU */
-.comic-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.7), transparent 60%);
-  opacity: 0;
-  transition: opacity 0.2s ease;
-  pointer-events: none;
-}
-
-/* Gradient aktywny przy hoverze */
-.comic-card:hover::before {
-  opacity: 1;
-}
-
-/* TEKST POD OKŁADKĄ */
-.comic-card p {
-  font-size: 30px;
-  margin-top: 10px;
-  font-weight: 600;
-}
-
-  .comic-card p {
-  font-size: 30px;
-  margin-top: 10px;
-  font-weight: 600;
-  text-align: center;
-
-  max-width: 300px;
-  white-space: normal;
-  word-wrap: break-word;
-  line-height: 1.25;
-}
-
-  /* ===== ANIMOWANY NAGŁÓWEK (h1 + h2) ===== */
-@keyframes glowPulse {
-  0% { text-shadow: 0 0 5px rgba(255,255,255,0.4); }
-  50% { text-shadow: 0 0 20px rgba(255,255,255,0.8); }
-  100% { text-shadow: 0 0 5px rgba(255,255,255,0.4); }
-}
-
-h1, h2, h3, h4 {
-  animation: glowPulse 2.5s infinite ease-in-out;
-}
 
   /* ===== STATUS ===== */
 .status {
@@ -176,15 +121,8 @@ h1, h2, h3, h4 {
   /* ===== POWOLNY RUCH TŁA ===== */
 body {
   /* gradient, możesz zmienić kolory jak chcesz */
-  background: linear-gradient(120deg, #111 0%, #222 50%, #111 100%);
-  background-size: 400% 400%; /* wielkość gradientu dla ruchu */
-  animation: moveBackground 30s linear infinite;
-}
+  background: #191818ff;
 
-@keyframes moveBackground {
-  0% { background-position: 0% 0%; }
-  50% { background-position: 100% 100%; }
-  100% { background-position: 0% 0%; }
 }
 /* ===== HERO / LOGO ===== */
 .hero {
