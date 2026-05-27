@@ -124,11 +124,11 @@ a { color: white; text-decoration: none; }
   color: black;
 }
 
-  @media (max-width: 600px) {
+@media (max-width: 600px) {
   body {
     zoom: 0.7;
-
-    
+  }
+}
 </style>
 </head>
 
@@ -162,9 +162,11 @@ a { color: white; text-decoration: none; }
   <div class="chapter-grid" id="chapters"></div>
 </div>
 
-  </div>
-<div class="padlet-embed" style="border:1px solid rgba(0,0,0,0.1);border-radius:2px;box-sizing:border-box;overflow:hidden;position:relative;width:100%;background:#F4F4F4"><p style="padding:0;margin:0"><iframe src="https://padlet.com/embed/ml339n7v5mkqpdpg" frameborder="0" allow="camera;microphone;geolocation;display-capture;clipboard-write" style="width:100%;height:608px;display:block;padding:0;margin:0"></iframe></p></div>
-
+<div class="padlet-embed" style="border:1px solid rgba(0,0,0,0.1);border-radius:2px;box-sizing:border-box;overflow:hidden;position:relative;width:100%;background:#F4F4F4">
+  <p style="padding:0;margin:0">
+    <iframe src="https://padlet.com/embed/ml339n7v5mkqpdpg" frameborder="0" allow="camera;microphone;geolocation;display-capture;clipboard-write" style="width:100%;height:608px;display:block;padding:0;margin:0"></iframe>
+  </p>
+</div>
 
 <script>
 (async function() {
@@ -199,8 +201,8 @@ a { color: white; text-decoration: none; }
     btn.className = "chapter-btn";
     btn.innerText = num;
 
-    // POPRAWIONE: historia odwiedzin
-    if (localStorage.getItem(`visited_${comicKey}_${num}`) === "true") {
+    // POPRAWIONE: sprawdzamy read_, nie visited_
+    if (localStorage.getItem(`read_${comicKey}_${num}`) === "1") {
       btn.classList.add("visited");
     }
 
