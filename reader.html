@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Reader</title>
+
+<style>
+body {
+  margin: 0;
+  background: black;
+}
+
+img {
+  display: block;
+  width: 100%;
+  max-width: 100vw;
+  height: auto;
+}
+
+}
+</style>
+</head>
+<body>
+
+<div id="comic-container"></div>
+
+<script>
+
+(async function () {
+  const params = new URLSearchParams(window.location.search);
+  const comicKey = params.get("comic");
+  const chapter = params.get("chapter");
+
+  const container = document.getElementById("comic-container");
+
+  if (!comicKey || !chapter) {
+    container.innerHTML =
+      "<p style='color:white;text-align:center;padding:50px;'>Brak parametru comic lub chapter.</p>";
+    return;
+  }
+
+  try {
+    const res = await fetch(`${comicKey}.json`);
+    if (!res.ok) throw new Error("Nie znaleziono JSON");
+
+    const data = await res.json();
+
+    const pages = data.chapters[String(chapter)];
+
+    if (!pages || pages.length === 0) {
+      container.innerHTML =
+        "<p style='color:white;text-align:center;padding:50px;'>Brak obrazków dla tego rozdziału.</p>";
+      return;
+    }
+
+    pages.forEach((src, index) => {
+  const img = document.createElement("img");
+  img.src = src;
+
+  // ⬇️ pierwsza strona BEZ lazy
+  if (index !== 0) {
+    img.loading = "lazy";
+  }
+
+  container.appendChild(img);
+});
+
+
+  } catch (err) {
+    console.error(err);
+    container.innerHTML =
+      "<p style='color:white;text-align:center;padding:50px;'>Błąd wczytywania pliku JSON.</p>";
+  }
+
+  // ===== ZAPIS OSTATNIO CZYTANE =====
+const recent = JSON.parse(localStorage.getItem("recentComics")) || [];
+
+// usuń powtórzenia
+const idx = recent.indexOf(comicKey);
+if (idx !== -1) recent.splice(idx, 1);
+
+// dodaj na początek
+recent.unshift(comicKey);
+
+// zostaw tylko 5 ostatnich
+localStorage.setItem("recentComics", JSON.stringify(recent.slice(0, 5)));
+
+})();
+  
+  console.log("recent after:", JSON.parse(localStorage.getItem("recentComics")));
+
+</script>
+
+</body>
+</html>
