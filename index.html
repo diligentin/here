@@ -18,6 +18,8 @@
     
 /* ===== GLOBAL ===== */
 
+/* ===== GLOBAL ===== */
+
 body {
   margin:0;
   background:#191818ff;
@@ -25,7 +27,7 @@ body {
   font-family: figtree, sans-serif;
 }
 
-  /* ===== HERO ===== */
+/* ===== HERO ===== */
 .hero {
   display:flex;
   justify-content:center;
@@ -34,7 +36,7 @@ body {
 .hero img {
   width:250px;
 }
-  
+
 /* ===== SEKCJA BLOKU (kontener wspólny dla tytułu i grida) ===== */
 
 .section-block {
@@ -100,15 +102,28 @@ body {
   object-fit:cover;
 }
 
+/* ===== SKALOWANIE CAŁEJ SEKCJI PONIŻEJ 1000px ===== */
+
+@media (max-width: 1000px) {
+  .section-block {
+    transform: scale(calc(100vw / 1000));
+    transform-origin: top center;
+  }
+}
+
 /* ===== TELEFON ===== */
 
 @media (max-width: 600px) {
   .auto-grid {
     grid-template-columns: repeat(3, 1fr);
+  }
+
+  .section-block {
     transform: scale(0.7);
     transform-origin: top center;
   }
 }
+
 
 
 </style>
