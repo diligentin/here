@@ -291,7 +291,7 @@ img {
           img.src = slice.url;
           img.loading = "lazy";
 
-          /* ⭐ KLUCZOWE — NAPRAWIA ROZCIĄGANIE NA TABLETACH */
+          /* ⭐ KLUCZOWE — NAPRAWIA ROZCIĄGANIE I BRAK OBRAZÓW */
           img.width = slice.w;
           img.height = slice.h;
 
@@ -309,5 +309,118 @@ img {
 
     loadingInfo.remove();
 
-    /* ===== NEXT
-</html>
+    /* ===== NEXT ===== */
+    const keys = Object.keys(data.chapters);
+
+    keys.sort((a, b) => {
+      const na = parseInt(a);
+      const nb = parseInt(b);
+      const ha = !isNaN(na);
+      const hb = !isNaN(nb);
+
+      if (ha && hb) {
+        if (na !== nb) return na - nb;
+        const ea = a.replace(/^\d+/, "").trim();
+        const eb = b.replace(/^\d+/, "").trim();
+        if (!ea && eb) return -1;
+        if (ea && !eb) return 1;
+        return a.localeCompare(b);
+      }
+      if (ha) return -1;
+      if (hb) return 1;
+      return a.localeCompare(b);
+    });
+
+    const index = keys.indexOf(chapter);
+
+    document.getElementById("nextBtn").onclick = () => {
+      if (index !== -1 && index < keys.length - 1) {
+        window.location.href =
+          `reader.html?comic=${comicKey}&chapter=${encodeURIComponent(keys[index + 1])}`;
+      } else {
+        window.location.href = "https://diligentin.github.io/here";
+      }
+    };
+
+    document.getElementById("prevBtn").onclick = () => {
+      if (index > 0) {
+        window.location.href =
+          `reader.html?comic=${comicKey}&chapter=${encodeURIComponent(keys[index - 1])}`;
+      } else {
+        window.location.href = "https://diligentin.github.io/here";
+      }
+    };
+
+  } catch {
+    container.innerHTML =
+      "<p style='color:white;text-align:center;padding:50px;'>Błąd wczytywania pliku JSON.</p>";
+  }
+
+})();
+  
+/* ===== AUTO-HIDE BUTTONS ===== */
+let lastScroll = 0;
+const nav = document.getElementById("nav");
+
+window.addEventListener("scroll", () => {
+  const current = window.scrollY;
+  if (current > lastScroll) nav.classList.add("hidden");
+  else nav.classList.remove("hidden");
+  lastScroll = current;
+});
+
+/* ===== REACTIONS ===== */
+document.querySelectorAll(".react").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const id = btn.dataset.id;
+
+    if (localStorage.getItem(`react_${id}`)) return;
+
+    localStorage.setItem(`react_${id}`, "1");
+
+    btn.classList.add("clicked");
+
+    const count = btn.querySelector(".count");
+    count.textContent = parseInt(count.textContent) + 1;
+
+    setTimeout(() => btn.classList.remove("clicked"), 250);
+  });
+});
+
+/* ============================================================
+   ===== DISQUS (MAPA ISTNIEJĄCYCH WĄTKÓW + AUTO IDENTIFIER) =====
+   ============================================================ */
+
+const disqusMap = {
+  "afos:2": "https://tajnachalupka.wixsite.com/ub-1/ub25",
+  "afos:2♡": "https://tajnachalupka.wixsite.com/ub-1/ub24"
+};
+
+var disqus_config = function () {
+  const key = `${comicKey}:${chapter}`;
+  const mapped = disqusMap[key];
+
+  this.page.url = window.location.href;
+  this.page.identifier = mapped || `${comicKey}-${chapter}`;
+};
+
+/* ===== DISQUS (LAZY LOAD) ===== */
+let disqusLoaded = false;
+
+function loadDisqus() {
+  if (disqusLoaded) return;
+  disqusLoaded = true;
+
+  var d = document, s = d.createElement('script');
+  s.src = 'https://chalupka-ruoye-chan-wix.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+}
+
+const observerDisqus = new IntersectionObserver(entries => {
+  if (entries[0].isIntersecting) loadDisqus();
+}, { threshold: 0.1 });
+
+observerDisqus.observe(document.getElementById("disqus_thread"));
+</script>
+</body>
