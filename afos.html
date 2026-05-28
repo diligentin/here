@@ -2,7 +2,7 @@
 <html lang="pl">
 <head>
 <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>afos</title>
 
@@ -56,7 +56,6 @@ a { color: white; text-decoration: none; }
 
 /* TYTUŁ */
 .comic-title {
-  font-family: Trebuchet MS, sans-serif;
   font-size: 40px;
   text-align: center;
   margin-bottom: 5px;
@@ -71,21 +70,16 @@ a { color: white; text-decoration: none; }
 }
 
 .comic-tags span {
-  font-family: Trebuchet MS, sans-serif;
   font-size: 26px;
-  padding: 0;
-  background: none;
   color: #8394F4;
   letter-spacing: 0.3px;
 }
 
 /* OPIS */
 .comic-desc {
-  font-family: Trebuchet MS, sans-serif;
   font-size: 17px;
   color: #e0e0e0;
   line-height: 1.3;
-  letter-spacing: 0.2px;
   text-align: justify;
 }
 
@@ -93,7 +87,7 @@ a { color: white; text-decoration: none; }
 .section { padding: 24px 16px; }
 .section h2 { font-size: 30px; font-weight: 200; margin-bottom: 50px; }
 
-/* ===== NOWA SIATKA ROZDZIAŁÓW ===== */
+/* ===== SIATKA ROZDZIAŁÓW ===== */
 .chapter-grid {
   display: grid;
   grid-template-columns: repeat(10, 42px);
@@ -127,9 +121,7 @@ a { color: white; text-decoration: none; }
 }
 
 @media (max-width: 600px) {
-  body {
-    zoom: 0.7;
-  }
+  body { zoom: 0.7; }
 }
 </style>
 </head>
@@ -143,19 +135,12 @@ a { color: white; text-decoration: none; }
 
 <!-- NOWY UKŁAD -->
 <div class="comic-layout">
-  
   <img class="cover" id="cover" src="" alt="">
-
   <div class="comic-info">
-
       <div class="comic-title" id="title"></div>
-
       <div class="comic-tags" id="tags"></div>
-
       <p class="comic-desc" id="desc"></p>
- 
   </div>
-
 </div>
 
 <!-- ROZDZIAŁY -->
@@ -180,61 +165,19 @@ a { color: white; text-decoration: none; }
 
   // Ustaw cover, desc, tagi, tytuł
   document.getElementById("cover").src = data.cover;
-  document.getElementById("cover").alt = comicKey;
-
-  document.getElementById("title").innerText = data.title || "A First of Summers";
-
-  // ENTERY w opisie
+  document.getElementById("title").innerText = data.title;
   document.getElementById("desc").innerHTML = data.desc.replace(/\n/g, "<br>");
+  document.getElementById("tags").innerHTML = data.tags.map(t => `<span>${t}</span>`).join("");
 
-  document.getElementById("tags").innerHTML = data.tags
-    .map(t => `<span>${t}</span>`)
-    .join("");
-
-  // GENEROWANIE ROZDZIAŁÓW
+  // ===== AUTOMATYCZNE GENEROWANIE ROZDZIAŁÓW =====
   const chapters = document.getElementById("chapters");
- // AUTOMATYCZNE GENEROWANIE ROZDZIAŁÓW NA PODSTAWIE JSON
-const chapters = document.getElementById("chapters");
 
-// Pobieramy listę istniejących rozdziałów z JSON
-const chapterNumbers = Object.keys(data.chapters)
-  .map(n => Number(n))
-  .sort((a, b) => a - b); // sortujemy rosnąco
+  if (data.chapters && typeof data.chapters === "object") {
+    const chapterNumbers = Object.keys(data.chapters)
+      .map(n => Number(n))
+      .filter(n => !isNaN(n))
+      .sort((a, b) => a - b);
 
-chapterNumbers.forEach(num => {
-  const a = document.createElement("a");
-  a.href = `reader.html?comic=${comicKey}&chapter=${num}`;
-
-  const btn = document.createElement("div");
-  btn.className = "chapter-btn";
-  btn.innerText = num;
-
-  // oznaczanie przeczytanych
-  if (localStorage.getItem(`read_${comicKey}_${num}`) === "1") {
-    btn.classList.add("visited");
-  }
-
-  a.appendChild(btn);
-  chapters.appendChild(a);
-});
-
-    const a = document.createElement("a");
-    a.href = `reader.html?comic=${comicKey}&chapter=${num}`;
-
-    const btn = document.createElement("div");
-    btn.className = "chapter-btn";
-    btn.innerText = num;
-
-    // POPRAWIONE: sprawdzamy read_, nie visited_
-    if (localStorage.getItem(`read_${comicKey}_${num}`) === "1") {
-      btn.classList.add("visited");
-    }
-
-    a.appendChild(btn);
-    chapters.appendChild(a);
-  }
-})();
-</script>
-
-</body>
-</html>
+    chapterNumbers.forEach(num => {
+      const a = document.createElement("a");
+      a.href
