@@ -95,12 +95,15 @@ a { color: white; text-decoration: none; }
 /* ===== SIATKA ROZDZIAŁÓW ===== */
 .chapter-grid {
   display: grid;
-  grid-template-columns: repeat(10, 45px);
+  grid-template-columns: repeat(auto-fit, minmax(45px, 1fr));
   gap: 11px;
   justify-content: center;
   padding-bottom: 40px;
   margin-bottom: 33px;
 
+  max-width: calc(45px * 10 + 11px * 9); /* max 10 guzików w rzędzie */
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .chapter-btn {
