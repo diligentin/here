@@ -391,9 +391,13 @@ document.querySelectorAll(".react").forEach(btn => {
 */
 
 const disqusMap = {
-  // PRZYKŁADY — usuń lub zmień:
-  // "2": "https://tajnachalupka.wixsite.com/ub-1/ub25",
-  // "2♡": "https://tajnachalupka.wixsite.com/ub-1/ub24"
+  // AFOS
+  "afos:2": "https://tajnachalupka.wixsite.com/ub-1/ub25",
+  "afos:2♡": "https://tajnachalupka.wixsite.com/ub-1/ub24",
+
+  // Inny komiks
+  "mycomic:1": "mycomic-ch1-old",
+  "mycomic:2": "mycomic-ch2-old"
 };
 
 /*
@@ -403,7 +407,8 @@ const disqusMap = {
 */
 
 var disqus_config = function () {
-  const mapped = disqusMap[chapter];
+  const key = `${comicKey}:${chapter}`;
+  const mapped = disqusMap[key];
 
   this.page.url = window.location.href;
   this.page.identifier = mapped || `${comicKey}-${chapter}`;
