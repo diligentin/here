@@ -33,10 +33,10 @@ img {
 .nav-buttons {
   position: fixed;
   bottom: 20px;
-  align-items: center;
+  left: 20px;
   display: flex;
-  flex-direction: row;
-  gap: 20px;
+  flex-direction: column;
+  gap: 10px;
   transition: opacity 0.3s ease;
   opacity: 1;
 }
@@ -65,6 +65,58 @@ img {
   pointer-events: none;
   filter: invert(1);
 }
+
+/* ===== REACTIONS ===== */
+#reactions {
+  padding: 25px 10px 40px;
+  text-align: center;
+  color: white;
+}
+
+.reaction-row {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  flex-wrap: wrap;
+}
+
+.react {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.react img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+
+.react .count {
+  margin-top: 5px;
+  font-size: 16px;
+  color: #ddd;
+}
+
+/* animacja pulsowania */
+.react.clicked {
+  animation: pulse 0.25s ease;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.18); }
+  100% { transform: scale(1); }
+}
+
+/* ===== DISQUS ===== */
+#disqus_thread {
+  padding: 20px;
+  background: #111;
+  margin-top: 40px;
+}
 </style>
 </head>
 <body>
@@ -78,26 +130,72 @@ img {
     <img src="https://tajnachalupka.github.io/main/szczala.png" class="btn-icon">
   </div>
 
-    <div class="nav-btn" id="homeBtn">
+  <div class="nav-btn" id="homeBtn">
     <img src="https://tajnachalupka.github.io/main/domek.png" class="btn-icon">
   </div>
 </div>
+
+<!-- ===== REACTIONS SECTION ===== -->
+<div id="reactions">
+  <div class="reaction-row">
+
+    <!-- REAKCJA 1 -->
+    <div class="react" data-id="1">
+      <img src="https://tajnachalupka.github.io/main/guziki-reakcji/r1.jpg" alt="">
+      <div class="count">0</div>
+    </div>
+
+    <!-- REAKCJA 2 -->
+    <div class="react" data-id="2">
+      <img src="https://tajnachalupka.github.io/main/guziki-reakcji/r2.jpg" alt="">
+      <div class="count">0</div>
+    </div>
+
+    <!-- REAKCJA 3 -->
+    <div class="react" data-id="3">
+      <img src="https://tajnachalupka.github.io/main/guziki-reakcji/r3.jpg" alt="">
+      <div class="count">0</div>
+    </div>
+
+    <!-- REAKCJA 4 -->
+    <div class="react" data-id="4">
+      <img src="https://tajnachalupka.github.io/main/guziki-reakcji/r4.jpg" alt="">
+      <div class="count">0</div>
+    </div>
+
+    <!-- REAKCJA 5 -->
+    <div class="react" data-id="5">
+      <img src="https://tajnachalupka.github.io/main/guziki-reakcji/r5.jpg" alt="">
+      <div class="count">0</div>
+    </div>
+
+    <!-- REAKCJA 6 (UKRYTA NA RAZIE) -->
+    <!--
+    <div class="react" data-id="6">
+      <img src="TU_WSTAW_OBRAZEK_6" alt="">
+      <div class="count">0</div>
+    </div>
+    -->
+
+  </div>
+</div>
+
+<!-- ===== DISQUS ===== -->
+<div id="disqus_thread"></div>
 
 <script>
 (async function () {
   const params = new URLSearchParams(window.location.search);
   const comicKey = params.get("comic");
-  const chapter = params.get("chapter"); // pełny string (emoji, spacje OK)
+  const chapter = params.get("chapter");
 
   const container = document.getElementById("comic-container");
 
-  // ===== HOME BUTTON =====
   document.getElementById("homeBtn").onclick = () => {
     window.location.href = "https://diligentin.github.io/here";
   };
 
-  // ===== WALIDACJA =====
-  if (comicKey === null || chapter === null) {
+  if (!comicKey || !chapter) {
     container.innerHTML =
       "<p style='color:white;text-align:center;padding:50px;'>Brak parametru comic lub chapter.</p>";
     document.getElementById("nextBtn").onclick = () => {
@@ -106,7 +204,7 @@ img {
     return;
   }
 
-  // ===== FUNKCJA: CIĘCIE JEDNEGO OBRAZU NA SEGMENTY =====
+  /* ===== CIĘCIE OBRAZÓW ===== */
   async function sliceImage(src, sliceHeight = 2000) {
     return new Promise((resolve, reject) => {
       const img = new Image();
@@ -128,8 +226,7 @@ img {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.drawImage(img, 0, y, img.width, h, 0, 0, img.width, h);
 
-            const dataUrl = canvas.toDataURL("image/jpeg", 0.95);
-            slices.push(dataUrl);
+            slices.push(canvas.toDataURL("image/jpeg", 0.95));
           }
 
           resolve(slices);
@@ -138,31 +235,21 @@ img {
         }
       };
 
-      img.onerror = () => {
-        reject(new Error("Błąd ładowania obrazu: " + src));
-      };
+      img.onerror = () => reject();
     });
   }
 
   try {
     const res = await fetch(`${comicKey}.json`);
-    if (!res.ok) throw new Error("Nie znaleziono JSON");
-
     const data = await res.json();
-    const pages = data.chapters[chapter]; // klucz 1:1
+    const pages = data.chapters[chapter];
 
-    // ===== jeśli chapter nie istnieje =====
     if (!pages) {
       container.innerHTML =
         "<p style='color:white;text-align:center;padding:50px;'>Ten rozdział nie istnieje.</p>";
-
-      document.getElementById("nextBtn").onclick = () => {
-        window.location.href = "https://diligentin.github.io/here/";
-      };
       return;
     }
 
-    // ===== INFO O ŁADOWANIU =====
     const loadingInfo = document.createElement("p");
     loadingInfo.style.color = "white";
     loadingInfo.style.textAlign = "center";
@@ -170,18 +257,16 @@ img {
     loadingInfo.textContent = "Ładowanie rozdziału...";
     container.appendChild(loadingInfo);
 
-    // ===== ŁADOWANIE I CIĘCIE OBRAZÓW =====
     for (const src of pages) {
       try {
-        const slices = await sliceImage(src, 2000); // ~2000px wysokości na segment
-
+        const slices = await sliceImage(src, 2000);
         slices.forEach(sliceUrl => {
           const img = document.createElement("img");
           img.src = sliceUrl;
           img.loading = "lazy";
           container.appendChild(img);
         });
-      } catch (e) {
+      } catch {
         const errP = document.createElement("p");
         errP.style.color = "red";
         errP.style.textAlign = "center";
@@ -193,77 +278,93 @@ img {
 
     loadingInfo.remove();
 
-    // ===== ZAPIS PRZECZYTANEGO ROZDZIAŁU =====
-    localStorage.setItem(`read_${comicKey}_${chapter}`, "1");
-
-    // ===== NEXT BUTTON — KOLEJNOŚĆ „PO LUDZKU” =====
-    const nextBtn = document.getElementById("nextBtn");
-
+    /* ===== NEXT ===== */
     const keys = Object.keys(data.chapters);
 
-    // sortowanie: najpierw po numerze z przodu, potem wersje typu "2♡", "3 2.s"
     keys.sort((a, b) => {
-      const numA = parseInt(a, 10);
-      const numB = parseInt(b, 10);
-      const hasNumA = !isNaN(numA);
-      const hasNumB = !isNaN(numB);
+      const na = parseInt(a);
+      const nb = parseInt(b);
+      const ha = !isNaN(na);
+      const hb = !isNaN(nb);
 
-      if (hasNumA && hasNumB) {
-        if (numA !== numB) return numA - numB;
-
-        const extraA = a.replace(/^\d+/, "").trim();
-        const extraB = b.replace(/^\d+/, "").trim();
-
-        if (!extraA && extraB) return -1; // "2" przed "2♡"
-        if (extraA && !extraB) return 1;  // "2♡" po "2"
+      if (ha && hb) {
+        if (na !== nb) return na - nb;
+        const ea = a.replace(/^\d+/, "").trim();
+        const eb = b.replace(/^\d+/, "").trim();
+        if (!ea && eb) return -1;
+        if (ea && !eb) return 1;
         return a.localeCompare(b);
       }
-
-      if (hasNumA && !hasNumB) return -1;
-      if (!hasNumA && hasNumB) return 1;
-
+      if (ha) return -1;
+      if (hb) return 1;
       return a.localeCompare(b);
     });
 
     const index = keys.indexOf(chapter);
 
-    if (index !== -1 && index < keys.length - 1) {
-      nextBtn.onclick = () => {
-        window.location.href = `reader.html?comic=${comicKey}&chapter=${encodeURIComponent(keys[index + 1])}`;
-      };
-    } else {
-      nextBtn.onclick = () => {
+    document.getElementById("nextBtn").onclick = () => {
+      if (index !== -1 && index < keys.length - 1) {
+        window.location.href =
+          `reader.html?comic=${comicKey}&chapter=${encodeURIComponent(keys[index + 1])}`;
+      } else {
         window.location.href = "https://diligentin.github.io/here";
-      };
-    }
+      }
+    };
 
-  } catch (err) {
-    console.error(err);
+  } catch {
     container.innerHTML =
       "<p style='color:white;text-align:center;padding:50px;'>Błąd wczytywania pliku JSON.</p>";
-
-    document.getElementById("nextBtn").onclick = () => {
-      window.location.href = "https://diligentin.github.io/here";
-    };
   }
 
 })();
   
-// ===== AUTO-HIDE BUTTONS ON SCROLL =====
+/* ===== AUTO-HIDE BUTTONS ===== */
 let lastScroll = 0;
 const nav = document.getElementById("nav");
 
 window.addEventListener("scroll", () => {
   const current = window.scrollY;
-
-  if (current > lastScroll) {
-    nav.classList.add("hidden");
-  } else {
-    nav.classList.remove("hidden");
-  }
-
+  if (current > lastScroll) nav.classList.add("hidden");
+  else nav.classList.remove("hidden");
   lastScroll = current;
 });
+
+/* ===== REACTIONS (FRONT-END ONLY) ===== */
+document.querySelectorAll(".react").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const id = btn.dataset.id;
+
+    if (localStorage.getItem(`react_${id}`)) return;
+
+    localStorage.setItem(`react_${id}`, "1");
+
+    btn.classList.add("clicked");
+
+    const count = btn.querySelector(".count");
+    count.textContent = parseInt(count.textContent) + 1;
+
+    setTimeout(() => btn.classList.remove("clicked"), 250);
+  });
+});
+
+/* ===== DISQUS (LAZY LOAD) ===== */
+let disqusLoaded = false;
+
+function loadDisqus() {
+  if (disqusLoaded) return;
+  disqusLoaded = true;
+
+  var d = document, s = d.createElement('script');
+  s.src = 'https://chalupka-ruoye-chan-wix.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+}
+
+const observerDisqus = new IntersectionObserver(entries => {
+  if (entries[0].isIntersecting) loadDisqus();
+}, { threshold: 0.1 });
+
+observerDisqus.observe(document.getElementById("disqus_thread"));
 </script>
 
 </body>
