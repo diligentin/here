@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>...</title>
+<title>Reader</title>
 
 <style>
 body {
@@ -86,7 +86,7 @@ img {
 (async function () {
   const params = new URLSearchParams(window.location.search);
   const comicKey = params.get("comic");
-  const chapter = params.get("chapter");   // ← pełny string, emoji OK
+  const chapter = params.get("chapter"); // pełny string (emoji, spacje OK)
 
   const container = document.getElementById("comic-container");
 
@@ -105,12 +105,50 @@ img {
     return;
   }
 
+  // ===== FUNKCJA: CIĘCIE JEDNEGO OBRAZU NA SEGMENTY =====
+  async function sliceImage(src, sliceHeight = 2000) {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.crossOrigin = "anonymous";
+      img.src = src;
+
+      img.onload = () => {
+        try {
+          const slices = [];
+          const canvas = document.createElement("canvas");
+          const ctx = canvas.getContext("2d");
+
+          canvas.width = img.width;
+
+          for (let y = 0; y < img.height; y += sliceHeight) {
+            const h = Math.min(sliceHeight, img.height - y);
+            canvas.height = h;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(img, 0, y, img.width, h, 0, 0, img.width, h);
+
+            const dataUrl = canvas.toDataURL("image/jpeg", 0.95);
+            slices.push(dataUrl);
+          }
+
+          resolve(slices);
+        } catch (e) {
+          reject(e);
+        }
+      };
+
+      img.onerror = () => {
+        reject(new Error("Błąd ładowania obrazu: " + src));
+      };
+    });
+  }
+
   try {
     const res = await fetch(`${comicKey}.json`);
     if (!res.ok) throw new Error("Nie znaleziono JSON");
 
     const data = await res.json();
-    const pages = data.chapters[chapter];   // ← klucz 1:1
+    const pages = data.chapters[chapter]; // klucz 1:1
 
     // ===== jeśli chapter nie istnieje =====
     if (!pages) {
@@ -123,56 +161,74 @@ img {
       return;
     }
 
-    // ===== ŁADOWANIE OBRAZÓW =====
-    // ===== SUPER-LAZY LOADING + ODCIĄŻANIE RAM =====
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    const img = entry.target;
+    // ===== INFO O ŁADOWANIU =====
+    const loadingInfo = document.createElement("p");
+    loadingInfo.style.color = "white";
+    loadingInfo.style.textAlign = "center";
+    loadingInfo.style.padding = "20px";
+    loadingInfo.textContent = "Ładowanie rozdziału...";
+    container.appendChild(loadingInfo);
 
-    if (entry.isIntersecting) {
-      // ŁADOWANIE OBRAZU
-      if (!img.dataset.loaded) {
-        img.src = img.dataset.src;
-        img.dataset.loaded = "1";
-      }
-    } else {
-      // ODCIĄŻANIE RAM — usuń obraz, jeśli daleko
-      if (img.dataset.loaded) {
-        img.removeAttribute("src");
-        delete img.dataset.loaded;
+    // ===== ŁADOWANIE I CIĘCIE OBRAZÓW =====
+    for (const src of pages) {
+      try {
+        const slices = await sliceImage(src, 2000); // ~2000px wysokości na segment
+
+        slices.forEach(sliceUrl => {
+          const img = document.createElement("img");
+          img.src = sliceUrl;
+          img.loading = "lazy";
+          container.appendChild(img);
+        });
+      } catch (e) {
+        const errP = document.createElement("p");
+        errP.style.color = "red";
+        errP.style.textAlign = "center";
+        errP.style.padding = "10px";
+        errP.textContent = "Błąd ładowania strony.";
+        container.appendChild(errP);
       }
     }
-  });
-}, {
-  rootMargin: "600px 0px", // ładuje 600px przed wejściem w viewport
-  threshold: 0.01
-});
 
-pages.forEach(src => {
-  const img = document.createElement("img");
-  img.dataset.src = src;   // prawdziwy URL
-  img.alt = "page";
-
-  img.style.minHeight = "300px"; // placeholder, żeby nie skakało
-
-  observer.observe(img);
-  container.appendChild(img);
-});
+    loadingInfo.remove();
 
     // ===== ZAPIS PRZECZYTANEGO ROZDZIAŁU =====
     localStorage.setItem(`read_${comicKey}_${chapter}`, "1");
 
-    // ===== NEXT BUTTON — KOLEJNOŚĆ Z JSON =====
+    // ===== NEXT BUTTON — KOLEJNOŚĆ „PO LUDZKU” =====
     const nextBtn = document.getElementById("nextBtn");
 
-    // klucze w TEJ SAMEJ kolejności, w jakiej są w JSON
     const keys = Object.keys(data.chapters);
+
+    // sortowanie: najpierw po numerze z przodu, potem wersje typu "2♡", "3 2.s"
+    keys.sort((a, b) => {
+      const numA = parseInt(a, 10);
+      const numB = parseInt(b, 10);
+      const hasNumA = !isNaN(numA);
+      const hasNumB = !isNaN(numB);
+
+      if (hasNumA && hasNumB) {
+        if (numA !== numB) return numA - numB;
+
+        const extraA = a.replace(/^\d+/, "").trim();
+        const extraB = b.replace(/^\d+/, "").trim();
+
+        if (!extraA && extraB) return -1; // "2" przed "2♡"
+        if (extraA && !extraB) return 1;  // "2♡" po "2"
+        return a.localeCompare(b);
+      }
+
+      if (hasNumA && !hasNumB) return -1;
+      if (!hasNumA && hasNumB) return 1;
+
+      return a.localeCompare(b);
+    });
 
     const index = keys.indexOf(chapter);
 
     if (index !== -1 && index < keys.length - 1) {
       nextBtn.onclick = () => {
-        window.location.href = `reader.html?comic=${comicKey}&chapter=${keys[index + 1]}`;
+        window.location.href = `reader.html?comic=${comicKey}&chapter=${encodeURIComponent(keys[index + 1])}`;
       };
     } else {
       nextBtn.onclick = () => {
