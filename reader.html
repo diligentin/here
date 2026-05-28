@@ -86,7 +86,7 @@ img {
 (async function () {
   const params = new URLSearchParams(window.location.search);
   const comicKey = params.get("comic");
-  const chapter = params.get("chapter");   // ← pełny string (emoji OK)
+  const chapter = params.get("chapter");   // ← pełny string, emoji OK
 
   const container = document.getElementById("comic-container");
 
@@ -110,7 +110,7 @@ img {
     if (!res.ok) throw new Error("Nie znaleziono JSON");
 
     const data = await res.json();
-    const pages = data.chapters[chapter];   // ← klucz 1:1, działa z emoji
+    const pages = data.chapters[chapter];   // ← klucz 1:1
 
     // ===== jeśli chapter nie istnieje =====
     if (!pages) {
@@ -153,7 +153,9 @@ img {
     // ===== NEXT BUTTON — KOLEJNOŚĆ Z JSON =====
     const nextBtn = document.getElementById("nextBtn");
 
-    const keys = Object.keys(data.chapters);  // ← BEZ SORTOWANIA
+    // klucze w TEJ SAMEJ kolejności, w jakiej są w JSON
+    const keys = Object.keys(data.chapters);
+
     const index = keys.indexOf(chapter);
 
     if (index !== -1 && index < keys.length - 1) {
