@@ -68,7 +68,7 @@ img {
 
 /* ===== REACTIONS ===== */
 #reactions {
-  padding: 25px 10px 40px;
+  padding: 25px 10px 25px;
   text-align: center;
   color: white;
 }
@@ -76,7 +76,7 @@ img {
 .reaction-row {
   display: flex;
   justify-content: center;
-  gap: 25px;
+  gap: 8px;
   flex-wrap: wrap;
 }
 
@@ -86,28 +86,29 @@ img {
   align-items: center;
   cursor: pointer;
   transition: transform 0.15s ease;
+   border-radius: 2px;
 }
 
 .react img {
-  width: 60px;
-  height: 60px;
+  width: 80px;
+  height: 80px;
   object-fit: contain;
 }
 
 .react .count {
-  margin-top: 5px;
-  font-size: 16px;
+  margin-top: 4px;
+  font-size: 14px;
   color: #ddd;
 }
 
 /* animacja pulsowania */
 .react.clicked {
-  animation: pulse 0.25s ease;
+  animation: pulse 0.35s ease;
 }
 
 @keyframes pulse {
   0% { transform: scale(1); }
-  50% { transform: scale(1.18); }
+  50% { transform: scale(1.08); }
   100% { transform: scale(1); }
 }
 
