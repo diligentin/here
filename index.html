@@ -52,7 +52,7 @@ body {
   display: block;
   width: 100%;        /* skaluje się jak obrazki */
   max-width: 200px;   /* pełny rozmiar = 250px */
-  margin: 35px 0 20px 0; /* zostaje jak było */
+  margin: 35px auto 20px auto; /* zostaje jak było */
   height: auto;
 }
 
@@ -63,10 +63,13 @@ body {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 7px;
-  justify-content: center;
   justify-items: center;
+  margin-bottom: 10px; /* odstęp między gridami */
 }
-
+.auto-grid:last-child {
+  margin-bottom: 0; /* ostatni grid bez odstępu */
+} 
+  
 /* odstęp pod gridem tytułów */
 #titles-grid {
   margin-bottom: 30px;
@@ -173,7 +176,7 @@ body {
 
   <div class="section-block">
   <img class="section-title-img" src="https://tajnachalupka.github.io/main/wszystkie.png" />
-  <div id="titles-grid" class="auto-grid">
+   <div id="titles-grid-1" class="auto-grid">
    
   <a class="card tall" href="afos.html">
     <img src="https://tajnachalupka.github.io/main/cov/!afos.jpg">
@@ -199,6 +202,10 @@ body {
     <img src="https://tajnachalupka.github.io/main/cov/!mnbig.jpg">
   </a>
 
+      </div>
+
+<div id="titles-grid-2" class="auto-grid">
+       
    <a class="card tall" href="1rta.html">
     <img src="https://tajnachalupka.github.io/main/cov/!orta.jpg">
   </a>
