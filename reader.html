@@ -76,8 +76,8 @@ img {
 .reaction-row {
   display: flex;
   justify-content: center;
-  gap: 4px;
-  flex-wrap: wrap;
+  gap: 2px;
+  flex-wrap: nowrap;
 }
 
 .react {
@@ -92,6 +92,8 @@ img {
 .react img {
   width: 80px;
   height: 80px;
+   max-width: 14vw;   /* zmniejsza się na małych ekranach */
+  max-height: 14vw;
   object-fit: contain;
   border-radius: 2px;
 }
