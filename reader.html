@@ -347,6 +347,38 @@ document.querySelectorAll(".react").forEach(btn => {
   });
 });
 
+/* ============================================================
+   ===== DISQUS (MAPA ISTNIEJĄCYCH WĄTKÓW + AUTO IDENTIFIER) =====
+   ============================================================ */
+
+/* 
+   MAPA ISTNIEJĄCYCH WĄTKÓW DISQUS
+   Jeśli chcesz podpiąć istniejący wątek do konkretnego rozdziału,
+   wpisz go tutaj:
+
+   "nazwa_rozdziału": "identifier_z_disqus"
+*/
+
+const disqusMap = {
+  // PRZYKŁADY — usuń lub zmień:
+  // "1": "afos-chapter-1-old",
+  // "2♡": "afos-special-2",
+  // "3 2.s": "afos-bonus-3"
+};
+
+/*
+   KONFIGURACJA DISQUS
+   Jeśli rozdział jest w mapie → używa istniejącego wątku.
+   Jeśli nie → tworzy nowy wątek o nazwie `${comicKey}-${chapter}`.
+*/
+
+var disqus_config = function () {
+  const mapped = disqusMap[chapter];
+
+  this.page.url = window.location.href;
+  this.page.identifier = mapped || `${comicKey}-${chapter}`;
+};
+
 /* ===== DISQUS (LAZY LOAD) ===== */
 let disqusLoaded = false;
 
