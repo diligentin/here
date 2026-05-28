@@ -80,6 +80,24 @@ img {
   flex-wrap: nowrap;
 }
 
+.react img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  border-radius: 2px;
+
+  /* zapobiega ściskaniu */
+  flex-shrink: 0;
+
+  /* minimalny rozmiar na telefonach */
+  min-width: 55px;
+  min-height: 55px;
+
+  /* skalowanie na mniejszych ekranach */
+  max-width: 18vw;
+  max-height: 18vw;
+}
+
 .react {
   display: flex;
   flex-direction: column;
@@ -87,15 +105,6 @@ img {
   cursor: pointer;
   transition: transform 0.15s ease;
    border-radius: 2px;
-}
-
-.react img {
-  width: 80px;
-  height: 80px;
-   max-width: 14vw;   /* zmniejsza się na małych ekranach */
-  max-height: 14vw;
-  object-fit: contain;
-  border-radius: 2px;
 }
 
 .react .count {
