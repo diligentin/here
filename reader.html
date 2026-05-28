@@ -124,28 +124,40 @@ img {
     }
 
     // ===== ŁADOWANIE OBRAZÓW =====
-    pages.forEach((src, index) => {
-      const img = document.createElement("img");
+    // ===== SUPER-LAZY LOADING + ODCIĄŻANIE RAM =====
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    const img = entry.target;
 
-      let attempts = 0;
-      const loadImage = () => {
-        img.src = src + (attempts > 0 ? `?retry=${attempts}` : "");
-      };
+    if (entry.isIntersecting) {
+      // ŁADOWANIE OBRAZU
+      if (!img.dataset.loaded) {
+        img.src = img.dataset.src;
+        img.dataset.loaded = "1";
+      }
+    } else {
+      // ODCIĄŻANIE RAM — usuń obraz, jeśli daleko
+      if (img.dataset.loaded) {
+        img.removeAttribute("src");
+        delete img.dataset.loaded;
+      }
+    }
+  });
+}, {
+  rootMargin: "600px 0px", // ładuje 600px przed wejściem w viewport
+  threshold: 0.01
+});
 
-      img.onerror = () => {
-        attempts++;
-        if (attempts < 3) loadImage();
-        else {
-          img.style.opacity = "0.4";
-          img.style.border = "2px solid red";
-          img.alt = "Błąd ładowania";
-        }
-      };
+pages.forEach(src => {
+  const img = document.createElement("img");
+  img.dataset.src = src;   // prawdziwy URL
+  img.alt = "page";
 
-      if (index !== 0) img.loading = "lazy";
-      loadImage();
-      container.appendChild(img);
-    });
+  img.style.minHeight = "300px"; // placeholder, żeby nie skakało
+
+  observer.observe(img);
+  container.appendChild(img);
+});
 
     // ===== ZAPIS PRZECZYTANEGO ROZDZIAŁU =====
     localStorage.setItem(`read_${comicKey}_${chapter}`, "1");
