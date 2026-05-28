@@ -16,81 +16,51 @@
    }
 
     
+/* ===== GLOBAL ===== */
+
 body {
   margin:0;
   background:#191818ff;
   color:white;
   font-family: figtree, sans-serif;
 }
-  
-/* ===== NAGŁÓWKI ===== */
-h1, h2 {
-  margin:20px 16px 10px;
-  font-size:30px;
-  font-family: figtree, sans-serif;
-}
 
-/* ===== HERO ===== */
-.hero {
-  display:flex;
-  justify-content:center;
-  padding:20px 0;
-}
-.hero img {
-  width:300px;
-  filter:drop-shadow(0 0 20px rgba(0,0,0,0.6));
-}
-.section-title-img {
-  display: block;
-  width: 300px;
-  margin: 35px 0 20px 17px; /* wyrównanie do lewej marginesu gridu */
-}
+/* ===== SEKCJA BLOKU (kontener wspólny dla tytułu i grida) ===== */
 
-
-/* ===== GRID ===== */
-
-  .section-block {
+.section-block {
   width: 100%;
-  max-width: 1000px; /* możesz zmienić */
+  max-width: 1000px;
   margin: 0 auto;
   padding: 0 17px; /* stały margines boczny */
   box-sizing: border-box;
 }
+
+/* ===== TYTUŁ SEKCJI ===== */
+
 .section-title-img {
   display: block;
   width: 300px;
-  margin: 35px 0 20px 0; /* już bez 17px */
+  margin: 35px 0 20px 0; /* wyrównany do lewej kontenera */
 }
 
-  .auto-grid {
+/* ===== GRID ===== */
+
+.auto-grid {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  justify-content: center; /* WYŚRODKOWANIE OSTATNIEGO RZĘDU */
+  gap: 11px;                 /* odstępy między obrazami */
+  justify-content: center;   /* wyśrodkowanie ostatniego rzędu */
   width: 100%;
   margin: 0 auto;
-  padding: 0 17px;
   box-sizing: border-box;
 }
 
-
-/* 30px tylko pod gridem z tytułami */
+/* odstęp pod gridem tytułów */
 #titles-grid {
   margin-bottom: 30px;
 }
-  
 
-/* KARTA */
-.card img {
-  transition: filter 0.25s ease;
-}
-
-.card img {
-  transition: transform 0.25s ease, border-radius 0.25s ease;
-}
-
-.card:hover img {
-  transform: scale(1.03); /* delikatna zmiana kształtu */
-}
+/* ===== KARTY ===== */
 
 .card {
   text-decoration:none;
@@ -98,21 +68,30 @@ h1, h2 {
   text-align:center;
 }
 
-/* MINIATURY 170×170 */
+.card img {
+  transition: transform 0.25s ease, border-radius 0.25s ease;
+}
+
+.card:hover img {
+  transform: scale(1.03);
+  border-radius: 14px;
+}
+
+/* MINIATURY 150×150 */
 .card.square img {
   width:150px;
   height:150px;
   object-fit:cover;
 }
 
-/* OKŁADKI 170×300 */
+/* OKŁADKI 150×270 */
 .card.tall img {
   width:150px;
   height:270px;
   object-fit:cover;
 }
 
-
+/* ===== TELEFON ===== */
 
 @media (max-width: 600px) {
   .auto-grid {
@@ -121,7 +100,6 @@ h1, h2 {
     transform-origin: top center;
   }
 }
-
 
 
 </style>
