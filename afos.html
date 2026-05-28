@@ -111,11 +111,12 @@ a { color: white; text-decoration: none; }
 /* ===== SIATKA ROZDZIAŁÓW ===== */
 .chapter-grid {
   display: grid;
-  grid-template-columns: repeat(10, 42px);
-  gap: 12px;
-  justify-content: center;
+  grid-template-columns: repeat(auto-fit, 42px); /* max 10 w rzędzie */
+  gap: 11px; /* odstępy między kolumnami i wierszami */
+  justify-content: center; /* wyśrodkowanie */
   padding-bottom: 40px;
 }
+
 
 .chapter-btn {
   width: 42px;
