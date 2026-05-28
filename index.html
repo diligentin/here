@@ -22,6 +22,13 @@ body {
   color:white;
   font-family: figtree, sans-serif;
 }
+  
+/* ===== NAGŁÓWKI ===== */
+h1, h2 {
+  margin:20px 16px 10px;
+  font-size:30px;
+  font-family: figtree, sans-serif;
+}
 
 /* ===== HERO ===== */
 .hero {
@@ -39,13 +46,6 @@ body {
   margin: 35px 0 20px 17px; /* wyrównanie do lewej marginesu gridu */
 }
 
-
-/* ===== NAGŁÓWKI ===== */
-h1, h2 {
-  margin:20px 16px 10px;
-  font-size:30px;
-  font-family: figtree, sans-serif;
-}
 
 /* ===== GRID ===== */
 
@@ -78,7 +78,6 @@ h1, h2 {
   margin-bottom: 30px;
 }
   
-
 
 /* KARTA */
 .card img {
@@ -118,8 +117,11 @@ h1, h2 {
 @media (max-width: 600px) {
   .auto-grid {
     grid-template-columns: repeat(3, 1fr);
+    transform: scale(0.8);
+    transform-origin: top center;
   }
 }
+
 
 
 </style>
