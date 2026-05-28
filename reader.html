@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>miłego czytania ♡</title>
+<title>...</title>
 
 <style>
 body {
@@ -86,7 +86,7 @@ img {
 (async function () {
   const params = new URLSearchParams(window.location.search);
   const comicKey = params.get("comic");
-  const chapter = params.get("chapter");   // ← NIE liczba, pełny string
+  const chapter = params.get("chapter");   // ← pełny string (emoji OK)
 
   const container = document.getElementById("comic-container");
 
@@ -150,24 +150,31 @@ img {
     // ===== ZAPIS PRZECZYTANEGO ROZDZIAŁU =====
     localStorage.setItem(`read_${comicKey}_${chapter}`, "1");
 
-   // ===== NEXT BUTTON =====
-const nextBtn = document.getElementById("nextBtn");
+    // ===== NEXT BUTTON — KOLEJNOŚĆ Z JSON =====
+    const nextBtn = document.getElementById("nextBtn");
 
-// bierzemy klucze w TEJ SAMEJ kolejności, w jakiej są w JSON
-const keys = Object.keys(data.chapters);
+    const keys = Object.keys(data.chapters);  // ← BEZ SORTOWANIA
+    const index = keys.indexOf(chapter);
 
-const index = keys.indexOf(chapter);
+    if (index !== -1 && index < keys.length - 1) {
+      nextBtn.onclick = () => {
+        window.location.href = `reader.html?comic=${comicKey}&chapter=${keys[index + 1]}`;
+      };
+    } else {
+      nextBtn.onclick = () => {
+        window.location.href = "https://diligentin.github.io/here";
+      };
+    }
 
-if (index !== -1 && index < keys.length - 1) {
-  nextBtn.onclick = () => {
-    window.location.href = `reader.html?comic=${comicKey}&chapter=${keys[index + 1]}`;
-  };
-} else {
-  nextBtn.onclick = () => {
-    window.location.href = "https://diligentin.github.io/here";
-  };
-}
+  } catch (err) {
+    console.error(err);
+    container.innerHTML =
+      "<p style='color:white;text-align:center;padding:50px;'>Błąd wczytywania pliku JSON.</p>";
 
+    document.getElementById("nextBtn").onclick = () => {
+      window.location.href = "https://diligentin.github.io/here";
+    };
+  }
 
 })();
   
