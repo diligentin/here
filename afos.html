@@ -180,4 +180,23 @@ a { color: white; text-decoration: none; }
 
     chapterNumbers.forEach(num => {
       const a = document.createElement("a");
-      a.href
+      a.href = `reader.html?comic=${comicKey}&chapter=${num}`;
+
+      const btn = document.createElement("div");
+      btn.className = "chapter-btn";
+      btn.innerText = num;
+
+      if (localStorage.getItem(`read_${comicKey}_${num}`) === "1") {
+        btn.classList.add("visited");
+      }
+
+      a.appendChild(btn);
+      chapters.appendChild(a);
+    });
+  }
+
+})();
+</script>
+
+</body>
+</html>
