@@ -12,13 +12,15 @@ body {
   margin: 0;
   background: #191818ff;
 }
+
 #comic-container {
   max-width: 720px;
   margin: 0 auto;
 }
-/* obrazki */
-img {
- width: 100%;
+
+/* obrazki KOMIKSU – tylko w kontenerze */
+#comic-container img {
+  width: 100%;
   height: auto;
   display: block;
   max-width: 720px;
@@ -28,7 +30,7 @@ img {
 }
 
 @media (max-width: 800px) {
-  img {
+  #comic-container img {
     max-width: 100% !important;
     margin: 0;
   }
@@ -91,14 +93,9 @@ img {
   object-fit: contain;
   border-radius: 2px;
 
-  /* zapobiega ściskaniu */
   flex-shrink: 0;
-
-  /* minimalny rozmiar na telefonach */
   min-width: 60px;
   min-height: 60px;
-
-  /* skalowanie na mniejszych ekranach */
   max-width: 16vw;
   max-height: 16vw;
 }
@@ -109,7 +106,7 @@ img {
   align-items: center;
   cursor: pointer;
   transition: transform 0.15s ease;
-   border-radius: 2px;
+  border-radius: 2px;
 }
 
 .react .count {
@@ -148,9 +145,9 @@ img {
     <img src="https://tajnachalupka.github.io/main/szczala-next.png" class="btn-icon">
   </div>
   
-<div class="nav-btn" id="prevBtn">
-  <img src="https://tajnachalupka.github.io/main/szczala-prev.png" class="btn-icon">
-</div>
+  <div class="nav-btn" id="prevBtn">
+    <img src="https://tajnachalupka.github.io/main/szczala-prev.png" class="btn-icon">
+  </div>
 
   <div class="nav-btn" id="homeBtn">
     <img src="https://tajnachalupka.github.io/main/domek.png" class="btn-icon">
@@ -161,31 +158,26 @@ img {
 <div id="reactions">
   <div class="reaction-row">
 
-    <!-- REAKCJA 1 -->
     <div class="react" data-id="1">
       <img src="https://tajnachalupka.github.io/main/guziki-reakcji/r1.jpg" alt="">
       <div class="count">0</div>
     </div>
 
-    <!-- REAKCJA 2 -->
     <div class="react" data-id="2">
       <img src="https://tajnachalupka.github.io/main/guziki-reakcji/r2.jpg" alt="">
       <div class="count">0</div>
     </div>
 
-    <!-- REAKCJA 3 -->
     <div class="react" data-id="3">
       <img src="https://tajnachalupka.github.io/main/guziki-reakcji/r3.jpg" alt="">
       <div class="count">0</div>
     </div>
 
-    <!-- REAKCJA 4 -->
     <div class="react" data-id="4">
       <img src="https://tajnachalupka.github.io/main/guziki-reakcji/r4.jpg" alt="">
       <div class="count">0</div>
     </div>
 
-    <!-- REAKCJA 5 -->
     <div class="react" data-id="5">
       <img src="https://tajnachalupka.github.io/main/guziki-reakcji/r5.jpg" alt="">
       <div class="count">0</div>
@@ -206,10 +198,17 @@ img {
 <div id="disqus_thread"></div>
 
 <script>
+/* zmienne widoczne dla disqus_config */
+let currentComicKey = null;
+let currentChapter = null;
+
 (async function () {
   const params = new URLSearchParams(window.location.search);
   const comicKey = params.get("comic");
   const chapter = params.get("chapter");
+
+  currentComicKey = comicKey;
+  currentChapter = chapter;
 
   const container = document.getElementById("comic-container");
 
@@ -291,7 +290,6 @@ img {
           img.src = slice.url;
           img.loading = "lazy";
 
-          /* ⭐ KLUCZOWE — NAPRAWIA ROZCIĄGANIE I BRAK OBRAZÓW */
           img.width = slice.w;
           img.height = slice.h;
 
@@ -309,7 +307,7 @@ img {
 
     loadingInfo.remove();
 
-    /* ===== NEXT ===== */
+    /* ===== NEXT / PREV ===== */
     const keys = Object.keys(data.chapters);
 
     keys.sort((a, b) => {
@@ -397,11 +395,11 @@ const disqusMap = {
 };
 
 var disqus_config = function () {
-  const key = `${comicKey}:${chapter}`;
+  const key = `${currentComicKey}:${currentChapter}`;
   const mapped = disqusMap[key];
 
   this.page.url = window.location.href;
-  this.page.identifier = mapped || `${comicKey}-${chapter}`;
+  this.page.identifier = mapped || `${currentComicKey}-${currentChapter}`;
 };
 
 /* ===== DISQUS (LAZY LOAD) ===== */
@@ -424,3 +422,4 @@ const observerDisqus = new IntersectionObserver(entries => {
 observerDisqus.observe(document.getElementById("disqus_thread"));
 </script>
 </body>
+</html>
