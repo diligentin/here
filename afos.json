@@ -12,7 +12,7 @@
         "https://tajnachalupka.github.io/afos/02/1.jpg",
         "https://tajnachalupka.github.io/afos/02/2.jpg"
       ],
-      "2u": [
+      "2.1": [
         "https://tajnachalupka.github.io/afos/02/1.jpg",
         "https://tajnachalupka.github.io/afos/02/2.jpg"
       ],
@@ -42,7 +42,7 @@
       "https://tajnachalupka.github.io/afos/07/2.jpg",
       "https://tajnachalupka.github.io/afos/07/3.jpg" 
     ],
-     "8 - 2. sezon": [
+     "8": [
       "https://tajnachalupka.github.io/afos/08/1.jpg",
       "https://tajnachalupka.github.io/afos/08/2.jpg",
       "https://tajnachalupka.github.io/afos/08/3.jpg"
@@ -51,6 +51,24 @@
       "https://tajnachalupka.github.io/afos/09/1.jpg",
       "https://tajnachalupka.github.io/afos/09/2.jpg",
       "https://tajnachalupka.github.io/afos/09/3.jpg"
-       ]
+     "10": [
+      "https://tajnachalupka.github.io/afos/10/1.jpg",
+      "https://tajnachalupka.github.io/afos/10/2.jpg",
+      "https://tajnachalupka.github.io/afos/10/3.jpg",
+      "https://tajnachalupka.github.io/afos/10/4.jpg"  
+     
+     "11": [
+      "https://tajnachalupka.github.io/afos/11/1.jpg",
+      "https://tajnachalupka.github.io/afos/11/2.jpg",
+      "https://tajnachalupka.github.io/afos/11/3.jpg",
+      "https://tajnachalupka.github.io/afos/11/4.jpg" 
+       
+     "12": [
+      "https://tajnachalupka.github.io/afos/12/1.jpg",
+      "https://tajnachalupka.github.io/afos/12/2.jpg",
+      "https://tajnachalupka.github.io/afos/12/3.jpg"
+     
+     
+     ]
   }
 }
