@@ -248,7 +248,11 @@ img {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.drawImage(img, 0, y, img.width, h, 0, 0, img.width, h);
 
-            slices.push(canvas.toDataURL("image/jpeg", 0.95));
+            slices.push({
+              url: canvas.toDataURL("image/jpeg", 0.95),
+              w: canvas.width,
+              h: canvas.height
+            });
           }
 
           resolve(slices);
@@ -282,10 +286,15 @@ img {
     for (const src of pages) {
       try {
         const slices = await sliceImage(src, 2000);
-        slices.forEach(sliceUrl => {
+        slices.forEach(slice => {
           const img = document.createElement("img");
-          img.src = sliceUrl;
+          img.src = slice.url;
           img.loading = "lazy";
+
+          /* ⭐ KLUCZOWE — NAPRAWIA ROZCIĄGANIE NA TABLETACH */
+          img.width = slice.w;
+          img.height = slice.h;
+
           container.appendChild(img);
         });
       } catch {
@@ -300,139 +309,5 @@ img {
 
     loadingInfo.remove();
 
-    /* ===== NEXT ===== */
-    const keys = Object.keys(data.chapters);
-
-    keys.sort((a, b) => {
-      const na = parseInt(a);
-      const nb = parseInt(b);
-      const ha = !isNaN(na);
-      const hb = !isNaN(nb);
-
-      if (ha && hb) {
-        if (na !== nb) return na - nb;
-        const ea = a.replace(/^\d+/, "").trim();
-        const eb = b.replace(/^\d+/, "").trim();
-        if (!ea && eb) return -1;
-        if (ea && !eb) return 1;
-        return a.localeCompare(b);
-      }
-      if (ha) return -1;
-      if (hb) return 1;
-      return a.localeCompare(b);
-    });
-
-    const index = keys.indexOf(chapter);
-
-    document.getElementById("nextBtn").onclick = () => {
-  if (index !== -1 && index < keys.length - 1) {
-    window.location.href =
-      `reader.html?comic=${comicKey}&chapter=${encodeURIComponent(keys[index + 1])}`;
-  } else {
-    window.location.href = "https://diligentin.github.io/here";
-  }
-};
-
-document.getElementById("prevBtn").onclick = () => {
-  if (index > 0) {
-    window.location.href =
-      `reader.html?comic=${comicKey}&chapter=${encodeURIComponent(keys[index - 1])}`;
-  } else {
-    window.location.href = "https://diligentin.github.io/here";
-  }
-};
-
-  } catch {
-    container.innerHTML =
-      "<p style='color:white;text-align:center;padding:50px;'>Błąd wczytywania pliku JSON.</p>";
-  }
-
-})();
-  
-/* ===== AUTO-HIDE BUTTONS ===== */
-let lastScroll = 0;
-const nav = document.getElementById("nav");
-
-window.addEventListener("scroll", () => {
-  const current = window.scrollY;
-  if (current > lastScroll) nav.classList.add("hidden");
-  else nav.classList.remove("hidden");
-  lastScroll = current;
-});
-
-/* ===== REACTIONS (FRONT-END ONLY) ===== */
-document.querySelectorAll(".react").forEach(btn => {
-  btn.addEventListener("click", () => {
-    const id = btn.dataset.id;
-
-    if (localStorage.getItem(`react_${id}`)) return;
-
-    localStorage.setItem(`react_${id}`, "1");
-
-    btn.classList.add("clicked");
-
-    const count = btn.querySelector(".count");
-    count.textContent = parseInt(count.textContent) + 1;
-
-    setTimeout(() => btn.classList.remove("clicked"), 250);
-  });
-});
-
-/* ============================================================
-   ===== DISQUS (MAPA ISTNIEJĄCYCH WĄTKÓW + AUTO IDENTIFIER) =====
-   ============================================================ */
-
-/* 
-   MAPA ISTNIEJĄCYCH WĄTKÓW DISQUS
-   Jeśli chcesz podpiąć istniejący wątek do konkretnego rozdziału,
-   wpisz go tutaj:
-
-   "nazwa_rozdziału": "identifier_z_disqus"
-*/
-
-const disqusMap = {
-  // AFOS
-  "afos:2": "https://tajnachalupka.wixsite.com/ub-1/ub25",
-  "afos:2♡": "https://tajnachalupka.wixsite.com/ub-1/ub24",
-
-  // Inny komiks
-  "mycomic:1": "mycomic-ch1-old",
-  "mycomic:2": "mycomic-ch2-old"
-};
-
-/*
-   KONFIGURACJA DISQUS
-   Jeśli rozdział jest w mapie → używa istniejącego wątku.
-   Jeśli nie → tworzy nowy wątek o nazwie `${comicKey}-${chapter}`.
-*/
-
-var disqus_config = function () {
-  const key = `${comicKey}:${chapter}`;
-  const mapped = disqusMap[key];
-
-  this.page.url = window.location.href;
-  this.page.identifier = mapped || `${comicKey}-${chapter}`;
-};
-
-/* ===== DISQUS (LAZY LOAD) ===== */
-let disqusLoaded = false;
-
-function loadDisqus() {
-  if (disqusLoaded) return;
-  disqusLoaded = true;
-
-  var d = document, s = d.createElement('script');
-  s.src = 'https://chalupka-ruoye-chan-wix.disqus.com/embed.js';
-  s.setAttribute('data-timestamp', +new Date());
-  (d.head || d.body).appendChild(s);
-}
-
-const observerDisqus = new IntersectionObserver(entries => {
-  if (entries[0].isIntersecting) loadDisqus();
-}, { threshold: 0.1 });
-
-observerDisqus.observe(document.getElementById("disqus_thread"));
-</script>
-
-</body>
+    /* ===== NEXT
 </html>
