@@ -160,21 +160,26 @@ const disqusMap = {
   "afos:2♡": "https://tajnachalupka.wixsite.com/ub-1/ub24"
 };
 
+function loadDisqusNow() {
+  var d = document, s = d.createElement('script');
+  s.src = 'https://chalupka-ruoye-chan-wix.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+}
+
 var disqus_config = function () {
   const key = `${CK}:${CH}`;
   this.page.url = location.href;
   this.page.identifier = disqusMap[key] || `${CK}-${CH}`;
 };
 
-let disqusLoaded = false;
-new IntersectionObserver(e=>{
-  if(e[0].isIntersecting && !disqusLoaded){
-    disqusLoaded = true;
-    const s=document.createElement("script");
-    s.src="https://chalupka-ruoye-chan-wix.disqus.com/embed.js";
-    document.body.appendChild(s);
+/* ŁADUJEMY DISQUS DOPIERO PO USTAWIENIU CK I CH */
+new IntersectionObserver(e => {
+  if (e[0].isIntersecting && CK && CH) {
+    loadDisqusNow();
   }
-}).observe(document.getElementById("disqus_thread"));
+}, { threshold: 0.1 }).observe(document.getElementById("disqus_thread"));
+
 </script>
 
 </body>
