@@ -193,9 +193,31 @@ a { color: white; text-decoration: none; }
 
   // GENEROWANIE ROZDZIAŁÓW
   const chapters = document.getElementById("chapters");
-  const total = data.totalChapters || 250;
+ // AUTOMATYCZNE GENEROWANIE ROZDZIAŁÓW NA PODSTAWIE JSON
+const chapters = document.getElementById("chapters");
 
-  for (let num = 1; num <= total; num++) {
+// Pobieramy listę istniejących rozdziałów z JSON
+const chapterNumbers = Object.keys(data.chapters)
+  .map(n => Number(n))
+  .sort((a, b) => a - b); // sortujemy rosnąco
+
+chapterNumbers.forEach(num => {
+  const a = document.createElement("a");
+  a.href = `reader.html?comic=${comicKey}&chapter=${num}`;
+
+  const btn = document.createElement("div");
+  btn.className = "chapter-btn";
+  btn.innerText = num;
+
+  // oznaczanie przeczytanych
+  if (localStorage.getItem(`read_${comicKey}_${num}`) === "1") {
+    btn.classList.add("visited");
+  }
+
+  a.appendChild(btn);
+  chapters.appendChild(a);
+});
+
     const a = document.createElement("a");
     a.href = `reader.html?comic=${comicKey}&chapter=${num}`;
 
