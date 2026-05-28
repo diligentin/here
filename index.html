@@ -34,10 +34,11 @@ body {
   filter:drop-shadow(0 0 20px rgba(0,0,0,0.6));
 }
 .section-title-img {
-  display:block;
-  width:300px;
-  margin: 35px auto 20px auto;
+  display: block;
+  width: 300px;
+  margin: 35px 0 20px 17px; /* wyrównanie do lewej marginesu gridu */
 }
+
 
 /* ===== NAGŁÓWKI ===== */
 h1, h2 {
@@ -51,12 +52,14 @@ h1, h2 {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 11px;
-  width: calc(100% - 30px);
-  max-width: 1200px;
+  padding: 0 17px;
+  box-sizing: border-box;
+  width: 100%;
   margin: 0 auto;
 }
 
-  .auto-grid + .auto-grid {
+/* 18px tylko pod gridem z tytułami */
+#titles-grid {
   margin-bottom: 18px;
 }
 
@@ -93,17 +96,20 @@ h1, h2 {
   height:270px;
   object-fit:cover;
 }
+  #titles-grid {
+  margin-bottom: 18px;
+}
+
 
 
 @media (max-width: 600px) {
   .auto-grid {
     grid-template-columns: repeat(3, 1fr);
     gap: 11px;
-     zoom: 0.7;
-
-   
+    padding: 0 17px; /* nadal ten sam margines */
   }
 }
+
 </style>
 </head>
 
