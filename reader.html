@@ -18,10 +18,13 @@ body {
 }
 /* obrazki */
 img {
-  display: block;
-  width: 100%;
+ width: 100%;
   height: auto;
-  margin: 0 auto;
+  display: block;
+  max-width: 720px;
+  aspect-ratio: auto;
+  image-rendering: -webkit-optimize-contrast;
+  object-fit: contain;
 }
 
 @media (max-width: 800px) {
