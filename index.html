@@ -48,20 +48,34 @@ h1, h2 {
 }
 
 /* ===== GRID ===== */
-.auto-grid {
+
+  .section-block {
+  width: 100%;
+  max-width: 1000px; /* możesz zmienić */
+  margin: 0 auto;
+  padding: 0 17px; /* stały margines boczny */
+  box-sizing: border-box;
+}
+.section-title-img {
+  display: block;
+  width: 300px;
+  margin: 35px 0 20px 0; /* już bez 17px */
+}
+
+  .auto-grid {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 11px;
-  padding: 0 17px;
-  box-sizing: border-box;
   width: 100%;
   margin: 0 auto;
 }
+
 
 /* 30px tylko pod gridem z tytułami */
 #titles-grid {
   margin-bottom: 30px;
 }
+  
 
 
 /* KARTA */
@@ -102,10 +116,9 @@ h1, h2 {
 @media (max-width: 600px) {
   .auto-grid {
     grid-template-columns: repeat(3, 1fr);
-    gap: 11px;
-    padding: 0 17px; /* nadal ten sam margines */
   }
 }
+
 
 </style>
 </head>
@@ -148,10 +161,11 @@ h1, h2 {
 </div>
 
 <!-- ===== WSZYSTKIE TYTUŁY — 12 OKŁADEK 170×300 ===== -->
-<img class="section-title-img" src="https://tajnachalupka.github.io/main/wszystkie.png" alt="">
 
-<div id="titles-grid" class="auto-grid">
-
+  <div class="section-block">
+  <img class="section-title-img" src="https://tajnachalupka.github.io/main/wszystkie.png" />
+  <div id="titles-grid" class="auto-grid">
+   
   <a class="card tall" href="afos.html">
     <img src="https://tajnachalupka.github.io/main/cov/!afos.jpg">
   </a>
@@ -183,8 +197,9 @@ h1, h2 {
    <a class="card tall" href="osd.html">
     <img src="https://tajnachalupka.github.io/main/cov/!osd.jpg">
   </a>
-
+  </div>
 </div>
+
 
 <!-- PADLET -->
 <div class="padlet-embed" 
