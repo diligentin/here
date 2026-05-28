@@ -129,8 +129,12 @@ img {
 <div class="nav-buttons" id="nav">
 
   <div class="nav-btn" id="nextBtn">
-    <img src="https://tajnachalupka.github.io/main/szczala.png" class="btn-icon">
+    <img src="https://tajnachalupka.github.io/main/szczala-next.png" class="btn-icon">
   </div>
+  
+<div class="nav-btn" id="prevBtn">
+  <img src="https://tajnachalupka.github.io/main/szczala-prev.png" class="btn-icon">
+</div>
 
   <div class="nav-btn" id="homeBtn">
     <img src="https://tajnachalupka.github.io/main/domek.png" class="btn-icon">
@@ -305,11 +309,24 @@ img {
     const index = keys.indexOf(chapter);
 
     document.getElementById("nextBtn").onclick = () => {
-      if (index !== -1 && index < keys.length - 1) {
-        window.location.href =
-          `reader.html?comic=${comicKey}&chapter=${encodeURIComponent(keys[index + 1])}`;
-      } else {
-        window.location.href = "https://diligentin.github.io/here";
+  if (index !== -1 && index < keys.length - 1) {
+    window.location.href =
+      `reader.html?comic=${comicKey}&chapter=${encodeURIComponent(keys[index + 1])}`;
+  } else {
+    window.location.href = "https://diligentin.github.io/here";
+  }
+};
+
+document.getElementById("prevBtn").onclick = () => {
+  if (index > 0) {
+    window.location.href =
+      `reader.html?comic=${comicKey}&chapter=${encodeURIComponent(keys[index - 1])}`;
+  } else {
+    window.location.href = "https://diligentin.github.io/here";
+  }
+};
+
+
       }
     };
 
