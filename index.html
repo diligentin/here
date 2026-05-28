@@ -56,8 +56,8 @@ body {
 
 .auto-grid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 11px;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
   justify-content: center;
   width: 100%;
   margin: 0 auto;
@@ -87,16 +87,16 @@ body {
 
 /* MINIATURY 150×150 */
 .card.square img {
-  width:150px;
-  height:150px;
-  object-fit:cover;
+  width: min(150px, 100%); /* dopóki się mieści = 150px, jak za mało miejsca = skaluje się */
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
 }
 
 /* OKŁADKI 150×270 */
 .card.tall img {
-  width:150px;
-  height:270px;
-  object-fit:cover;
+  width: min(150px, 100%);
+  aspect-ratio: 5 / 9;
+  object-fit: cover;
 }
 
 /* ===== TELEFON ===== */
