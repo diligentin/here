@@ -38,9 +38,9 @@ body {
 /* ===== SEKCJA BLOKU ===== */
 
 .section-block {
-  width: min(100%, 1000px); /* kluczowa poprawka */
+  width: min(100%, 1000px);
   margin: 0 auto;
-  padding: 0; /* nic */
+  padding: 0 10px; 
   box-sizing: border-box;
 }
 
@@ -61,7 +61,6 @@ body {
   justify-content: center;
   width: 100%;
   margin: 0 auto;
-  padding: 0 17px;
   box-sizing: border-box;
 }
 
@@ -88,14 +87,18 @@ body {
 
 /* MINIATURY 150×150 */
 .card.square img {
-  width: min(150px, 100%); /* dopóki się mieści = 150px, jak za mało miejsca = skaluje się */
+  width: 100%;
+  max-width: 150px;
+  height: auto;
   aspect-ratio: 1 / 1;
   object-fit: cover;
 }
 
 /* OKŁADKI 150×270 */
 .card.tall img {
-  width: min(150px, 100%);
+  width: 100%;
+  max-width: 150px;
+  height: auto;
   aspect-ratio: 5 / 9;
   object-fit: cover;
 }
