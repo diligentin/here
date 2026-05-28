@@ -86,7 +86,7 @@ img {
 (async function () {
   const params = new URLSearchParams(window.location.search);
   const comicKey = params.get("comic");
-  const chapter = Number(params.get("chapter"));
+  const chapter = params.get("chapter");   // ← NIE liczba, pełny string
 
   const container = document.getElementById("comic-container");
 
@@ -96,7 +96,7 @@ img {
   };
 
   // ===== WALIDACJA =====
-  if (!comicKey || !chapter) {
+  if (comicKey === null || chapter === null) {
     container.innerHTML =
       "<p style='color:white;text-align:center;padding:50px;'>Brak parametru comic lub chapter.</p>";
     document.getElementById("nextBtn").onclick = () => {
@@ -110,7 +110,7 @@ img {
     if (!res.ok) throw new Error("Nie znaleziono JSON");
 
     const data = await res.json();
-    const pages = data.chapters[String(chapter)];
+    const pages = data.chapters[chapter];   // ← klucz 1:1, działa z emoji
 
     // ===== jeśli chapter nie istnieje =====
     if (!pages) {
@@ -152,11 +152,13 @@ img {
 
     // ===== NEXT BUTTON =====
     const nextBtn = document.getElementById("nextBtn");
-    const total = Object.keys(data.chapters).length;
 
-    if (chapter < total) {
+    const keys = Object.keys(data.chapters);
+    const index = keys.indexOf(chapter);
+
+    if (index !== -1 && index < keys.length - 1) {
       nextBtn.onclick = () => {
-        window.location.href = `reader.html?comic=${comicKey}&chapter=${chapter + 1}`;
+        window.location.href = `reader.html?comic=${comicKey}&chapter=${keys[index + 1]}`;
       };
     } else {
       nextBtn.onclick = () => {
