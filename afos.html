@@ -202,9 +202,8 @@ a { color: white; text-decoration: none; }
 
   // Ustaw cover, desc, tagi, tytuł
   document.getElementById("cover").src = data.cover;
-  document.getElementById("title").innerText = data.title;
   document.getElementById("desc").innerHTML = data.desc.replace(/\n/g, "<br>");
-  document.getElementById("tags").innerHTML = data.tags.map(t => `<span>${t}</span>`).join("");
+
 
   // ===== AUTOMATYCZNE GENEROWANIE ROZDZIAŁÓW =====
   const chapters = document.getElementById("chapters");
