@@ -2,88 +2,130 @@
 <html lang="pl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>tłumaczenia</title>
+<title>afos</title>
 
 <style>
+/* ===== RESET / BAZA ===== */
 body {
-  margin:0;
-  background:#191818ff;
-  color:white;
-  font-family:Avenir Next W1G, sans-serif;
+  margin: 0;
+  background: #191818ff;
+  color: white;
+  font-family: Trebuchet MS, sans-serif;
+}
+a { color: white; text-decoration: none; }
+
+/* HOME BUTTON NA DOLE */
+.back {
+  display: block;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 20;
+}
+.back img {
+  width: 80px;
+  height: auto;
 }
 
-/* ===== HERO ===== */
-.hero {
-  display:flex;
-  justify-content:center;
-  padding:20px 0;
-}
-.hero img {
-  width:300px;
-  filter:drop-shadow(0 0 20px rgba(0,0,0,0.6));
-}
-.section-title-img {
-  display:block;
-  width:300px;
-  margin: 20px 0 20px 16px;
+/* ===== NOWY UKŁAD COVER + INFO ===== */
+.comic-layout {
+  display: flex;
+  gap: 32px;
+  padding: 40px;
+  align-items: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
-/* ===== NAGŁÓWKI ===== */
-h1, h2 {
-  margin:20px 16px 10px;
-  font-size:30px;
-  font-family:PiekosToons BB;
-}
-
-/* ===== GRID ===== */
-.auto-grid {
-  display: grid;
-  gap: 10px;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+.cover {
   width: 100%;
-  max-width: 1100px;
-  margin: 0 auto;
+  max-width: 299px;
+  border-radius: 12px;
+  display: block;
 }
 
-/* KARTA */
-.card img {
-  transition: filter 0.25s ease;
+.comic-info {
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: center;
 }
 
-.card:hover img {
-  filter: brightness(0.75);
+/* TYTUŁ */
+.comic-title {
+  font-family: Trebuchet MS, sans-serif;
+  font-size: 40px;
+  text-align: center;
+  margin-bottom: 5px;
 }
 
-.card {
-  text-decoration:none;
-  color:white;
-  text-align:center;
+/* TAGI */
+.comic-tags {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
-/* MINIATURY 170×170 */
-.card.square img {
-  width:170px;
-  height:170px;
-  object-fit:cover;
-  border-radius:8px;
+.comic-tags span {
+  font-family: Trebuchet MS, sans-serif;
+  font-size: 26px;
+  padding: 0;
+  background: none;
+  color: #8394F4;
+  letter-spacing: 0.3px;
 }
 
-/* OKŁADKI 170×300 */
-.card.tall img {
-  width:170px;
-  height:300px;
-  object-fit:cover;
-  border-radius:8px;
+/* OPIS */
+.comic-desc {
+  font-family: Trebuchet MS, sans-serif;
+  font-size: 17px;
+  color: #e0e0e0;
+  line-height: 1.3;
+  letter-spacing: 0.2px;
+  text-align: justify;
 }
 
-/* ===== PRZECZYTANE ROZDZIAŁY ===== */
-.card.read img {
-  filter: brightness(0.4) saturate(0.8);
-  border: 3px solid #00ff88;
-  border-radius: 8px;
+/* ===== SEKCJA ===== */
+.section { padding: 24px 16px; }
+.section h2 { font-size: 30px; font-weight: 600; margin-bottom: 50px; }
+
+/* ===== NOWA SIATKA ROZDZIAŁÓW ===== */
+.chapter-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 42px);
+  gap: 12px;
+  justify-content: center;
+  padding-bottom: 40px;
 }
+
+.chapter-btn {
+  width: 42px;
+  height: 42px;
+  background: #1c1c1c;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 300;
+  transition: 0.2s;
+}
+
+.chapter-btn:hover {
+  background: #2a2a2a;
+}
+
+.chapter-btn.visited {
+  background: #1c1c1c;
+  color: #8394F4;
+  font-weight: 300;
+ 
+}
+
 
 @media (max-width: 600px) {
   body {
@@ -95,93 +137,82 @@ h1, h2 {
 
 <body>
 
-<header class="hero">
-  <img src="https://tajnachalupka.github.io/main/tlum.png" alt="l">
-</header>
+<!-- HOME BUTTON -->
+<a class="back" href="index.html">
+  <img src="https://tajnachalupka.github.io/main/home.png" alt="">
+</a>
 
-<!-- ===== NOWY ROZDZIAŁ — 6 OKŁADEK 170×170 ===== -->
-<img class="section-title-img" src="https://tajnachalupka.github.io/main/nowy.png" alt="">
+<!-- NOWY UKŁAD -->
+<div class="comic-layout">
+  
+  <img class="cover" id="cover" src="" alt="">
 
-<div class="auto-grid">
+  <div class="comic-info">
 
-  <a class="card square" href="reader.html?comic=thehoundsofsisyphus&chapter=8">
-    <img src="https://tajnachalupka.github.io/main/nr/afos60.jpg">
-  </a>
+      <div class="comic-title" id="title"></div>
 
-  <a class="card square" href="reader.html?comic=thehoundsofsisyphus&chapter=8">
-    <img src="https://tajnachalupka.github.io/main/nr/rc95.jpg">
-  </a>
+      <div class="comic-tags" id="tags"></div>
 
-  <a class="card square" href="reader.html?comic=thehoundsofsisyphus&chapter=8">
-    <img src="https://tajnachalupka.github.io/main/nr/sah6.jpg">
-  </a>
-
-  <a class="card square" href="reader.html?comic=thehoundsofsisyphus&chapter=8">
-    <img src="https://tajnachalupka.github.io/main/nr/ub26c.jpg">
-  </a>
-
-  <a class="card square" href="reader.html?comic=thehoundsofsisyphus&chapter=8">
-    <img src="https://tajnachalupka.github.io/main/nr/yiam11.jpg">
-  </a>
-
-  <a class="card square" href="reader.html?comic=afos&chapter=2">
-    <img src="https://tajnachalupka.github.io/main/nr/yiam12.jpg">
-  </a>
+      <p class="comic-desc" id="desc"></p>
+ 
+  </div>
 
 </div>
 
-<!-- ===== WSZYSTKIE TYTUŁY — 12 OKŁADEK 170×300 ===== -->
-<img class="section-title-img" src="https://tajnachalupka.github.io/main/wszystkie.png" alt="">
-
-<div class="auto-grid">
-
-  <a class="card tall" href="comic-swallow-you-whole.html">
-    <img src="https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/Syw.png">
-  </a>
-
-  <a class="card tall" href="comic-the-hounds-of-sisyphus.html">
-    <img src="https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/thos.png">
-  </a>
-
-  <a class="card tall" href="afos.html">
-    <img src="https://tajnachalupka.github.io/main/cov/!afos.jpg">
-  </a>
-
-  <a class="card tall" href="comic-devils-knight.html">
-    <img src="https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/Dk.png">
-  </a>
-
-  <a class="card tall" href="comic-shutline.html">
-    <img src="https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/sh.png">
-  </a>
-
-  <a class="card tall" href="comic-love-remedy.html">
-    <img src="https://pub-03107a31d2b74d229162ef805e24eed7.r2.dev/LR.png">
-  </a>
-
+<!-- ROZDZIAŁY -->
+<div class="section">
+  <h2>Rozdziały</h2>
+  <div class="chapter-grid" id="chapters"></div>
 </div>
 
-<!-- PADLET -->
 <div class="padlet-embed" style="border:1px solid rgba(0,0,0,0.1);border-radius:2px;box-sizing:border-box;overflow:hidden;position:relative;width:100%;background:#F4F4F4">
   <p style="padding:0;margin:0">
-    <iframe src="https://padlet.com/embed/ml339n7v5mkqpdpg" frameborder="0" allow="camera;microphone;geolocation;display-capture;clipboard-write" style="width:100%;height:608px;display:block;padding:0;margin:0"></iframe>
+    <iframe src="https://padlet.com/embed/ml339n7v5mkqpdpg" frameborder="0" style="width:100%;height:608px;display:block;padding:0;margin:0"></iframe>
   </p>
 </div>
 
-<!-- ===== JS: OZNACZANIE PRZECZYTANYCH ROZDZIAŁÓW ===== -->
 <script>
-document.querySelectorAll("a.card").forEach(card => {
-  const url = new URL(card.href, window.location.href);
-  const comic = url.searchParams.get("comic");
-  const chapter = url.searchParams.get("chapter");
+(async function() {
+  const comicKey = "afos";
+  const jsonUrl = `${comicKey}.json`;
 
-  if (comic && chapter) {
-    const key = `read_${comic}_${chapter}`;
-    if (localStorage.getItem(key)) {
-      card.classList.add("read");
+  const res = await fetch(jsonUrl);
+  const data = await res.json();
+
+  // Ustaw cover, desc, tagi, tytuł
+  document.getElementById("cover").src = data.cover;
+  document.getElementById("cover").alt = comicKey;
+
+  document.getElementById("title").innerText = data.title || "A First of Summers";
+
+  // ENTERY w opisie
+  document.getElementById("desc").innerHTML = data.desc.replace(/\n/g, "<br>");
+
+  document.getElementById("tags").innerHTML = data.tags
+    .map(t => `<span>${t}</span>`)
+    .join("");
+
+  // GENEROWANIE ROZDZIAŁÓW
+  const chapters = document.getElementById("chapters");
+  const total = data.totalChapters || 6;
+
+  for (let num = 1; num <= total; num++) {
+    const a = document.createElement("a");
+    a.href = `reader.html?comic=${comicKey}&chapter=${num}`;
+
+    const btn = document.createElement("div");
+    btn.className = "chapter-btn";
+    btn.innerText = num;
+
+    // POPRAWIONE: sprawdzamy read_, nie visited_
+    if (localStorage.getItem(`read_${comicKey}_${num}`) === "1") {
+      btn.classList.add("visited");
     }
+
+    a.appendChild(btn);
+    chapters.appendChild(a);
   }
-});
+})();
 </script>
 
 </body>
