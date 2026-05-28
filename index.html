@@ -61,10 +61,11 @@ body {
 
 .auto-grid {
   display: grid;
-  grid-template-columns: repeat(6, minmax(auto, 1fr));
+  grid-auto-flow: column;        /* elementy układane w kolumny */
+  grid-auto-columns: max-content;/* szerokość kolumn = szerokość elementu */
+  justify-content: center;       /* wyśrodkowanie całego rzędu */
   gap: 7px;
-  justify-content: center;   /* wyśrodkowanie całego rzędu */
-  margin-bottom: 10px; /* odstęp między gridami */
+  margin-bottom: 10px;
 }
 
 .auto-grid:last-child {
