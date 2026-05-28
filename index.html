@@ -60,10 +60,9 @@ body {
 /* ===== GRID ===== */
 
 .auto-grid {
-  display: grid;
-  grid-auto-flow: column;        /* elementy układane w kolumny */
-  grid-auto-columns: max-content;/* szerokość kolumn = szerokość elementu */
-  justify-content: center;       /* wyśrodkowanie całego rzędu */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* wyśrodkowanie */
   gap: 7px;
   margin-bottom: 10px;
 }
@@ -72,7 +71,6 @@ body {
   margin-bottom: 0;
 }
 
-/* odstęp pod gridem tytułów */
 #titles-grid-1 {
   margin-bottom: 10px;
 }
