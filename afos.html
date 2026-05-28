@@ -9,7 +9,7 @@
 
 <style>
 
- @font-face {
+@font-face {
   font-family: "figtree";
   src: url("https://tajnachalupka.github.io/main/Figtree.ttf") format("truetype");
   font-weight: normal;
@@ -23,15 +23,12 @@
   font-style: normal;
 }
 
-
-}
-
 /* ===== RESET / BAZA ===== */
 body {
   margin: 0;
   background: #191818ff;
   color: white;
-  font-family: figtree; sans-serif;
+  font-family: figtree, sans-serif;
 }
 a { color: white; text-decoration: none; }
 
@@ -77,8 +74,8 @@ a { color: white; text-decoration: none; }
 .comic-header-img {
   display: block;
   width: 100%;
-  max-width: 600px; /* dopasowane do .comic-info */
-  margin: 0 auto 16px auto; /* wyśrodkowanie + odstęp jak tytuł */
+  max-width: 600px;
+  margin: 0 auto 16px auto;
   height: auto;
 }
 
@@ -92,18 +89,17 @@ a { color: white; text-decoration: none; }
 
 /* ===== SEKCJA ===== */
 .section { padding: 24px 16px; }
-.section h2 {  font-family: thai; sans-serif; font-size: 30px; font-weight: 200; text-align: center; margin-bottom: 50px; }
+.section h2 { font-family: thai, sans-serif; font-size: 30px; font-weight: 200; text-align: center; margin-bottom: 50px; }
 .section h3 { font-size: 20px; font-weight: 200; text-align: center; margin-bottom: 50px; }
 
 /* ===== SIATKA ROZDZIAŁÓW ===== */
 .chapter-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, 45px); /* max 10 w rzędzie */
-  gap: 11px; /* odstępy między kolumnami i wierszami */
-  justify-content: center; /* wyśrodkowanie */
+  grid-template-columns: repeat(auto-fit, 45px);
+  gap: 11px;
+  justify-content: center;
   padding-bottom: 40px;
 }
-
 
 .chapter-btn {
   width: 45px;
@@ -122,7 +118,6 @@ a { color: white; text-decoration: none; }
   background: #2a2a2a;
 }
 
-/* ===== PRZECZYTANE ROZDZIAŁY — TYLKO KOLOR NUMERU ===== */
 .chapter-btn.visited {
   background: #272727ff;
   color: #8394F4;
@@ -151,7 +146,7 @@ a { color: white; text-decoration: none; }
     <!-- OBRAZEK ZAMIAST TYTUŁU I TAGÓW -->
     <img src="https://tajnachalupka.github.io/main/tagi/afos.png" class="comic-header-img" alt="">
 
-    <!-- OPIS – JEDEN ELEMENT, NIE DWA -->
+    <!-- OPIS -->
     <p class="comic-desc" id="desc"></p>
 
   </div>
@@ -175,7 +170,7 @@ a { color: white; text-decoration: none; }
        width:100%;
        max-width:960px;
        background:#F4F4F4;
-       margin: 0 auto;   /* WYŚRODKOWANIE */
+       margin: 0 auto;
      ">
   <p style="padding:0;margin:0">
     <iframe 
@@ -202,12 +197,9 @@ a { color: white; text-decoration: none; }
   const res = await fetch(jsonUrl);
   const data = await res.json();
 
-  // Ustaw cover, desc, tagi, tytuł
   document.getElementById("cover").src = data.cover;
   document.getElementById("desc").innerHTML = data.desc.replace(/\n/g, "<br>");
 
-
-  // ===== AUTOMATYCZNE GENEROWANIE ROZDZIAŁÓW =====
   const chapters = document.getElementById("chapters");
 
   if (data.chapters && typeof data.chapters === "object") {
