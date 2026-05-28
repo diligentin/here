@@ -129,11 +129,11 @@ a { color: white; text-decoration: none; }
 @media (max-width: 600px) {
   body { zoom: 0.9; }
   
-  .comic-header-img {
-    max-width: 100%;   /* większy obraz */
-    width: 100%;       /* wymuszenie większej szerokości */
-    margin-top: 10px; /* opcjonalnie: trochę oddechu */
-    }
+ .comic-header-img {
+    width: 120%;
+    max-width: none;
+    transform: translateX(-10%);
+  }
 }
 </style>
 </head>
