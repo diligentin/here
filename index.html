@@ -61,22 +61,23 @@ body {
 
 .auto-grid {
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(6, minmax(auto, 1fr));
   gap: 7px;
-  justify-items: center;
-  margin-bottom: 10px; /* odstęp między gridami */
-}
-.auto-grid:last-child {
-  margin-bottom: 0; /* ostatni grid bez odstępu */
-} 
-  
-/* odstęp pod gridem tytułów */
-#titles-grid-1 {
+  justify-content: center;   /* wyśrodkowanie całego rzędu */
   margin-bottom: 10px; /* odstęp między gridami */
 }
 
+.auto-grid:last-child {
+  margin-bottom: 0;
+}
+
+/* odstęp pod gridem tytułów */
+#titles-grid-1 {
+  margin-bottom: 10px;
+}
+
 #titles-grid-2 {
-  margin-bottom: 30px; /* odstęp pod całą sekcją */
+  margin-bottom: 30px;
 }
 
 /* ===== KARTY ===== */
