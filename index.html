@@ -67,10 +67,15 @@ body {
   margin-bottom: 10px;
 }
 
-.auto-grid:last-child {
-  margin-bottom: 0;
+/* każdy element zachowuje się jak w gridzie */
+.auto-grid > * {
+  flex: 1 1 calc(100% / 6 - 7px); /* 6 elementów w rzędzie */
+  max-width: calc(100% / 6 - 7px);
+  display: flex;
+  justify-content: center;
 }
 
+/* odstępy między gridami */
 #titles-grid-1 {
   margin-bottom: 10px;
 }
@@ -78,6 +83,36 @@ body {
 #titles-grid-2 {
   margin-bottom: 30px;
 }
+
+/* RESPONSYWNOŚĆ – jak grid */
+@media (max-width: 1200px) {
+  .auto-grid > * {
+    flex: 1 1 calc(100% / 4 - 7px); /* 4 w rzędzie */
+    max-width: calc(100% / 4 - 7px);
+  }
+}
+
+@media (max-width: 800px) {
+  .auto-grid > * {
+    flex: 1 1 calc(100% / 3 - 7px); /* 3 w rzędzie */
+    max-width: calc(100% / 3 - 7px);
+  }
+}
+
+@media (max-width: 600px) {
+  .auto-grid > * {
+    flex: 1 1 calc(100% / 2 - 7px); /* 2 w rzędzie */
+    max-width: calc(100% / 2 - 7px);
+  }
+}
+
+@media (max-width: 400px) {
+  .auto-grid > * {
+    flex: 1 1 100%; /* 1 w rzędzie */
+    max-width: 100%;
+  }
+}
+
 
 /* ===== KARTY ===== */
 
@@ -113,23 +148,7 @@ body {
   object-fit: cover;
 }
 
-/* ===== TELEFON ===== */
 
-@media (max-width: 600px) {
-  .auto-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-  }
-
-  .card img {
-    width: 100%;
-    height: auto;
-  }
-
-  .section-title-img {
-    width: 58%;
-    height: auto;
-  }
 }
 
 
