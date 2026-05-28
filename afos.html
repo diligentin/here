@@ -70,30 +70,14 @@ a { color: white; text-decoration: none; }
   text-align: center;
 }
 
-/* TYTUŁ */
-.comic-title {
-  font-size: 40px;
-  text-align: center;
-  margin-bottom: 5px;
-  font-family: thai; sans-serif;
+/* ===== OBRAZ ZAMIAST TYTUŁU + TAGÓW ===== */
+.comic-header-img {
+  display: block;
+  width: 100%;
+  max-width: 600px; /* dopasowane do .comic-info */
+  margin: 0 auto 16px auto; /* wyśrodkowanie + odstęp jak tytuł */
+  height: auto;
 }
-
-/* TAGI */
-.comic-tags {
-  display: flex;
-  gap: 4px;
-  flex-wrap: wrap;
-  justify-content: center;
-  font-family: thai; sans-serif;
-}
-
-.comic-tags span {
-  font-family: thai; sans-serif;
-  font-size: 26px;
-  color: white;
-  letter-spacing: 0.3px;
-}
-
 
 /* OPIS */
 .comic-desc {
@@ -159,8 +143,8 @@ a { color: white; text-decoration: none; }
 <div class="comic-layout">
   <img class="cover" id="cover" src="" alt="">
   <div class="comic-info">
-      <div class="comic-title" id="title"></div>
-      <div class="comic-tags" id="tags"></div>
+    <img src="https://tajnachalupka.github.io/main/tagi/afos.png" class="comic-header-img" alt="Tytuł">
+
       <p class="comic-desc" id="desc"></p>
   </div>
 </div>
