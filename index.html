@@ -40,20 +40,26 @@ h1, h2 {
 /* ===== GRID ===== */
 .auto-grid {
   display: grid;
-  gap: 10px;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  width: 100%;
-  max-width: 1100px;
-  margin: auto;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 11px;
+  width: calc(100% - 30px);
+  max-width: 1200px;
+  margin: 0 auto;
 }
+
 
 /* KARTA */
 .card img {
   transition: filter 0.25s ease;
 }
 
+.card img {
+  transition: transform 0.25s ease, border-radius 0.25s ease;
+}
+
 .card:hover img {
-  filter: brightness(0.75);
+  transform: scale(1.03);
+  border-radius: 14px; /* delikatna zmiana kształtu */
 }
 
 .card {
@@ -78,8 +84,12 @@ h1, h2 {
 
 
 @media (max-width: 600px) {
-  body {
-    zoom: 0.7;
+  .auto-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 11px;
+     zoom: 0.7;
+
+   
   }
 }
 </style>
