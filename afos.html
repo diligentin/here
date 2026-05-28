@@ -211,10 +211,9 @@ a { color: white; text-decoration: none; }
   const chapters = document.getElementById("chapters");
 
   if (data.chapters && typeof data.chapters === "object") {
-    const chapterNumbers = Object.keys(data.chapters)
-      .map(n => Number(n))
-      .filter(n => !isNaN(n))
-      .sort((a, b) => a - b);
+  const chapterNumbers = Object.keys(data.chapters)
+    .sort((a, b) => parseFloat(a) - parseFloat(b));
+
 
     chapterNumbers.forEach(num => {
       const a = document.createElement("a");
