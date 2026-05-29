@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+</head>
+<body>
+<script>
+const parts = location.pathname.split("/").filter(Boolean);
+
+// parts = ["series", "afos"] lub ["series", "afos", "1"]
+
+const slug = parts[1];
+const chapter = parts[2];
+
+if (!slug) {
+  document.body.innerHTML = "<h2>Brak slugu serii</h2>";
+} else if (chapter) {
+  // Rozdział
+  location.href = `/reader.html?comic=${slug}&chapter=${chapter}`;
+} else {
+  // Strona tytułowa
+  location.href = `/series.html?title=${slug}`;
+}
+</script>
+</body>
+</html>
