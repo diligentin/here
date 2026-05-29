@@ -101,7 +101,7 @@ let CK = null, CH = null;
     await img.decode();
 
     const out = [];
-    const H = 1400;
+    const H = 1600;
     const c = document.createElement("canvas");
     const ctx = c.getContext("2d");
     c.width = img.width;
@@ -120,8 +120,8 @@ let CK = null, CH = null;
     const slices = await slice(src);
     for (const s of slices) {
      const im = document.createElement("img");
-im.width = s.w;
-im.height = s.h;
+im.style.width = s.w + "px";
+im.style.height = s.h + "px";
 im.src = s.url;   // ← dopiero TERAZ
 box.appendChild(im);
  }
