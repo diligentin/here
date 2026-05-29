@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<link rel="icon" type="image/png" href="https://tajnachalupka.github.io/main/favicon.png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title id="page-title">loading...</title>
+
+<style>
+
+@font-face {
+  font-family: "figtree";
+  src: url("https://tajnachalupka.github.io/main/Figtree.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "piekos";
+  src: url("https://tajnachalupka.github.io/main/Piekos.otf") format("opentype");
+  font-weight: 300;
+}
+
+/* ===== RESET / BAZA ===== */
+body {
+  margin: 0;
+  background: #191818ff;
+  color: white;
+  font-family: figtree, sans-serif;
+}
+a { color: white; text-decoration: none; }
+
+/* HOME BUTTON */
+.back {
+  display: block;
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 20;
+}
+.back img {
+  width: 50px;
+  height: auto;
+}
+
+/* ===== UKŁAD ===== */
+.comic-layout {
+  display: flex;
+  gap: 32px;
+  padding: 40px;
+  align-items: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.cover {
+  width: 100%;
+  max-width: 299px;
+  border-radius: 2px;
+}
+
+.comic-info {
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: center;
+}
+
+.comic-header-img {
+  display: block;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto 16px auto;
+  height: auto;
+}
+
+/* OPIS */
+.comic-desc {
+  font-size: 17px;
+  color: #e0e0e0;
+  line-height: 1.3;
+  text-align: justify;
+}
+
+/* ===== SEKCJA ===== */
+.section { padding: 24px 16px; }
+.section h2 { font-size: 30px; font-weight: 200; text-align: center; margin-bottom: 50px; }
+
+/* ===== SIATKA ROZDZIAŁÓW ===== */
+.chapter-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(45px, 1fr));
+  gap: 11px;
+  justify-content: center;
+  padding-bottom: 40px;
+  margin-bottom: 33px;
+
+  max-width: calc(45px * 10 + 11px * 9);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.chapter-btn {
+  width: 45px;
+  height: 45px;
+  background: #272727ff;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 200;
+  transition: 0.2s;
+}
+
+.chapter-btn:hover {
+  background: #2a2a2a;
+}
+
+.chapter-btn.visited {
+  background: #272727ff;
+  color: #8394F4;
+}
+
+@media (max-width: 600px) {
+  body { zoom: 0.9; }
+  .comic-header-img {
+    width: 120%;
+    max-width: none;
+    transform: translateX(-10%);
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- HOME BUTTON -->
+<a class="back" href="https://diligentin.github.io/here">
+  <img src="https://tajnachalupka.github.io/main/domek.png">
+</a>
+
+<!-- UKŁAD -->
+<div class="comic-layout">
+  <img class="cover" id="cover" src="" alt="">
+  <div class="comic-info">
+    <img id="header-img" class="comic-header-img" src="" alt="">
+    <p class="comic-desc" id="desc"></p>
+  </div>
+</div>
+
+<!-- ROZDZIAŁY -->
+<div class="section">
+  <h2>Rozdziały</h2>
+  <div class="chapter-grid" id="chapters"></div>
+</div>
+
+<!-- PADLET -->
+<div id="padlet-box"></div>
+
+<script>
+(async function() {
+
+  /* ===== POBIERANIE KLUCZA SERII ===== */
+  const params = new URLSearchParams(location.search);
+  const comicKey = params.get("title");
+
+  if (!comicKey) {
+    document.body.innerHTML = "<p style='padding:40px;text-align:center;'>Brak parametru ?title=</p>";
+    return;
+  }
+
+  /* ===== ŁADOWANIE JSON ===== */
+  const data = await fetch(`${comicKey}.json`).then(r => r.json());
+
+  /* ===== USTAWIANIE TYTUŁU STRONY ===== */
+  document.getElementById("page-title").textContent = data.title || comicKey;
+
+  /* ===== WYPEŁNIANIE DANYCH ===== */
+  document.getElementById("cover").src = data.cover;
+  document.getElementById("header-img").src = data.header_img;
+  document.getElementById("desc").innerHTML = data.desc.replace(/\n/g, "<br>");
+
+  /* ===== PADLET ===== */
+  if (data.padlet) {
+    document.getElementById("padlet-box").innerHTML = `
+      <div style="
+        border:1px solid rgba(0,0,0,0.1);
+        border-radius:2px;
+        overflow:hidden;
+        width:100%;
+        max-width:960px;
+        margin:0 auto;
+        background:#F4F4F4;
+      ">
+        <iframe src="${data.padlet}" frameborder="0"
+          style="width:100%;height:720px;display:block;">
+        </iframe>
+      </div>
+    `;
+  }
+
+  /* ===== ROZDZIAŁY ===== */
+  const chaptersBox = document.getElementById("chapters");
+  const chapterNumbers = Object.keys(data.chapters)
+    .sort((a,b)=>parseFloat(a)-parseFloat(b));
+
+  chapterNumbers.forEach(num => {
+    const a = document.createElement("a");
+    a.href = `reader.html?comic=${comicKey}&chapter=${num}`;
+
+    const btn = document.createElement("div");
+    btn.className = "chapter-btn";
+    btn.innerText = num;
+
+    if (localStorage.getItem(`read_${comicKey}_${num}`) === "1") {
+      btn.classList.add("visited");
+    }
+
+    a.appendChild(btn);
+    chaptersBox.appendChild(a);
+  });
+
+})();
+</script>
+
+</body>
+</html>
