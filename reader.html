@@ -8,6 +8,444 @@
 <title>...</title>
 
 <style>
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<link rel="icon" type="image/png" href="https://tajnachalupka.github.io/main/favicon.png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>...</title>
+
+<style>
+
+@font-face {
+  font-family: "piekos";
+  src: url("https://tajnachalupka.github.io/main/Piekos.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+}
+
+body {
+  margin: 0;
+  background: #191818ff;
+}
+#comic-container {
+  max-width: 720px;
+  margin: 0 auto;
+}
+/* obrazki */
+img {
+ width: 100%;
+  height: auto;
+  display: block;
+  max-width: 720px;
+  aspect-ratio: auto;
+  image-rendering: -webkit-optimize-contrast;
+  object-fit: contain;
+}
+
+@media (max-width: 800px) {
+  img {
+    max-width: 100% !important;
+    margin: 0;
+  }
+}
+
+/* ===== FLOATING BUTTONS ===== */
+.nav-buttons {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: opacity 0.3s ease;
+  opacity: 1;
+}
+
+.nav-buttons.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.nav-btn {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  transition: 0.2s;
+}
+
+/* ikony w przyciskach */
+.btn-icon {
+  width: 42px;
+  height: 42px;
+  pointer-events: none;
+  filter: invert(1);
+}
+
+/* ===== REACTIONS ===== */
+#reactions {
+  padding: 25px 10px 15px;
+  text-align: center;
+  color: white;
+}
+
+.reaction-row {
+  display: flex;
+  justify-content: center;
+  gap: 2px;
+  flex-wrap: nowrap;
+}
+
+.react img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  border-radius: 2px;
+
+  /* zapobiega ściskaniu */
+  flex-shrink: 0;
+
+  /* minimalny rozmiar na telefonach */
+  min-width: 60px;
+  min-height: 60px;
+
+  /* skalowanie na mniejszych ekranach */
+  max-width: 16vw;
+  max-height: 16vw;
+}
+
+.react {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+   border-radius: 2px;
+}
+
+.react .count {
+  margin-top: 4px;
+  font-size: 14px;
+  color: #ddd;
+}
+
+/* animacja pulsowania */
+.react.clicked {
+  animation: pulse 0.35s ease;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+/* ===== DISQUS ===== */
+#disqus_thread {
+  padding: 20px;
+  background: #111;
+  margin-top: 40px;
+}
+</style>
+</head>
+<body>
+
+<div id="comic-container"></div>
+
+<!-- ===== FLOATING BUTTONS ===== -->
+<div class="nav-buttons" id="nav">
+
+  <div class="nav-btn" id="nextBtn">
+    <img src="https://tajnachalupka.github.io/main/szczala-next.png" class="btn-icon">
+  </div>
+  
+<div class="nav-btn" id="prevBtn">
+  <img src="https://tajnachalupka.github.io/main/szczala-prev.png" class="btn-icon">
+</div>
+
+  <div class="nav-btn" id="homeBtn">
+    <img src="https://tajnachalupka.github.io/main/domek.png" class="btn-icon">
+  </div>
+</div>
+
+<!-- ===== REACTIONS SECTION ===== -->
+<div id="reactions">
+  <div class="reaction-row">
+
+    <!-- REAKCJA 1 -->
+    <div class="react" data-id="1">
+      <img src="https://tajnachalupka.github.io/main/guziki-reakcji/r1.jpg" alt="">
+      <div class="count">0</div>
+    </div>
+
+    <!-- REAKCJA 2 -->
+    <div class="react" data-id="2">
+      <img src="https://tajnachalupka.github.io/main/guziki-reakcji/r2.jpg" alt="">
+      <div class="count">0</div>
+    </div>
+
+    <!-- REAKCJA 3 -->
+    <div class="react" data-id="3">
+      <img src="https://tajnachalupka.github.io/main/guziki-reakcji/r3.jpg" alt="">
+      <div class="count">0</div>
+    </div>
+
+    <!-- REAKCJA 4 -->
+    <div class="react" data-id="4">
+      <img src="https://tajnachalupka.github.io/main/guziki-reakcji/r4.jpg" alt="">
+      <div class="count">0</div>
+    </div>
+
+    <!-- REAKCJA 5 -->
+    <div class="react" data-id="5">
+      <img src="https://tajnachalupka.github.io/main/guziki-reakcji/r5.jpg" alt="">
+      <div class="count">0</div>
+    </div>
+
+    <!-- REAKCJA 6 (UKRYTA NA RAZIE) -->
+    <!--
+    <div class="react" data-id="6">
+      <img src="TU_WSTAW_OBRAZEK_6" alt="">
+      <div class="count">0</div>
+    </div>
+    -->
+
+  </div>
+</div>
+
+<!-- ===== DISQUS ===== -->
+<div id="disqus_thread"></div>
+
+<script>
+(async function () {
+  const params = new URLSearchParams(window.location.search);
+  const comicKey = params.get("comic");
+  const chapter = params.get("chapter");
+
+  const container = document.getElementById("comic-container");
+
+  document.getElementById("homeBtn").onclick = () => {
+    window.location.href = "https://diligentin.github.io/here";
+  };
+
+  if (!comicKey || !chapter) {
+    container.innerHTML =
+      "<p style='color:white;text-align:center;padding:50px;'>Brak parametru comic lub chapter.</p>";
+    document.getElementById("nextBtn").onclick = () => {
+      window.location.href = "https://diligentin.github.io/here/";
+    };
+    return;
+  }
+
+  /* ===== CIĘCIE OBRAZÓW ===== */
+  async function sliceImage(src, sliceHeight = 2000) {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.crossOrigin = "anonymous";
+      img.src = src;
+
+      img.onload = () => {
+        try {
+          const slices = [];
+          const canvas = document.createElement("canvas");
+          const ctx = canvas.getContext("2d");
+
+          canvas.width = img.width;
+
+          for (let y = 0; y < img.height; y += sliceHeight) {
+            const h = Math.min(sliceHeight, img.height - y);
+            canvas.height = h;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(img, 0, y, img.width, h, 0, 0, img.width, h);
+
+            slices.push({
+              url: canvas.toDataURL("image/jpeg", 0.95),
+              w: canvas.width,
+              h: canvas.height
+            });
+          }
+
+          resolve(slices);
+        } catch (e) {
+          reject(e);
+        }
+      };
+
+      img.onerror = () => reject();
+    });
+  }
+
+  try {
+    const res = await fetch(`${comicKey}.json`);
+    const data = await res.json();
+    const pages = data.chapters[chapter];
+
+    if (!pages) {
+      container.innerHTML =
+        "<p style='color:white;text-align:center;padding:50px;'>Ten rozdział nie istnieje.</p>";
+      return;
+    localStorage.setItem(`read_${comicKey}_${chapter}`, "1");
+    }
+
+    const loadingInfo = document.createElement("p");
+    loadingInfo.style.color = "white";
+    loadingInfo.style.textAlign = "center";
+    loadingInfo.style.padding = "20px";
+    loadingInfo.style.fontFamily = "piekos, sans-serif";
+    loadingInfo.textContent = "Ładowanie rozdziału...";
+    container.appendChild(loadingInfo);
+
+    for (const src of pages) {
+      try {
+        const slices = await sliceImage(src, 2000);
+        slices.forEach(slice => {
+          const img = document.createElement("img");
+          img.src = slice.url;
+          img.loading = "lazy";
+
+          /* ⭐ KLUCZOWE — NAPRAWIA ROZCIĄGANIE I BRAK OBRAZÓW */
+          img.width = slice.w;
+          img.height = slice.h;
+
+          container.appendChild(img);
+        });
+      } catch {
+        const errP = document.createElement("p");
+        errP.style.color = "red";
+        errP.style.textAlign = "center";
+        errP.style.padding = "10px";
+        errP.textContent = "Błąd ładowania strony.";
+        container.appendChild(errP);
+      }
+    }
+
+    loadingInfo.remove();
+
+    /* ===== NEXT ===== */
+    const keys = Object.keys(data.chapters);
+
+    keys.sort((a, b) => {
+      const na = parseInt(a);
+      const nb = parseInt(b);
+      const ha = !isNaN(na);
+      const hb = !isNaN(nb);
+
+      if (ha && hb) {
+        if (na !== nb) return na - nb;
+        const ea = a.replace(/^\d+/, "").trim();
+        const eb = b.replace(/^\d+/, "").trim();
+        if (!ea && eb) return -1;
+        if (ea && !eb) return 1;
+        return a.localeCompare(b);
+      }
+      if (ha) return -1;
+      if (hb) return 1;
+      return a.localeCompare(b);
+    });
+
+    const index = keys.indexOf(chapter);
+
+    document.getElementById("nextBtn").onclick = () => {
+      if (index !== -1 && index < keys.length - 1) {
+        window.location.href =
+          `reader.html?comic=${comicKey}&chapter=${encodeURIComponent(keys[index + 1])}`;
+      } else {
+        window.location.href = "https://diligentin.github.io/here";
+      }
+    };
+
+    document.getElementById("prevBtn").onclick = () => {
+      if (index > 0) {
+        window.location.href =
+          `reader.html?comic=${comicKey}&chapter=${encodeURIComponent(keys[index - 1])}`;
+      } else {
+        window.location.href = "https://diligentin.github.io/here";
+      }
+    };
+
+  } catch {
+    container.innerHTML =
+      "<p style='color:white;text-align:center;padding:50px;'>Błąd wczytywania pliku JSON.</p>";
+  }
+
+})();
+  
+/* ===== AUTO-HIDE BUTTONS ===== */
+let lastScroll = 0;
+const nav = document.getElementById("nav");
+
+window.addEventListener("scroll", () => {
+  const current = window.scrollY;
+  if (current > lastScroll) nav.classList.add("hidden");
+  else nav.classList.remove("hidden");
+  lastScroll = current;
+});
+
+/* ===== REACTIONS ===== */
+document.querySelectorAll(".react").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const id = btn.dataset.id;
+
+    if (localStorage.getItem(`react_${id}`)) return;
+
+  localStorage.setItem(`read_${CK}_${CH}`, "1");
+
+    btn.classList.add("clicked");
+
+    const count = btn.querySelector(".count");
+    count.textContent = parseInt(count.textContent) + 1;
+
+    setTimeout(() => btn.classList.remove("clicked"), 250);
+  });
+});
+
+/* ============================================================
+   ===== DISQUS (MAPA ISTNIEJĄCYCH WĄTKÓW + AUTO IDENTIFIER) =====
+   ============================================================ */
+
+const disqusMap = {
+  "afos:2": "https://tajnachalupka.wixsite.com/ub-1/ub25",
+  "afos:2♡": "https://tajnachalupka.wixsite.com/ub-1/ub24"
+};
+
+var disqus_config = function () {
+  const key = `${comicKey}:${chapter}`;
+  const mapped = disqusMap[key];
+
+  this.page.url = window.location.href;
+  this.page.identifier = mapped || `${comicKey}-${chapter}`;
+};
+
+/* ===== DISQUS (LAZY LOAD) ===== */
+let disqusLoaded = false;
+
+function loadDisqus() {
+  if (disqusLoaded)
+
+ return;
+  disqusLoaded = true;
+
+  var d = document, s = d.createElement('script');
+  s.src = 'https://chalupka-ruoye-chan-wix.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+}
+
+const observerDisqus = new IntersectionObserver(entries => {
+  if (entries[0].isIntersecting) loadDisqus();
+}, { threshold: 0.1 });
+
+observerDisqus.observe(document.getElementById("disqus_thread"));
+</script>
+</body>
 
 @font-face {
   font-family: "piekos";
