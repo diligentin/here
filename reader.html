@@ -9,13 +9,13 @@
 
 <style>
 
-  @font-face {
+@font-face {
   font-family: "piekos";
   src: url("https://tajnachalupka.github.io/main/Piekos.otf") format("opentype");
   font-weight: 300;
   font-style: normal;
 }
-  
+
 body {
   margin: 0;
   background: #191818ff;
@@ -288,6 +288,7 @@ img {
     loadingInfo.style.color = "white";
     loadingInfo.style.textAlign = "center";
     loadingInfo.style.padding = "20px";
+    loadingInfo.style.fontFamily = "piekos, sans-serif";
     loadingInfo.textContent = "Ładowanie rozdziału...";
     container.appendChild(loadingInfo);
 
@@ -384,7 +385,7 @@ document.querySelectorAll(".react").forEach(btn => {
 
     if (localStorage.getItem(`react_${id}`)) return;
 
-    localStorage.setItem(`read_${CK}_${CH}`, "1");
+  localStorage.setItem(`read_${CK}_${CH}`, "1");
 
     btn.classList.add("clicked");
 
