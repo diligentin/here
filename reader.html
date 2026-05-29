@@ -119,11 +119,12 @@ let CK = null, CH = null;
   for (const src of pages) {
     const slices = await slice(src);
     for (const s of slices) {
-      const im = document.createElement("img");
-      im.src = s.url;
-      im.width = s.w;
-      im.height = s.h;
-      box.appendChild(im);
+     const im = document.createElement("img");
+im.width = s.w;
+im.height = s.h;
+im.src = s.url;   // ← dopiero TERAZ
+box.appendChild(im);
+
     }
   }
 
