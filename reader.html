@@ -101,7 +101,7 @@ let CK = null, CH = null;
     await img.decode();
 
     const out = [];
-    const H = 2000;
+    const H = 1400;
     const c = document.createElement("canvas");
     const ctx = c.getContext("2d");
     c.width = img.width;
@@ -124,7 +124,13 @@ im.width = s.w;
 im.height = s.h;
 im.src = s.url;   // ← dopiero TERAZ
 box.appendChild(im);
-
+ }
+  } catch (err) {
+    console.error("Slice error:", err);
+    const p = document.createElement("p");
+    p.style.color = "red";
+    p.textContent = "Błąd ładowania obrazu.";
+    box.appendChild(p);
     }
   }
 
