@@ -376,7 +376,7 @@ document.querySelectorAll(".react").forEach(btn => {
 
     if (localStorage.getItem(`react_${id}`)) return;
 
-    localStorage.setItem(`react_${id}`, "1");
+    localStorage.setItem(`read_${CK}_${CH}`, "1");
 
     btn.classList.add("clicked");
 
@@ -409,6 +409,7 @@ let disqusLoaded = false;
 
 function loadDisqus() {
   if (disqusLoaded)
+
  return;
   disqusLoaded = true;
 
